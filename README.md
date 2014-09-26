@@ -12,3 +12,5 @@ Terminal Commands:
 $ ogr2ogr states.shp Entidades_2013.shp -t_srs "+proj=longlat +ellps=WGS84 +no_defs +towgs84=0,0,0"
 
 $ topojson -o mx_tj.json -s 1e-7 -q 1e5 states.shp -p state_code=+CVE_ENT,state_name=NOM_ENT
+
+Lalala
