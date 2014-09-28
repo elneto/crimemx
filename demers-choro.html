@@ -1,0 +1,456 @@
+<!DOCTYPE HTML>
+<!--
+	Miniport by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Crime in Mexico</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.scrolly.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/init.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="css/skel.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-desktop.css" />
+		</noscript>
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+		<style>
+
+    rect {
+    fill: #eee;
+    stroke: #000;
+    stroke-width: 1.5px;
+    }
+
+    #map, #demers {
+    margin-left: -7em;
+    margin-top: -7em;
+    }
+
+		.states {
+		  fill: #aaa;
+		}
+
+		.states :hover {
+		  fill: orange;
+		}
+
+		.state-boundary {
+		  fill: none;
+		  stroke: #fff;
+		  stroke-opacity: .25;
+		  stroke-width: .5px;
+		  pointer-events: none;
+		}
+
+		.q0-9 { fill:rgb(235,230,229); }
+		.q1-9 { fill:rgb(214,204,204); }
+		.q2-9 { fill:rgb(194,179,178); }
+		.q3-9 { fill:rgb(174,154,152); }
+		.q4-9 { fill:rgb(153,128,127); }
+		.q5-9 { fill:rgb(133,103,101); }
+		.q6-9 { fill:rgb(113,78,75); }
+		.q7-9 { fill:rgb(92,52,50); }
+		.q8-9 { fill:rgb(72,27,24); }
+
+		</style>
+	</head>
+	<body>
+		
+
+		<!-- Nav -->
+			<nav id="nav">
+				<ul class="container">
+					<li><a href="#top">Map</a></li>
+          <!--
+					<li><a href="#work">Work</a></li>
+					<li><a href="#portfolio">Portfolio</a></li>-->
+					<li><a href="#contact">Contact</a></li> 
+				</ul>
+			</nav>
+
+		<!-- Home -->
+			<div class="wrapper style1 first">
+				<article class="container" id="top">
+					
+							<header>
+								<h1><strong>Crime in Mexico</strong></h1>
+							</header>
+							<p>Select a state or click on the timeline to interact.</p>
+							
+              <div id="demers"></div>
+              <div id="map"></div>
+						
+				</article>
+			</div>
+      <!--<script src="http://d3js.org/d3.v3.min.js"></script> !-->
+      <script src="js/d3.min.js"></script>
+      <script src="http://d3js.org/topojson.v1.min.js"></script>
+
+      <script>
+
+      // Ratio of Homicides SNSP 2014
+      var valueById = [
+        NaN,1.97, 14.19, 3.91,  4.14,  8.61,  10.41, 5.46,  20.36, 5.26,  11.96, 7.9, 29.01, 3.48,  7.36,  7.97,  15.27, 15.81, 7.08,  6.66,  10.34, 3.16,  3.09,  7.19,  5.79,  23.22, 13.66, 4.66,  13.25, 3.89,  4.37,  1.24,  3.97
+      ];
+      /*
+      // Ratio of Homicides SNSP 2013
+      var valueById13 = [
+        NaN,3.11,22.92, 7.80,  7.61,  10.55, 39.69, 22.32, 25.49, 8.42,  27.54, 11.21, 59.22, 4.42,  14.19, 11.81, 19.91, 31.85, 12.81, 14.55, 13.54, 7.05,  5.71,  14.41, 9.66,  41.20, 20.17, 6.00,  16.03, 5.63,  10.89, 1.94,  10.77
+      ];*/
+
+      var quantize = d3.scale.quantize()
+    	.domain([0, d3.max(valueById)])
+    	.range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
+
+      var margin = {top: 0, right: 0, bottom: 0, left: 0},
+          width = 960 - margin.left - margin.right,
+          height = 700 - margin.top - margin.bottom,
+          padding = 3;
+
+      var projection = d3.geo.conicConformal()
+                .rotate([102, 0])
+                .center([0, 24])
+                .parallels([17.5, 29.5])
+                //.scale(1850)
+                .scale(1700)
+                .translate([width / 2, height / 2])
+                ;
+
+      var radius = d3.scale.sqrt()
+          .domain([0, d3.max(valueById)])
+          .range([0, 54]);
+
+      var force = d3.layout.force()
+          .charge(0)
+          .gravity(0)
+          .size([width, height]);
+
+      var svg = d3.select("#demers").append("svg")
+          .attr("width", width)
+          .attr("height", height);
+
+      d3.json("mx-state-centroids.json", function(error, states) {
+        var nodes = states
+            .filter(function(d) { return !isNaN(valueById[+d.id]); })
+            .map(function(d) {
+              var point = projection([d.geo_longitude,d.geo_latitude]);
+              var value = valueById[+d.id];
+              var q = quantize(valueById[+d.id]);
+              var state = d.state;
+              
+              if (isNaN(value)) fail();
+              return {
+                x: point[0], y: point[1],
+                x0: point[0], y0: point[1],
+                r: radius(value),
+                value: value,
+                state: state,
+                q: q
+              };
+            });
+
+        force
+            .nodes(nodes)
+            .on("tick", tick)
+            .start();
+
+        var node = svg.selectAll("rect")
+            .data(nodes)
+          .enter().append("rect")
+          	.attr("class", function(d) { return d.q; })
+            .attr("width", function(d) { return d.r * 2; })
+            .attr("height", function(d) { return d.r * 2; })
+            ;
+
+        node
+        	.append("title").text(function(d) { return d.state +" "+ d.value; })
+
+        	;
+
+        function tick(e) {
+          node.each(gravity(e.alpha * .1))
+              .each(collide(.5))
+              .attr("x", function(d) { return d.x - d.r; })
+              .attr("y", function(d) { return d.y - d.r; });
+        }
+
+        function gravity(k) {
+          return function(d) {
+            d.x += (d.x0 - d.x) * k;
+            d.y += (d.y0 - d.y) * k;
+          };
+        }
+
+        function collide(k) {
+          var q = d3.geom.quadtree(nodes);
+          return function(node) {
+            var nr = node.r + padding,
+                nx1 = node.x - nr,
+                nx2 = node.x + nr,
+                ny1 = node.y - nr,
+                ny2 = node.y + nr;
+            q.visit(function(quad, x1, y1, x2, y2) {
+              if (quad.point && (quad.point !== node)) {
+                var x = node.x - quad.point.x,
+                    y = node.y - quad.point.y,
+                    lx = Math.abs(x),
+                    ly = Math.abs(y),
+                    r = nr + quad.point.r;
+                if (lx < r && ly < r) {
+                  if (lx > ly) {
+                    lx = (lx - r) * (x < 0 ? -k : k);
+                    node.x -= lx;
+                    quad.point.x += lx;
+                  } else {
+                    ly = (ly - r) * (y < 0 ? -k : k);
+                    node.y -= ly;
+                    quad.point.y += ly;
+                  }
+                }
+              }
+              return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+            });
+          };
+        }
+      });
+
+      </script>
+
+      <script>
+      /*
+      var width = 960,
+          height = 628;
+
+      var projection = d3.geo.conicConformal()
+          .rotate([102, 0])
+          .center([0, 24])
+          .parallels([17.5, 29.5])
+          //.scale(1850)
+          .scale(300)
+          .translate([width / 2, height / 2]);
+
+      var path = d3.geo.path()
+          .projection(projection);
+
+      var svg = d3.select("#map").append("svg")
+          .attr("width", width)
+          .attr("height", height);
+
+      d3.json("mx.json", function(error, mx) {
+
+        svg.append("g")
+            .attr("class", "states")
+          .selectAll("path")
+            .data(topojson.feature(mx, mx.objects.states).features)
+          .enter().append("path")
+            .attr("d", path)
+          .append("title")
+            .text(function(d) { return d.properties.state_name; });
+
+      //adds classes for the state borders
+        svg.append("path")
+            .datum(topojson.mesh(mx, mx.objects.states, function(a, b) { return a.properties.state === b.properties.state && a !== b; }))
+            .attr("class", "state-boundary")
+            .attr("d", path); 
+        
+      });
+
+      d3.select(self.frameElement).style("height", height + "px");
+      */
+      </script>
+		<!-- Work -->
+			<div class="wrapper style2">
+				<article id="work">
+          <!--
+					<header>
+						<h2>Here's all the stuff I do.</h2>
+						<p>Odio turpis amet sed consequat eget posuere consequat.</p>
+					</header>
+					<div class="container">
+						<div class="row">
+							<div class="4u">
+								<section class="box style1">
+									<span class="icon featured fa-comments-o"></span>
+									<h3>Consequat lorem</h3>
+									<p>Ornare nulla proin odio consequat sapien vestibulum ipsum primis sed amet consequat lorem dolore.</p>
+								</section>
+							</div>
+							<div class="4u">
+								<section class="box style1">
+									<span class="icon featured fa-camera-retro"></span>
+									<h3>Lorem dolor tempus</h3>
+									<p>Ornare nulla proin odio consequat sapien vestibulum ipsum primis sed amet consequat lorem dolore.</p>
+								</section>
+							</div>
+							<div class="4u">
+								<section class="box style1">
+									<span class="icon featured fa-thumbs-o-up"></span>
+									<h3>Feugiat posuere</h3>
+									<p>Ornare nulla proin odio consequat sapien vestibulum ipsum primis sed amet consequat lorem dolore.</p>
+								</section>
+							</div>
+						</div>
+					</div>
+					<footer>
+						<p>Lorem ipsum dolor sit sapien vestibulum ipsum primis?</p>
+						<a href="#portfolio" class="button big scrolly">See some of my recent work</a>
+					</footer>
+          !-->
+				</article>
+			</div>
+
+		<!-- Portfolio -->
+			<div class="wrapper style3">
+				<article id="portfolio">
+          <!--
+					<header>
+						<h2>Here’s some stuff I made recently.</h2>
+						<p>Proin odio consequat  sapien vestibulum consequat lorem dolore feugiat lorem ipsum dolore.</p>
+					</header>
+					<div class="container">
+						<div class="row">
+							<div class="4u">
+								<article class="box style2">
+									<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
+									<h3><a href="#">Magna feugiat</a></h3>
+									<p>Ornare nulla proin odio consequat.</p>
+								</article>
+							</div>
+							<div class="4u">
+								<article class="box style2">
+									<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
+									<h3><a href="#">Veroeros primis</a></h3>
+									<p>Ornare nulla proin odio consequat.</p>
+								</article>
+							</div>
+							<div class="4u">
+								<article class="box style2">
+									<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
+									<h3><a href="#">Lorem ipsum</a></h3>
+									<p>Ornare nulla proin odio consequat.</p>
+								</article>
+							</div>
+						</div>
+						<div class="row">
+							<div class="4u">
+								<article class="box style2">
+									<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
+									<h3><a href="#">Tempus dolore</a></h3>
+									<p>Ornare nulla proin odio consequat.</p>
+								</article>
+							</div>
+							<div class="4u">
+								<article class="box style2">
+									<a href="#" class="image featured"><img src="images/pic05.jpg" alt="" /></a>
+									<h3><a href="#">Feugiat aliquam</a></h3>
+									<p>Ornare nulla proin odio consequat.</p>
+								</article>
+							</div>
+							<div class="4u">
+								<article class="box style2">
+									<a href="#" class="image featured"><img src="images/pic06.jpg" alt="" /></a>
+									<h3><a href="#">Sed amet ornare</a></h3>
+									<p>Ornare nulla proin odio consequat.</p>
+								</article>
+							</div>
+						</div>
+					</div>
+					<footer>
+						<p>Lorem ipsum dolor sit sapien vestibulum ipsum primis?</p>
+						<a href="#contact" class="button big scrolly">Get in touch with me</a>
+					</footer>
+          !-->
+				</article>
+			</div>
+
+		<!-- Contact -->
+			<div class="wrapper style4">
+				<article id="contact" class="container small">
+					<header>
+						<h2>Have me make stuff for you.</h2>
+						<p>Ornare nulla proin odio consequat sapien vestibulum ipsum sed lorem.</p>
+					</header>
+					<div>
+						<div class="row">
+							<div class="12u">
+								<form method="post" action="#">
+									<div>
+										<div class="row">
+											<div class="6u">
+												<input type="text" name="name" id="name" placeholder="Name" />
+											</div>
+											<div class="6u">
+												<input type="text" name="email" id="email" placeholder="Email" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="12u">
+												<input type="text" name="subject" id="subject" placeholder="Subject" />
+											</div>
+										</div>
+										<div class="row">
+											<div class="12u">
+												<textarea name="message" id="message" placeholder="Message"></textarea>
+											</div>
+										</div>
+										<div class="row double">
+											<div class="12u">
+												<ul class="actions">
+													<li><input type="submit" value="Send Message" /></li>
+													<li><input type="reset" value="Clear Form" class="alt" /></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+								<hr />
+								<h3>Find me on ...</h3>
+								<ul class="social">
+									<li><a href="http://twitter.com/soyfantomas" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+                  <li><a href="http://instagram.com/soyfantomas" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+                  <!--
+									<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+									<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									<li><a href="#" class="icon fa-tumblr"><span class="label">Tumblr</span></a></li>
+									<li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
+									<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+									
+									<li><a href="#" class="icon fa-rss"><span>RSS</span></a></li>
+									
+									<li><a href="#" class="icon fa-foursquare"><span>Foursquare</span></a></li>
+									<li><a href="#" class="icon fa-skype"><span>Skype</span></a></li>
+									<li><a href="#" class="icon fa-soundcloud"><span>Soundcloud</span></a></li>
+									<li><a href="#" class="icon fa-youtube"><span>YouTube</span></a></li>
+									<li><a href="#" class="icon fa-blogger"><span>Blogger</span></a></li>
+									<li><a href="#" class="icon fa-flickr"><span>Flickr</span></a></li>
+									<li><a href="#" class="icon fa-vimeo"><span>Vimeo</span></a></li>
+									-->
+								</ul>
+								<hr />
+							</div>
+						</div>
+					</div>
+					<footer>
+						<ul id="copyright">
+							<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						</ul>
+					</footer>
+				</article>
+			</div>
+
+	</body>
+</html>
