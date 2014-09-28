@@ -10,7 +10,6 @@
   fill: orange;
 }
 
-
 .state-boundary {
   fill: none;
   stroke: #fff;
@@ -32,7 +31,8 @@ var projection = d3.geo.conicConformal()
     .rotate([102, 0])
     .center([0, 24])
     .parallels([17.5, 29.5])
-    .scale(1850)
+    //.scale(1850)
+    .scale(1000)
     .translate([width / 2, height / 2]);
 
 var path = d3.geo.path()
@@ -53,11 +53,11 @@ d3.json("mx.json", function(error, mx) {
     .append("title")
       .text(function(d) { return d.properties.state_name; });
 
+//adds classes for the state borders
   svg.append("path")
       .datum(topojson.mesh(mx, mx.objects.states, function(a, b) { return a.properties.state === b.properties.state && a !== b; }))
       .attr("class", "state-boundary")
       .attr("d", path); 
-
   
 });
 
