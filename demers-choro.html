@@ -120,7 +120,6 @@
                 .rotate([102, 0])
                 .center([0, 24])
                 .parallels([17.5, 29.5])
-                //.scale(1850)
                 .scale(1700)
                 .translate([width / 2, height / 2])
                 ;
@@ -142,10 +141,10 @@
         var nodes = states
             .filter(function(d) { return !isNaN(valueById[+d.id]); })
             .map(function(d) {
-              var point = projection([d.geo_longitude,d.geo_latitude]);
-              var value = valueById[+d.id];
-              var q = quantize(valueById[+d.id]);
-              var state = d.state;
+              var point = projection([d.geo_longitude,d.geo_latitude])
+              	value = valueById[+d.id],
+              	q = quantize(valueById[+d.id]),
+              	state = d.state;
               
               if (isNaN(value)) fail();
               return {
@@ -171,10 +170,7 @@
             .attr("height", function(d) { return d.r * 2; })
             ;
 
-        node
-        	.append("title").text(function(d) { return d.state +" "+ d.value; })
-
-        	;
+        node.append("title").text(function(d) { return d.state +" "+ d.value; });
 
         function tick(e) {
           node.each(gravity(e.alpha * .1))

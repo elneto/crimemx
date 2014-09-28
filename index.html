@@ -30,7 +30,7 @@
     }
 
 		.states {
-		  fill: #aaa;
+		  fill: none;
 		}
 
 		.states :hover {
@@ -44,6 +44,16 @@
 		  stroke-width: .5px;
 		  pointer-events: none;
 		}
+
+		.q0-9 { fill:rgb(235,230,229); }
+		.q1-9 { fill:rgb(214,204,204); }
+		.q2-9 { fill:rgb(194,179,178); }
+		.q3-9 { fill:rgb(174,154,152); }
+		.q4-9 { fill:rgb(153,128,127); }
+		.q5-9 { fill:rgb(133,103,101); }
+		.q6-9 { fill:rgb(113,78,75); }
+		.q7-9 { fill:rgb(92,52,50); }
+		.q8-9 { fill:rgb(72,27,24); }
 
 		</style>
 	</head>
@@ -78,6 +88,15 @@
       <script src="http://d3js.org/topojson.v1.min.js"></script>
       <script>
 
+       // Ratio of Homicides SNSP 2014
+      var valueById = [
+        NaN,1.97, 14.19, 3.91,  4.14,  8.61,  10.41, 5.46,  20.36, 5.26,  11.96, 7.9, 29.01, 3.48,  7.36,  7.97,  15.27, 15.81, 7.08,  6.66,  10.34, 3.16,  3.09,  7.19,  5.79,  23.22, 13.66, 4.66,  13.25, 3.89,  4.37,  1.24,  3.97
+      ];
+
+      var quantize = d3.scale.quantize()
+    	.domain([0, d3.max(valueById)])
+    	.range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
+
       var width = 960,
           height = 628;
 
@@ -85,8 +104,7 @@
           .rotate([102, 0])
           .center([0, 24])
           .parallels([17.5, 29.5])
-          //.scale(1850)
-          .scale(1400)
+          .scale(1500)
           .translate([width / 2, height / 2]);
 
       var path = d3.geo.path()
@@ -103,6 +121,7 @@
           .selectAll("path")
             .data(topojson.feature(mx, mx.objects.states).features)
           .enter().append("path")
+          	.attr("class", function(d) { return quantize(valueById[+d.properties.state_code]); })
             .attr("d", path)
           .append("title")
             .text(function(d) { return d.properties.state_name; });
