@@ -36,7 +36,7 @@
     }
 
 		.states {
-		  fill: #aaa;
+		  fill: none;
 		}
 
 		.states :hover {
@@ -50,7 +50,6 @@
 		  stroke-width: .5px;
 		  pointer-events: none;
 		}
-
 		/*
 		.q0-9 { fill:rgb(255,245,240); }
 		.q1-9 { fill:rgb(254,224,210); }
@@ -62,7 +61,6 @@
 		.q7-9 { fill:rgb(165,15,21); }
 		.q8-9 { fill:rgb(103,0,13); }
 		*/
-		
 		.q0-9 { fill:rgb(235,230,229); }
 		.q1-9 { fill:rgb(214,204,204); }
 		.q2-9 { fill:rgb(194,179,178); }
@@ -72,8 +70,6 @@
 		.q6-9 { fill:rgb(113,78,75); }
 		.q7-9 { fill:rgb(92,52,50); }
 		.q8-9 { fill:rgb(72,27,24); }
-		
-
 		</style>
 	</head>
 	<body>
@@ -109,7 +105,6 @@
       <script src="http://d3js.org/topojson.v1.min.js"></script>
 
       <script>
-
       // Ratio of Homicides SNSP 2014
       var valueById = [
         NaN,1.97, 14.19, 3.91,  4.14,  8.61,  10.41, 5.46,  20.36, 5.26,  11.96, 7.9, 29.01, 3.48,  7.36,  7.97,  15.27, 15.81, 7.08,  6.66,  10.34, 3.16,  3.09,  7.19,  5.79,  23.22, 13.66, 4.66,  13.25, 3.89,  4.37,  1.24,  3.97
@@ -232,49 +227,6 @@
         }
       });
 
-      </script>
-
-      <script>
-      /*
-      var width = 960,
-          height = 628;
-
-      var projection = d3.geo.conicConformal()
-          .rotate([102, 0])
-          .center([0, 24])
-          .parallels([17.5, 29.5])
-          //.scale(1850)
-          .scale(300)
-          .translate([width / 2, height / 2]);
-
-      var path = d3.geo.path()
-          .projection(projection);
-
-      var svg = d3.select("#map").append("svg")
-          .attr("width", width)
-          .attr("height", height);
-
-      d3.json("mx.json", function(error, mx) {
-
-        svg.append("g")
-            .attr("class", "states")
-          .selectAll("path")
-            .data(topojson.feature(mx, mx.objects.states).features)
-          .enter().append("path")
-            .attr("d", path)
-          .append("title")
-            .text(function(d) { return d.properties.state_name; });
-
-      //adds classes for the state borders
-        svg.append("path")
-            .datum(topojson.mesh(mx, mx.objects.states, function(a, b) { return a.properties.state === b.properties.state && a !== b; }))
-            .attr("class", "state-boundary")
-            .attr("d", path); 
-        
-      });
-
-      d3.select(self.frameElement).style("height", height + "px");
-      */
       </script>
 		<!-- Work -->
 			<div class="wrapper style2">
