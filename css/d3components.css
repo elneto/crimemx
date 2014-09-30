@@ -1,0 +1,81 @@
+/*For Axis*/
+		#top_part{
+			width:1200px;
+			height: 650px;
+		}
+		#map, #demers {
+		    margin-left: -7em;
+		    margin-top: -7em;
+		    width:930px;
+		    height: 650px;
+		    float: left;
+	    }
+		#chart{
+			width: 300px;
+			height: 650px;
+			float: left;
+		}
+
+
+		.bar {
+		  fill: #481B18;
+		}
+
+		.bar:hover {
+		  fill: #99807F;
+		  /*border: 2px solid #99807F;*/
+		}
+
+		.bar_num {
+		  fill: white;
+		  font: 15px sans-serif;
+		}
+
+
+		.axis {
+		  font: 12px sans-serif;
+		}
+
+		.axis path,
+		.axis line {
+		  fill: none;
+		  stroke: #000;
+		  shape-rendering: crispEdges;
+		}
+
+		.x.axis path {
+		}
+
+		/*For Demers*/
+	    rect {
+	    fill: #eee;
+	    stroke: #000;
+	    stroke-width: 1.5px;
+	    }
+
+	    /*For geo maps*/
+		.states {
+		  fill: none;
+		}
+
+		.states :hover {
+		  fill: orange;
+		}
+
+		.state-boundary {
+		  fill: none;
+		  stroke: #fff;
+		  stroke-opacity: .25;
+		  stroke-width: .5px;
+		  pointer-events: none;
+		}
+		/*For choropleth steps*/
+		.q0-9 { fill:rgb(235,230,229); }
+		.q1-9 { fill:rgb(214,204,204); }
+		.q2-9 { fill:rgb(194,179,178); }
+		.q3-9 { fill:rgb(174,154,152); }
+		.q4-9 { fill:rgb(153,128,127); }
+		.q5-9 { fill:rgb(133,103,101); }
+		.q6-9 { fill:rgb(113,78,75); }
+		.q7-9 { fill:rgb(92,52,50); }
+		.q8-9 { fill:rgb(72,27,24); }

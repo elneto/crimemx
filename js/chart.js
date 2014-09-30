@@ -1,43 +1,5 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-<style>
-
-.bar {
-  fill: #481B18;
-}
-
-.bar:hover {
-  fill: #99807F;
-  /*border: 2px solid #99807F;*/
-}
-
-.bar_num {
-  fill: white;
-  font: 15px sans-serif;
-}
-
-
-.axis {
-  font: 12px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {
-}
-
-</style>
-<div id="chart"></div>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script>
-
 var chartMargin = {top: 20, right: 20, bottom: 50, left: 70},
-    chartWidth = 380 - chartMargin.left - chartMargin.right,
+    chartWidth = 300 - chartMargin.left - chartMargin.right,
     chartHeight = 600 - chartMargin.top - chartMargin.bottom;
 
 var x = d3.scale.linear()
@@ -49,7 +11,7 @@ var y = d3.scale.ordinal()
 var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom")
-    .ticks(5);
+    .ticks(4);
 
 var yAxis = d3.svg.axis()
     .scale(y)
@@ -106,5 +68,3 @@ function type(d) {
   d.value = +d.value; // coerce to number
   return d;
 }
-
-</script>
