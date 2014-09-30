@@ -1,7 +1,7 @@
       // Ratio of Homicides SNSP 2014
-      var valueById = [
-        NaN,1.97, 14.19, 3.91,  4.14,  8.61,  10.41, 5.46,  20.36, 5.26,  11.96, 7.9, 29.01, 3.48,  7.36,  7.97,  15.27, 15.81, 7.08,  6.66,  10.34, 3.16,  3.09,  7.19,  5.79,  23.22, 13.66, 4.66,  13.25, 3.89,  4.37,  1.24,  3.97
-      ];
+      //var valueById = [
+        //NaN,1.97, 14.19, 3.91,  4.14,  8.61,  10.41, 5.46,  20.36, 5.26,  11.96, 7.9, 29.01, 3.48,  7.36,  7.97,  15.27, 15.81, 7.08,  6.66,  10.34, 3.16,  3.09,  7.19,  5.79,  23.22, 13.66, 4.66,  13.25, 3.89,  4.37,  1.24,  3.97
+      //];
 
       /*
       // Ratio of Homicides SNSP 2013
@@ -9,9 +9,30 @@
         NaN,3.11,22.92, 7.80,  7.61,  10.55, 39.69, 22.32, 25.49, 8.42,  27.54, 11.21, 59.22, 4.42,  14.19, 11.81, 19.91, 31.85, 12.81, 14.55, 13.54, 7.05,  5.71,  14.41, 9.66,  41.20, 20.17, 6.00,  16.03, 5.63,  10.89, 1.94,  10.77
       ];*/
 
+      var ratesNationalHomicides;
+
+      var yearCode = {1997:1, 1998:2, 1999:3, 2000:4, 2001:5, 2002:6, 2003:7, 2004:8, 2005:9, 2006:10,  2007:11,  2008:12,  2009:13,  2010:14,  2011:15,  2012:16,  2013:17,  2014:18}
+
+      //year must be between 1997 and 2014
+      function rateById(year, id)
+        {
+          //ratesNationalHomicides[year][state]
+          //year 1 = 1997
+          ////state 0 = Total,  state 1 = Aguascalientes, state 2 = Baja California...
+          if (year < 1997 || year > 2014)
+              throw { name: 'FatalError', message: 'Year out of limits' }
+
+          return ratesNationalHomicides[yearCode[year]][id];
+        }
+
+      function maxYear(year)
+        {
+            console.log(ratesNationalHomicides[+yearCode[year]]);
+            console.log(Math.max(+ratesNationalHomicides[+yearCode[year]]));
+        }
+
       var quantize = d3.scale.quantize()
-    	.domain([0, d3.max(valueById)])
-    	.range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
+    	   .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
 
       var margin = {top: 0, right: 0, bottom: 0, left: 0},
           width = 960 - margin.left - margin.right,
@@ -27,7 +48,6 @@
                 ;
 
       var radius = d3.scale.sqrt()
-          .domain([0, d3.max(valueById)])
           .range([0, 54]);
 
       var force = d3.layout.force()
@@ -39,16 +59,34 @@
           .attr("width", width)
           .attr("height", height);
 
-      d3.json("mx-state-centroids.json", function(error, states) {
+      queue()
+        .defer(d3.json, "json/mx-state-centroids.json")
+        .defer(d3.csv, "csv/D3-national-homicide-rates.csv")
+
+        .await(ready);
+
+      function ready(error, states, rates) {
+
+        //console.log(rates);
+        ratesNationalHomicides = rates;
+
+        //quantize.domain([0, d3.max(totalByYear.values())]);
+        //radius.domain([0, d3.max(totalByYear.values())]);
+        quantize.domain([0, 110.71]);
+        radius.domain([0, 110.71]);
+        //maxYear(2014);
+        //maxYear(2013);
+
         var nodes = states
-            .filter(function(d) { return !isNaN(valueById[+d.id]); })
+            //.filter(function(d) { return !isNaN(valueById[+d.id]); })
             .map(function(d) {
+
               var point = projection([d.geo_longitude,d.geo_latitude])
-              	value = valueById[+d.id],
-              	q = quantize(valueById[+d.id]),
+              	value = rateById(2010, +d.id),
+              	q = quantize(value),
               	state = d.state;
               
-              if (isNaN(value)) fail();
+              if (isNaN(value)) throw { name: 'FatalError', message: 'Values for squares are not numbers' };
               return {
                 x: point[0], y: point[1],
                 x0: point[0], y0: point[1],
@@ -57,7 +95,7 @@
                 state: state,
                 q: q
               };
-            });
+            }); //closes .map
 
         force
             .nodes(nodes)
@@ -76,7 +114,7 @@
 
         function tick(e) {
           node.each(gravity(e.alpha * .1))
-              .each(collide(.5))
+              .each(collide(.2))
               .attr("x", function(d) { return d.x - d.r; })
               .attr("y", function(d) { return d.y - d.r; });
         }
@@ -118,5 +156,6 @@
               return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
             });
           };
-        }
-      });
+        } //end function collide
+      }; //end ready (d3.json)
+

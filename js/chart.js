@@ -1,6 +1,6 @@
 var chartMargin = {top: 20, right: 20, bottom: 50, left: 70},
     chartWidth = 300 - chartMargin.left - chartMargin.right,
-    chartHeight = 600 - chartMargin.top - chartMargin.bottom;
+    chartHeight = 400 - chartMargin.top - chartMargin.bottom;
 
 var x = d3.scale.linear()
     .range([0,chartWidth]);
@@ -56,7 +56,7 @@ d3.tsv("national.tsv", type, function(error, data) {
     bar.append("text")
       .attr("x", function(d) { return x(d.value)-3;} )
       .attr("y", function(d) { return y(d.month); })
-      .attr("dy", "1.6em")
+      .attr("dy", "1.1em")
       .attr("class", "bar_num")
       .style("text-anchor", "end")
       .text(function(d) { return d.value });
