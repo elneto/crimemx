@@ -82,7 +82,7 @@
             .map(function(d) {
 
               var point = projection([d.geo_longitude,d.geo_latitude])
-              	value = rateById(2010, +d.id),
+              	value = rateById(2009, +d.id),
               	q = quantize(value),
               	state = d.state;
               
