@@ -88,29 +88,28 @@
               };
             }); //closes .map
 
-        
-
-        var node = svg.selectAll("rect")
-            .data(nodes)
-          .enter().append("rect")
-          	.attr("class", function(d) { return d.q; })
-            .attr("width", function(d) { return d.r * 2; })
-            .attr("height", function(d) { return d.r * 2; })
-            ;
-        //for the update
-        svg.selectAll("rect")
-            .data(nodes)
-            .attr("class", function(d) { return d.q; })
-            .attr("width", function(d) { return d.r * 2; })
-            .transition().attr("height", function(d) { return d.r * 2; })
-            ;
-
         force
             .nodes(nodes)
             .on("tick", tick)
             .start();
 
-        node.append("title").text(function(d) { return d.state +" "+ d.value; });
+        var node = svg.selectAll("rect")
+            .data(nodes);
+
+        //the enter() section
+        node
+            .enter().append("rect")
+          	.attr("class", function(d) { return d.q; })
+            .attr("width", function(d) { return d.r * 2; })
+            .attr("height", function(d) { return d.r * 2; })
+            .append("title").text(function(d) { return d.state +" "+ d.value; });
+        //for the update() section
+        node
+            .attr("class", function(d) { return d.q; })
+            .transition().attr("width", function(d) { return d.r * 2; })
+            .attr("height", function(d) { return d.r * 2; })
+            .select("title").text(function(d) { return d.state +" "+ d.value; });
+            ;
 
         function tick(e) {
           node.each(gravity(e.alpha * .1))
