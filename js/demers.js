@@ -1,17 +1,4 @@
-      // Ratio of Homicides SNSP 2014
-      //var valueById = [
-        //NaN,1.97, 14.19, 3.91,  4.14,  8.61,  10.41, 5.46,  20.36, 5.26,  11.96, 7.9, 29.01, 3.48,  7.36,  7.97,  15.27, 15.81, 7.08,  6.66,  10.34, 3.16,  3.09,  7.19,  5.79,  23.22, 13.66, 4.66,  13.25, 3.89,  4.37,  1.24,  3.97
-      //];
-
-      /*
-      // Ratio of Homicides SNSP 2013
-      var valueById13 = [
-        NaN,3.11,22.92, 7.80,  7.61,  10.55, 39.69, 22.32, 25.49, 8.42,  27.54, 11.21, 59.22, 4.42,  14.19, 11.81, 19.91, 31.85, 12.81, 14.55, 13.54, 7.05,  5.71,  14.41, 9.66,  41.20, 20.17, 6.00,  16.03, 5.63,  10.89, 1.94,  10.77
-      ];*/
-
       var ratesNationalHomicides;
-
-      var yearCode = {1997:1, 1998:2, 1999:3, 2000:4, 2001:5, 2002:6, 2003:7, 2004:8, 2005:9, 2006:10,  2007:11,  2008:12,  2009:13,  2010:14,  2011:15,  2012:16,  2013:17,  2014:18}
 
       //year must be between 1997 and 2014
       function rateById(year, id)
@@ -22,7 +9,7 @@
           if (year < 1997 || year > 2014)
               throw { name: 'FatalError', message: 'Year out of limits' }
 
-          return ratesNationalHomicides[yearCode[year]][id];
+          return ratesNationalHomicides[year-1996][id];
         }
 
       function maxYear(year)
@@ -62,11 +49,13 @@
       queue()
         .defer(d3.json, "json/mx-state-centroids.json")
         .defer(d3.csv, "csv/D3-national-homicide-rates.csv")
-
         .await(ready);
 
       function ready(error, states, rates) {
 
+        GERROR = error;
+        GSTATES = states;
+        GRATES = rates;
         //console.log(rates);
         ratesNationalHomicides = rates;
 
@@ -82,10 +71,12 @@
             .map(function(d) {
 
               var point = projection([d.geo_longitude,d.geo_latitude])
-              	value = rateById(2009, +d.id),
+              	value = rateById(GYEAR, +d.id),
               	q = quantize(value),
               	state = d.state;
               
+              //console.log('Year: '+GYEAR+" value: "+value+' q:'+q);
+
               if (isNaN(value)) throw { name: 'FatalError', message: 'Values for squares are not numbers' };
               return {
                 x: point[0], y: point[1],
@@ -97,10 +88,7 @@
               };
             }); //closes .map
 
-        force
-            .nodes(nodes)
-            .on("tick", tick)
-            .start();
+        
 
         var node = svg.selectAll("rect")
             .data(nodes)
@@ -109,6 +97,18 @@
             .attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
             ;
+        //for the update
+        svg.selectAll("rect")
+            .data(nodes)
+            .attr("class", function(d) { return d.q; })
+            .attr("width", function(d) { return d.r * 2; })
+            .transition().attr("height", function(d) { return d.r * 2; })
+            ;
+
+        force
+            .nodes(nodes)
+            .on("tick", tick)
+            .start();
 
         node.append("title").text(function(d) { return d.state +" "+ d.value; });
 

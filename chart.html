@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Monthly homicides 2013</title>
+	<script src="js/d3.min.js"></script>
+	<!-- Load c3.css -->
+	<link href="css/c3.css" rel="stylesheet" type="text/css">
+	<!-- Load d3.js and c3.js -->
+	<script src="js/c3.min.js"></script>
+  <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+  <style type="text/css">
+
+  *{
+  font: medium, palatino;
+  }
+  .candtitle{
+    height: 170px;
+    width: 400px;
+      display: block;
+      float: left;
+      
+  }
+  .chart {
+      display: block;
+      height: 160px;
+      width: 400px;
+      float: left;
+  }
+
+  h2 {
+      background-color: red;
+      color: white;
+      display: inline;
+      font-size: medium;
+      padding: 0.1em 0.4em;
+      font-family: palatino;
+  }
+
+  </style>
+</head>
+
+<body>
+
+<h2>Homicides 2013</h2>
+<div id="chart"></div>
+</body>
+<script type="text/javascript">
+
+function separateJSON(jsondata) {
+
+      console.log(jsondata);
+
+      var chart = c3.generate({
+      bindto: '#chart',
+      data: {
+        x: 'x',
+        columns: jsondata,
+              
+          },
+        axis: {
+        x: {
+            type: 'timeseries',
+            tick: {
+                format: '%m/%Y'
+            }
+        }
+    }
+      
+      });
+
+    }
+
+d3.json('json/national-months-2013.json', separateJSON);
+
+
+</script
+</html>

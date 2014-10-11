@@ -23,6 +23,7 @@
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="js/ie-emulation-modes-warning.js"></script>
+    <script src="js/jquery.min.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -61,9 +62,24 @@
         <p class="lead">Select a state or click on the timeline.</p>
         <div id="top_part">   
               <div id="demers"></div>
-              <div id="chart"></div>
+              <!--<div id="chart"></div>-->
         </div>
-        <div id="map"></div>
+        <script type="text/javascript">
+        var GERROR, GSTATES, GRATES;
+        var GYEAR = 1997;
+         $(function() {
+            $( "#resetButton" ).click(function() {
+              if (GYEAR<2015)
+                {
+                  GYEAR += 1;
+                  ready(GERROR, GSTATES, GRATES);
+                }
+              
+            });
+          });
+        </script>
+        <button id="resetButton">Advance</button>
+        <!--Put geo map TODO <div id="map"></div> -->
 
       </div>
 
@@ -74,7 +90,7 @@
       <script src="http://d3js.org/topojson.v1.min.js"></script>
       <script src="http://d3js.org/queue.v1.min.js"></script>
       <script src="js/demers.js"></script>
-      <script src="js/chart.js"></script>
+      <!--<script src="js/chart.js"></script>-->
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
