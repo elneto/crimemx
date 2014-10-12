@@ -47,12 +47,33 @@
 
       var ol = d3.select("#list-states").append("ol");
 
+      var xSlider = d3.time.scale()
+          .domain([new Date(1997, 0, 1), new Date(2014, 0, 1)])
+          //.domain([1997,2014])
+          .range([0, 820]);
+
+      var xAxis = d3.svg.axis()
+          .scale(xSlider)
+          .ticks(d3.time.years, 1);
+      
+      var sliderSVG = d3.select("#slider-label").insert("svg")
+          .attr("width", "900px")
+          .attr("height", "50px");
+
+      sliderSVG.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(12," + 2 + ")") //separation from slider
+        .call(xAxis)
+      .selectAll("text")
+        .attr("y", 0)
+        .attr("x", 0)
+        .attr("dy", "1.8em")
+        .style("text-anchor", "middle");
+
       queue()
         .defer(d3.json, "json/mx-state-centroids.json")
         .defer(d3.csv, "csv/D3-national-homicide-rates.csv")
         .await(ready);
-
-
 
       function ready(error, states, rates) {
 
