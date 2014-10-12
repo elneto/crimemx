@@ -1,6 +1,8 @@
 #crimemx
 Crime in Mexico Visualization using D3 and topojson
 
+Demo (work in progress): <a href="http://thesis.ernestoaraiza.com/crimemx/"><img src="http://thesis.ernestoaraiza.com/images/t20141011.png" align="left" hspace="10" vspace="6" width="400"></a>
+
 SNSP visualization with D3
 
 Based on: http://bl.ocks.org/mbostock/9265674 To generate the states in topojson I used: https://gist.github.com/diegovalle/5129746 but with the 2013 downloaded from the INEGI link below
