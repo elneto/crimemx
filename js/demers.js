@@ -1,5 +1,6 @@
       //global var that stores the rates
       var ratesNationalHomicides;
+      var GNODE;
 
       //year must be between 1997 and 2014
       function rateById(year, id)
@@ -129,7 +130,9 @@
             .select("title").text(function(d) { 
                 rankingPerYear.push({state:d.state,value:d.value});
                 return d.state +" "+ d.value; });
-              
+        
+        GNODE = node; //make it available globally
+
         //order rankingPerYear
         rankingPerYear.sort(function(a, b) { 
           return b.value - a.value;
@@ -205,11 +208,27 @@
       map.addLayer('admin1', {
           styles: {
               stroke: '#aaa',
-              fill: '#f6f4f2'
+              fill: function(de, path) { 
+                var d = de;
+                var col = "#00ff00";
+                $.each(GNODE[0], function(index, nodo) {
+                    if (d.name === nodo.__data__.state) {
+                      col = nodo.__data__.color;
+                      }
+                  })
+                return col; 
+                }
+              
           },
           mouseenter: function(d, path) {
               path.attr('fill', Math.random() < 0.5 ? '#c04' : '#04c');
-              console.log(d);
+              /*
+              console.log(d.name);
+              $.each(GNODE[0], function(index, nodo) {
+                  console.log(index +": "+nodo.__data__.state);  
+                  console.log(index +": "+nodo.__data__.color);  
+                  console.log(index +": "+nodo.__data__.value);  
+              });*/
           },
           mouseleave: function(d, path) {
               path.animate({ fill: '#f6f4f2' }, 1000);
