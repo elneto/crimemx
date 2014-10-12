@@ -37,27 +37,29 @@
   </head>
 
   <body>
-
+    
     <script type="text/javascript">
         var GERROR, GSTATES, GRATES;
         var GYEAR = 1997;
     $(document).ready(function(){
+
+            function updateYear(){
+                GYEAR = $( "#slider" ).slider( "value" );
+                $("#main-title").text("Crime in Mexico "+$( "#slider" ).slider( "value" ));
+                ready(GERROR, GSTATES, GRATES);
+                if (GYEAR==2014)
+                    $("#main-title").append("*");
+
+            }
          //slider         
             $( "#slider" ).slider({
-              value:1997,
               min: 1997,
               max: 2014,
               step: 1,
-              slide: function( event, ui ) {
-                GYEAR = val( ui.value );
-                $("#main-title").text("Crime in Mexico "+$( "#slider" ).slider( "value" ));
-                //ready(GERROR, GSTATES, GRATES);
-
-                //if (GYEAR==2014)
-                    //$("#main-title").text("Crime in Mexico "+GYEAR+"*");
-              }
+              value:1997,
+              slide: updateYear,
+              change: updateYear
             });
-            
           });
 
         </script>
@@ -107,7 +109,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
