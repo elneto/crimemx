@@ -95,7 +95,9 @@
 	    	padding: 1em;
 	    	background-color: #EEE;
 	    	padding: 1em;
-    		margin-right: 5em;
+    		margin-right: 4em;
+    		padding: 0.75em 0.2em;
+    		width: 19%;
 	    }
 
 	    #list-states ol {

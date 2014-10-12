@@ -33,8 +33,9 @@
                 .translate([width / 2, height / 2])
                 ;
 
-      var radius = d3.scale.sqrt()
-          .range([0, 54]);
+      var radius = d3.scale.sqrt() //values for the square sizes
+          .domain([0, 110.71])
+          .range([0, 58]);
 
       var force = d3.layout.force()
           .charge(0)
@@ -49,7 +50,6 @@
 
       var xSlider = d3.time.scale()
           .domain([new Date(1997, 0, 1), new Date(2014, 0, 1)])
-          //.domain([1997,2014])
           .range([0, 820]);
 
       var xAxis = d3.svg.axis()
@@ -61,14 +61,14 @@
           .attr("height", "50px");
 
       sliderSVG.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(12," + 2 + ")") //separation from slider
-        .call(xAxis)
-      .selectAll("text")
-        .attr("y", 0)
-        .attr("x", 0)
-        .attr("dy", "1.8em")
-        .style("text-anchor", "middle");
+          .attr("class", "x axis")
+          .attr("transform", "translate(12," + 2 + ")") //separation from slider
+          .call(xAxis)
+        .selectAll("text")
+          .attr("y", 0)
+          .attr("x", 0)
+          .attr("dy", "1.8em")
+          .style("text-anchor", "middle");
 
       queue()
         .defer(d3.json, "json/mx-state-centroids.json")
@@ -77,6 +77,7 @@
 
       function ready(error, states, rates) {
 
+        //the global vars are updated to have access to the data pulled by the json in d3's format
         GERROR = error;
         GSTATES = states;
         GRATES = rates;
@@ -84,7 +85,6 @@
 
         var rankingPerYear = [];
       
-        radius.domain([0, 110.71]);
         var colorFn = chroma.scale([colLow, colHi]).domain([0,75]);
 
         var nodes = states
@@ -137,6 +137,7 @@
           return b.value - a.value;
         })
 
+        //enter list
         ol.selectAll("li")
             .data(rankingPerYear)
             .enter()
@@ -144,13 +145,13 @@
             .classed("li-background", true)
             .style("width", function(d) { return d.value*2 +"px" } )
             .text(function(d) { return d.state+" "+d.value; });
-        
-
+        //update list
         ol.selectAll("li")
             .data(rankingPerYear)
             .style("width", function(d) { return d.value*2 +"px" } )
             .text(function(d) { return d.state+" "+d.value; });
 
+        //all below is for the force layout
         function tick(e) {
           node.each(gravity(e.alpha * .1))
               .each(collide(.2))
