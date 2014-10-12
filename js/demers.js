@@ -1,6 +1,8 @@
       //global var that stores the rates
       var ratesNationalHomicides;
       var GNODE;
+      var updateMap;
+      var isMapLoaded = false;
 
       //year must be between 1997 and 2014
       function rateById(year, id)
@@ -123,7 +125,7 @@
                 return d.state +" "+ d.value; });
         //for the update() section
         node
-            .on('mouseover', function(d) { console.log(d);})
+            //.on('mouseover', function(d) { console.log(d);})
             .attr("style", function(d) { return "fill:"+d.color+";"; })
             .transition().attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
@@ -132,6 +134,10 @@
                 return d.state +" "+ d.value; });
         
         GNODE = node; //make it available globally
+        if (isMapLoaded){
+            updateMap();
+        }
+          
 
         //order rankingPerYear
         rankingPerYear.sort(function(a, b) { 
@@ -201,8 +207,10 @@
       }; //end ready (d3.json)
 
   //add thumbnail map
+
   var opts = { padding: 0 };
-  kartograph.map('#map').loadMap('svg/MEX.svg', mapLoaded, opts);
+  var map = kartograph.map('#map');
+  map.loadMap('svg/MEX.svg', mapLoaded, opts);
 
   function mapLoaded(map) {
       map.addLayer('admin1', {
@@ -234,5 +242,24 @@
               path.animate({ fill: '#f6f4f2' }, 1000);
           }
       });
+
+      updateMap = function() {
+          //console.log(map.__proto__.getLayer('admin1'));
+          map.getLayer('admin1').style('fill', 
+                function(de, path) { 
+                var d = de;
+                var col = "#00ff00";
+                $.each(GNODE[0], function(index, nodo) {
+                    if (d.name === nodo.__data__.state) {
+                      col = nodo.__data__.color;
+                      }
+                  })
+                return col; 
+                }
+            );
+      }
+      isMapLoaded = true;
     }
+
+  
 
