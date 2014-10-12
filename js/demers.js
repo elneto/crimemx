@@ -212,21 +212,24 @@
   var map = kartograph.map('#map');
   map.loadMap('svg/MEX.svg', mapLoaded, opts);
 
+  function getColorFromNode(name){      
+      var color;
+      $.each(GNODE[0], function(index, nodo) {
+          if (name == nodo.__data__.state) {
+            color = nodo.__data__.color;
+            return false; //to break the .each
+            }
+        })
+      return color;
+  }
+
   function mapLoaded(map) {
       map.addLayer('admin1', {
           styles: {
               stroke: '#aaa',
-              fill: function(de, path) { 
-                var d = de;
-                var col = "#00ff00";
-                $.each(GNODE[0], function(index, nodo) {
-                    if (d.name === nodo.__data__.state) {
-                      col = nodo.__data__.color;
-                      }
-                  })
-                return col; 
+              fill: function(d) { 
+                return getColorFromNode(d.name);
                 }
-              
           },
           mouseenter: function(d, path) {
               path.attr('fill', Math.random() < 0.5 ? '#c04' : '#04c');
@@ -246,15 +249,8 @@
       updateMap = function() {
           //console.log(map.__proto__.getLayer('admin1'));
           map.getLayer('admin1').style('fill', 
-                function(de, path) { 
-                var d = de;
-                var col = "#00ff00";
-                $.each(GNODE[0], function(index, nodo) {
-                    if (d.name === nodo.__data__.state) {
-                      col = nodo.__data__.color;
-                      }
-                  })
-                return col; 
+                function(d) { 
+                return getColorFromNode(d.name);
                 }
             );
       }
