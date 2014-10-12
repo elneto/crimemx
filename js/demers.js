@@ -252,7 +252,9 @@
                 function(d) { 
                 return getValueFromNode(d.name, 'color');
                 }
-            );
+            ).tooltips(function(d) {
+              return [d.name, getValueFromNode(d.name, 'value') + ' homicides per 100,000 people'];
+              });
       }
       isMapLoaded = true;
     }
