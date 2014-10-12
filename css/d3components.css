@@ -3,19 +3,30 @@
 			/*width:1200px;*/
 			height: 650px;
 		}
-		#map, #demers {
+		#demers {
 		    margin-left: -7em;
 		    margin-top: -3.5em;
 		    width:930px;
 		    height: 650px;
 		    float: left;
+		    position: relative;
 	    }
+
+	    #map {
+	    	position: absolute;
+	    	bottom: 0;
+	    	left: 0;
+	    	display: block;
+	    	width: 250px;
+	    	height: 200px;
+	    }
+		
+		/*TODO: clean the unused chart css*/;	
 		#chart{
 			width: 300px;
 			height: 650px;
 			float: left;
 		}
-
 
 		.bar {
 		  fill: #481B18;
@@ -30,7 +41,7 @@
 		  fill: white;
 		  font: 15px sans-serif;
 		}
-
+		/*TODO: clean the unused chart css*/;
 
 		.axis {
 		  font: 11px sans-serif;
@@ -79,7 +90,7 @@
 
 	    #slider{
 	    	padding: 0;
-	    	margin-left: 12px;
+	    	margin-left: 14px;
 	    	width: 820px;
 	    }
 	    #slider-label{

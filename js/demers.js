@@ -17,9 +17,6 @@
       var colHi = chroma.hex("rgb(72,27,24)"),
           colLow = chroma.hex("#ebe6e5");
           
-
-      
-
       var margin = {top: 0, right: 0, bottom: 0, left: 0},
           width = 960 - margin.left - margin.right,
           height = 700 - margin.top - margin.bottom,
@@ -62,7 +59,7 @@
 
       sliderSVG.append("g")
           .attr("class", "x axis")
-          .attr("transform", "translate(12," + 2 + ")") //separation from slider
+          .attr("transform", "translate(14," + 2 + ")") //separation from slider
           .call(xAxis)
         .selectAll("text")
           .attr("y", 0)
@@ -198,4 +195,23 @@
           };
         } //end function collide
       }; //end ready (d3.json)
+
+  //add thumbnail map
+  var opts = { padding: 0 };
+  kartograph.map('#map').loadMap('svg/MEX.svg', mapLoaded, opts);
+
+  function mapLoaded(map) {
+      map.addLayer('admin1', {
+          styles: {
+              stroke: '#aaa',
+              fill: '#f6f4f2'
+          },
+          mouseenter: function(d, path) {
+              path.attr('fill', Math.random() < 0.5 ? '#c04' : '#04c');
+          },
+          mouseleave: function(d, path) {
+              path.animate({ fill: '#f6f4f2' }, 1000);
+          }
+      });
+    }
 
