@@ -1,7 +1,7 @@
 #crimemx
 Crime in Mexico Visualization using D3 and topojson
 
-Demo (work in progress): <a href="http://thesis.ernestoaraiza.com/crimemx/"><img src="http://thesis.ernestoaraiza.com/images/t20141011.png" align="left" hspace="10" vspace="6" width="400"></a>
+<a href="http://thesis.ernestoaraiza.com/crimemx/"><img src="http://thesis.ernestoaraiza.com/images/t20141011.png" align="left" hspace="10" vspace="6" width="400"></a>
 
 SNSP visualization with D3
 
