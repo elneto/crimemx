@@ -1,3 +1,4 @@
+      //global var that stores the rates
       var ratesNationalHomicides;
 
       //year must be between 1997 and 2014
@@ -42,10 +43,14 @@
           .attr("width", width)
           .attr("height", height);
 
+      var ol = d3.select("#list-states").append("ol");
+
       queue()
         .defer(d3.json, "json/mx-state-centroids.json")
         .defer(d3.csv, "csv/D3-national-homicide-rates.csv")
         .await(ready);
+
+
 
       function ready(error, states, rates) {
 
@@ -53,6 +58,8 @@
         GSTATES = states;
         GRATES = rates;
         ratesNationalHomicides = rates;
+
+        var rankingPerYear = [];
       
         radius.domain([0, 110.71]);
         var colorFn = chroma.scale([colLow, colHi]).domain([0,80]);
@@ -90,14 +97,31 @@
           	.attr("style", function(d) { return "fill:"+d.color+";"; })
             .attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
-            .append("title").text(function(d) { return d.state +" "+ d.value; });
+            .append("title").text(function(d) { 
+                //rankingPerYear.push({state:d.state,value:d.value});
+                return d.state +" "+ d.value; });
         //for the update() section
         node
             .attr("style", function(d) { return "fill:"+d.color+";"; })
             .transition().attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
-            .select("title").text(function(d) { return d.state +" "+ d.value; });
-            ;
+            .select("title").text(function(d) { 
+                rankingPerYear.push({state:d.state,value:d.value});
+                return d.state +" "+ d.value; });
+              
+        //order rankingPerYear
+        rankingPerYear.sort(function(a, b) { 
+          return b.value - a.value;
+        })
+
+        ol.selectAll("li")
+            .data(rankingPerYear)
+            .enter().append("li")
+            .text(function(d) { return d. state });
+
+        ol.selectAll("li")
+            .data(rankingPerYear)
+            .text(function(d) { return d. state });
 
         function tick(e) {
           node.each(gravity(e.alpha * .1))

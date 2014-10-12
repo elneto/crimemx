@@ -76,6 +76,20 @@
 		    padding-left: 5px;
 		    width: 830px;
 	    }
+
+	    #list-states {
+	    	float: right;
+	    	width: 16%;
+	    	display: block;
+	    	padding: 1em;
+	    	background-color: #EEE;
+	    	padding: 1em;
+    		margin-right: 5em;
+	    }
+
+	    #list-states ol {
+    		text-align: left;
+		}
     
 		/*For choropleth steps*/
 		.q0-9 { fill:rgb(235,230,229); }
