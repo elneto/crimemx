@@ -23,7 +23,11 @@
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="js/ie-emulation-modes-warning.js"></script>
+
+    <link rel="stylesheet" href="css/jquery-ui.min.css" />
     <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/chroma.min.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -34,6 +38,29 @@
 
   <body>
 
+    <script type="text/javascript">
+        var GERROR, GSTATES, GRATES;
+        var GYEAR = 1997;
+    $(document).ready(function(){
+         //slider         
+            $( "#slider" ).slider({
+              value:1997,
+              min: 1997,
+              max: 2014,
+              step: 1,
+              slide: function( event, ui ) {
+                GYEAR = val( ui.value );
+                $("#main-title").text("Crime in Mexico "+$( "#slider" ).slider( "value" ));
+                //ready(GERROR, GSTATES, GRATES);
+
+                //if (GYEAR==2014)
+                    //$("#main-title").text("Crime in Mexico "+GYEAR+"*");
+              }
+            });
+            
+          });
+
+        </script>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -43,7 +70,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Crime in Mexico</a>
+          <a class="navbar-brand" href="#">Crime in Mexico </a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -58,27 +85,13 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1>Crime in Mexico</h1>
+        <h1 id="main-title">Crime in Mexico 1997</h1>
         <p class="lead">Select a state or click on the timeline.</p>
         <div id="top_part">   
               <div id="demers"></div>
+              <div id="slider"></div>
               <!--<div id="chart"></div>-->
         </div>
-        <script type="text/javascript">
-        var GERROR, GSTATES, GRATES;
-        var GYEAR = 1997;
-         $(function() {
-            $( "#resetButton" ).click(function() {
-              if (GYEAR<2015)
-                {
-                  GYEAR += 1;
-                  ready(GERROR, GSTATES, GRATES);
-                }
-              
-            });
-          });
-        </script>
-        <button id="resetButton">Advance</button>
         <!--Put geo map TODO <div id="map"></div> -->
 
       </div>

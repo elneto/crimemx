@@ -12,14 +12,10 @@
           return ratesNationalHomicides[year-1996][id];
         }
 
-      function maxYear(year)
-        {
-            console.log(ratesNationalHomicides[+yearCode[year]]);
-            console.log(Math.max(+ratesNationalHomicides[+yearCode[year]]));
-        }
+      var colHi = chroma.hex("rgb(72,27,24)"),
+          colLow = chroma.hex("#ebe6e5");
 
-      var quantize = d3.scale.quantize()
-    	   .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
+      
 
       var margin = {top: 0, right: 0, bottom: 0, left: 0},
           width = 960 - margin.left - margin.right,
@@ -56,26 +52,18 @@
         GERROR = error;
         GSTATES = states;
         GRATES = rates;
-        //console.log(rates);
         ratesNationalHomicides = rates;
-
-        //quantize.domain([0, d3.max(totalByYear.values())]);
-        //radius.domain([0, d3.max(totalByYear.values())]);
-        quantize.domain([0, 110.71]);
+      
         radius.domain([0, 110.71]);
-        //maxYear(2014);
-        //maxYear(2013);
+        var colorFn = chroma.scale([colLow, colHi]).domain([0,80]);
 
         var nodes = states
-            //.filter(function(d) { return !isNaN(valueById[+d.id]); })
             .map(function(d) {
 
               var point = projection([d.geo_longitude,d.geo_latitude])
               	value = rateById(GYEAR, +d.id),
-              	q = quantize(value),
+              	color = colorFn(value),
               	state = d.state;
-              
-              //console.log('Year: '+GYEAR+" value: "+value+' q:'+q);
 
               if (isNaN(value)) throw { name: 'FatalError', message: 'Values for squares are not numbers' };
               return {
@@ -84,7 +72,7 @@
                 r: radius(value),
                 value: value,
                 state: state,
-                q: q
+                color: color
               };
             }); //closes .map
 
@@ -99,13 +87,13 @@
         //the enter() section
         node
             .enter().append("rect")
-          	.attr("class", function(d) { return d.q; })
+          	.attr("style", function(d) { return "fill:"+d.color+";"; })
             .attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
             .append("title").text(function(d) { return d.state +" "+ d.value; });
         //for the update() section
         node
-            .attr("class", function(d) { return d.q; })
+            .attr("style", function(d) { return "fill:"+d.color+";"; })
             .transition().attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
             .select("title").text(function(d) { return d.state +" "+ d.value; });
