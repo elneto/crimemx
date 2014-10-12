@@ -2,6 +2,7 @@
 		#top_part{
 			/*width:1200px;*/
 			height: 650px;
+			margin-top: -8em;
 		}
 		#demers {
 		    margin-left: -7em;
@@ -14,8 +15,8 @@
 
 	    #map {
 	    	position: absolute;
-	    	bottom: 0;
-	    	left: 0;
+	    	bottom: 2em;
+	    	left: 7em;
 	    	display: block;
 	    	width: 250px;
 	    	height: 200px;
@@ -84,7 +85,7 @@
 	
 	    #slider-container{
 		    float: left;
-		    margin-top: 4em;
+		    margin-top: 2em;
 		    width: 820px;
 	    }
 

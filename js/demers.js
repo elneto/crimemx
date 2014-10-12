@@ -207,6 +207,9 @@
       }; //end ready (d3.json)
 
   //add thumbnail map
+// initialize qtip tooltip class
+  $.fn.qtip.defaults.style.classes = 'ui-tooltip-bootstrap';
+  $.fn.qtip.defaults.style.def = false;
 
   var opts = { padding: 0 };
   var map = kartograph.map('#map');
