@@ -13,8 +13,10 @@
           return ratesNationalHomicides[year-1996][id];
         }
 
+      //var colHi = chroma.hex("rgb(72,27,24)"),
       var colHi = chroma.hex("rgb(72,27,24)"),
           colLow = chroma.hex("#ebe6e5");
+          
 
       
 
@@ -62,7 +64,7 @@
         var rankingPerYear = [];
       
         radius.domain([0, 110.71]);
-        var colorFn = chroma.scale([colLow, colHi]).domain([0,80]);
+        var colorFn = chroma.scale([colLow, colHi]).domain([0,75]);
 
         var nodes = states
             .map(function(d) {
@@ -120,13 +122,13 @@
           .append("li")
             .classed("li-background", true)
             .style("width", function(d) { return d.value*2 +"px" } )
-            .text(function(d) { return d.state });
+            .text(function(d) { return d.state+" "+d.value; });
         
 
         ol.selectAll("li")
             .data(rankingPerYear)
             .style("width", function(d) { return d.value*2 +"px" } )
-            .text(function(d) { return d.state });
+            .text(function(d) { return d.state+" "+d.value; });
 
         function tick(e) {
           node.each(gravity(e.alpha * .1))
