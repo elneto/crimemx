@@ -116,12 +116,17 @@
 
         ol.selectAll("li")
             .data(rankingPerYear)
-            .enter().append("li")
-            .text(function(d) { return d. state });
+            .enter()
+          .append("li")
+            .classed("li-background", true)
+            .style("width", function(d) { return d.value*2 +"px" } )
+            .text(function(d) { return d.state });
+        
 
         ol.selectAll("li")
             .data(rankingPerYear)
-            .text(function(d) { return d. state });
+            .style("width", function(d) { return d.value*2 +"px" } )
+            .text(function(d) { return d.state });
 
         function tick(e) {
           node.each(gravity(e.alpha * .1))

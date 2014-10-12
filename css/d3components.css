@@ -90,6 +90,10 @@
 	    #list-states ol {
     		text-align: left;
 		}
+
+		.li-background{
+    		background-color: red;
+		}
     
 		/*For choropleth steps*/
 		.q0-9 { fill:rgb(235,230,229); }
