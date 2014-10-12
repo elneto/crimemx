@@ -122,6 +122,7 @@
                 return d.state +" "+ d.value; });
         //for the update() section
         node
+            .on('mouseover', function(d) { console.log(d);})
             .attr("style", function(d) { return "fill:"+d.color+";"; })
             .transition().attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
@@ -208,6 +209,7 @@
           },
           mouseenter: function(d, path) {
               path.attr('fill', Math.random() < 0.5 ? '#c04' : '#04c');
+              console.log(d);
           },
           mouseleave: function(d, path) {
               path.animate({ fill: '#f6f4f2' }, 1000);
