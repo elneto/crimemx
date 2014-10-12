@@ -215,15 +215,15 @@
   var map = kartograph.map('#map');
   map.loadMap('svg/MEX.svg', mapLoaded, opts);
 
-  function getColorFromNode(name){      
-      var color;
+  function getValueFromNode(name, valName){      
+      var val;
       $.each(GNODE[0], function(index, nodo) {
           if (name == nodo.__data__.state) {
-            color = nodo.__data__.color;
+            val = nodo.__data__[valName];
             return false; //to break the .each
             }
         })
-      return color;
+      return val;
   }
 
   function mapLoaded(map) {
@@ -231,9 +231,12 @@
           styles: {
               stroke: '#aaa',
               fill: function(d) { 
-                return getColorFromNode(d.name);
+                return getValueFromNode(d.name, 'color');
                 }
           },
+          /*tooltips: function(d) {
+              return [d.name, departments[d.id].density + '/km<sup>2</sup>'];
+              }*/
           mouseenter: function(d, path) {
               path.attr('fill', Math.random() < 0.5 ? '#c04' : '#04c');
               /*
@@ -253,7 +256,7 @@
           //console.log(map.__proto__.getLayer('admin1'));
           map.getLayer('admin1').style('fill', 
                 function(d) { 
-                return getColorFromNode(d.name);
+                return getValueFromNode(d.name, 'color');
                 }
             );
       }
