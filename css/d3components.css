@@ -93,6 +93,7 @@
 
 		.li-background{
     		background-color: red;
+    		white-space: nowrap;
 		}
     
 		/*For choropleth steps*/
