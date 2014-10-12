@@ -234,22 +234,16 @@
                 return getValueFromNode(d.name, 'color');
                 }
           },
-          /*tooltips: function(d) {
-              return [d.name, departments[d.id].density + '/km<sup>2</sup>'];
-              }*/
+          tooltips: function(d) {
+              return [d.name, getValueFromNode(d.name, 'value') + ' homicides per 100,000 people'];
+              }
+          /*
           mouseenter: function(d, path) {
               path.attr('fill', Math.random() < 0.5 ? '#c04' : '#04c');
-              /*
-              console.log(d.name);
-              $.each(GNODE[0], function(index, nodo) {
-                  console.log(index +": "+nodo.__data__.state);  
-                  console.log(index +": "+nodo.__data__.color);  
-                  console.log(index +": "+nodo.__data__.value);  
-              });*/
           },
           mouseleave: function(d, path) {
               path.animate({ fill: '#f6f4f2' }, 1000);
-          }
+          }*/
       });
 
       updateMap = function() {
