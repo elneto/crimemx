@@ -134,7 +134,7 @@
             .transition().attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
             .select("title").text(function(d) { 
-                rankingPerYear.push({state:d.state,value:d.value});
+                rankingPerYear.push({state:d.state,value:d.value, id:d.id});
                 return d.state +" "+ d.value; });
         
         GNODE = node; //make it available globally
@@ -142,7 +142,6 @@
             updateMap();
         }
           
-
         //order rankingPerYear
         rankingPerYear.sort(function(a, b) { 
           return b.value - a.value;
@@ -153,6 +152,7 @@
             .data(rankingPerYear)
             .enter()
           .append("li")
+            .attr("id", function(d) { return "idlist-"+d.id; }) //add one id got from states (mx-state-centroids)
             .classed("li-background", true)
             .style("width", function(d) { return d.value*2 +"px" } )
             .text(function(d) { return d.state+" "+d.value; });
@@ -224,22 +224,10 @@
       $.each(GNODE[0], function(index, nodo) {
           if (name == nodo.__data__.state) {
             val = nodo.__data__[valName];
-            //return false; //to break the .each
+            return false; //to break the .each
             }
         })
       return val;
-  }
-
-  function highlightBrotherNode(name){      
-      var index = getValueFromNode(name, 'index');
-      //console.log(index);
-
-      //this is incorrect, what to do instead?
-      //GNODE[0][index].__data__.color = chroma.hex("#ffff00");
-      
-      //update demers
-      //ready(GERROR, GSTATES, GRATES);
-      
   }
 
   function mapLoaded(map) {
@@ -256,17 +244,17 @@
           mouseenter: function(d, path) {
               mapLastStateColor = path.attrs.fill; //saves the last color;
               path.attr('fill', '#ff0');
-              //highlightBrotherNode(d.name);
               d3.select("#idn-" + getValueFromNode(d.name, 'id')).style("fill", "yellow");
+              d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", "yellow").style("font-weight", "bold");
           }, 
           mouseleave: function(d, path) {
               path.attr('fill', mapLastStateColor); //restores the last color
               d3.select("#idn-" + getValueFromNode(d.name, 'id')).style("fill", mapLastStateColor);
+              d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", "red").style("font-weight", "normal");
           }
       });
 
       updateMap = function() {
-          //console.log(map.__proto__.getLayer('admin1'));
           map.getLayer('admin1').style('fill', 
                 function(d) { 
                 return getValueFromNode(d.name, 'color');
