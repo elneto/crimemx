@@ -129,7 +129,14 @@
                 return d.state +" "+ d.value; });
         //for the update() section
         node
-            //.on('mouseover', function(d) { console.log(d);})
+            .on('mouseover', function(d) { 
+                d3.select("#idn-" + d.id).style("fill", "yellow");
+                d3.select("#idlist-" + d.id).style("background-color", "yellow").style("font-weight", "bold");
+            })
+            .on('mouseleave', function(d) { 
+                d3.select("#idlist-" + d.id).style("background-color", "red").style("font-weight", "normal");
+                d3.select("#idn-" + d.id).style("fill", d.color);
+            })
             .attr("style", function(d) { return "fill:"+d.color+";"; })
             .transition().attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
