@@ -3,6 +3,7 @@
       var GNODE;
       var updateMap;
       var isMapLoaded = false;
+      var mapLastStateColor;
 
       //year must be between 1997 and 2014
       function rateById(year, id)
@@ -71,7 +72,7 @@
           .style("text-anchor", "middle");
 
       queue()
-        .defer(d3.json, "json/mx-state-centroids.json")
+        .defer(d3.json, "json/mx-state-centroids.json") //states
         .defer(d3.csv, "csv/D3-national-homicide-rates.csv")
         .await(ready);
 
@@ -93,7 +94,8 @@
               var point = projection([d.geo_longitude,d.geo_latitude])
               	value = rateById(GYEAR, +d.id),
               	color = colorFn(value),
-              	state = d.state;
+              	state = d.state,
+                id = +d.id;
 
               if (isNaN(value)) throw { name: 'FatalError', message: 'Values for squares are not numbers' };
               return {
@@ -102,7 +104,8 @@
                 r: radius(value),
                 value: value,
                 state: state,
-                color: color
+                color: color,
+                id: id
               };
             }); //closes .map
 
@@ -117,6 +120,7 @@
         //the enter() section
         node
             .enter().append("rect")
+            .attr("id", function(d) { return "idn-"+d.id; }) //add one id got from states (mx-state-centroids)
           	.attr("style", function(d) { return "fill:"+d.color+";"; })
             .attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
@@ -220,10 +224,22 @@
       $.each(GNODE[0], function(index, nodo) {
           if (name == nodo.__data__.state) {
             val = nodo.__data__[valName];
-            return false; //to break the .each
+            //return false; //to break the .each
             }
         })
       return val;
+  }
+
+  function highlightBrotherNode(name){      
+      var index = getValueFromNode(name, 'index');
+      //console.log(index);
+
+      //this is incorrect, what to do instead?
+      //GNODE[0][index].__data__.color = chroma.hex("#ffff00");
+      
+      //update demers
+      //ready(GERROR, GSTATES, GRATES);
+      
   }
 
   function mapLoaded(map) {
@@ -236,14 +252,17 @@
           },
           tooltips: function(d) {
               return [d.name, getValueFromNode(d.name, 'value') + ' homicides per 100,000 people'];
-              }
-          /*
+              },
           mouseenter: function(d, path) {
-              path.attr('fill', Math.random() < 0.5 ? '#c04' : '#04c');
-          },
+              mapLastStateColor = path.attrs.fill; //saves the last color;
+              path.attr('fill', '#ff0');
+              //highlightBrotherNode(d.name);
+              d3.select("#idn-" + getValueFromNode(d.name, 'id')).style("fill", "yellow");
+          }, 
           mouseleave: function(d, path) {
-              path.animate({ fill: '#f6f4f2' }, 1000);
-          }*/
+              path.attr('fill', mapLastStateColor); //restores the last color
+              d3.select("#idn-" + getValueFromNode(d.name, 'id')).style("fill", mapLastStateColor);
+          }
       });
 
       updateMap = function() {
