@@ -137,8 +137,10 @@
                 d3.select("#idn-" + d.id).style("fill", "yellow");
                 d3.select("#idlist-" + d.id).style("background-color", "yellow").style("font-weight", "bold");
             })
-             .on('mouseenter', function(d) { 
-                showTooltip(d.state, d.value, window.event.clientX, window.event.clientY);
+             .on('mouseenter', function(d) {
+                //console.log(this.__data__.x); 
+                //console.log(this.width.animVal.value); 
+                showTooltip(d.state, d.value, this.__data__.x+this.width.animVal.value, this.__data__.y);
             })
             //.on("mousemove", function(){return myTooltip.style("top", (event.clientY)+"px").style("left",(event.clientX)+"px");})
             .on('mouseleave', function(d) { 
