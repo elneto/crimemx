@@ -149,9 +149,9 @@
             updateMap();
         }
             
-        //order by value (crime rate) estadosArray
+        //order by state (descending)
         estadosArray.sort(function(a, b) { 
-          return a.state - b.state;
+          return a.state < b.state ? -1 : a.state > b.state ? 1 : 0;
         });
 
         //enter list
