@@ -18,8 +18,8 @@
         }
 
       //var colHi = chroma.hex("rgb(72,27,24)"),
-      var colHi = chroma.hex("rgb(72,27,24)"),
-          colLow = chroma.hex("#ebe6e5");
+      var colHi = chroma.hex("#711a26"),
+          colLow = chroma.hex("#eeeeee");
           
       var margin = {top: 0, right: 0, bottom: 0, left: 0},
           width = 960 - margin.left - margin.right,
@@ -134,14 +134,14 @@
                 d3.select("#idlist-" + d.id).style("background-color", "yellow").style("font-weight", "bold");
             })
             .on('mouseleave', function(d) { 
-                d3.select("#idlist-" + d.id).style("background-color", "red").style("font-weight", "normal");
+                d3.select("#idlist-" + d.id).style("background-color", "#711a26").style("font-weight", "normal");
                 d3.select("#idn-" + d.id).style("fill", d.color);
             })
             .attr("style", function(d) { return "fill:"+d.color+";"; })
             .transition().attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
-            .select("title").text(function(d) { 
-                rankingPerYear.push({state:d.state,value:d.value, id:d.id});
+            .select("title").text(function(d) {
+                //rankingPerYear.push({state:d.state,value:d.value, id:d.id}); 
                 return d.state +" "+ d.value; });
         
         GNODE = node; //make it available globally
@@ -149,10 +149,15 @@
             updateMap();
         }
           
-        //order rankingPerYear
+        var datosEstados = svg.selectAll("rect").data();
+         $.each(datosEstados, function(i, d) {
+            rankingPerYear.push({state:d.state,value:d.value, id:d.id});
+         });
+            
+        //order by value (crime rate) rankingPerYear
         rankingPerYear.sort(function(a, b) { 
           return b.value - a.value;
-        })
+        });
 
         //enter list
         ol.selectAll("li")
@@ -161,12 +166,12 @@
           .append("li")
             .attr("id", function(d) { return "idlist-"+d.id; }) //add one id got from states (mx-state-centroids)
             .classed("li-background", true)
-            .style("width", function(d) { return d.value*2 +"px" } )
+            .transition().style("width", function(d) { return d.value*2 +"px" } )
             .text(function(d) { return d.state+" "+d.value; });
         //update list
         ol.selectAll("li")
             .data(rankingPerYear)
-            .style("width", function(d) { return d.value*2 +"px" } )
+            .transition().style("width", function(d) { return d.value*2 +"px" } )
             .text(function(d) { return d.state+" "+d.value; });
 
         //all below is for the force layout
@@ -257,7 +262,7 @@
           mouseleave: function(d, path) {
               path.attr('fill', mapLastStateColor); //restores the last color
               d3.select("#idn-" + getValueFromNode(d.name, 'id')).style("fill", mapLastStateColor);
-              d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", "red").style("font-weight", "normal");
+              d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", "#711a26").style("font-weight", "normal");
           }
       });
 
