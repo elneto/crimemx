@@ -17,10 +17,11 @@
           return ratesNationalHomicides[year-1996][id];
         }
 
-      //var colHi = chroma.hex("rgb(72,27,24)"),
+       //for the colors 
       var colHi = chroma.hex("#711a26"),
           colLow = chroma.hex("#eeeeee");
-          
+      
+      //the SVG main demers map    
       var margin = {top: 0, right: 0, bottom: 0, left: 0},
           width = 960 - margin.left - margin.right,
           height = 700 - margin.top - margin.bottom,
@@ -125,17 +126,33 @@
             .attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
             .append("title").text(function(d) { 
-                //estadosArray.push({state:d.state,value:d.value});
                 return d.state +" "+ d.value; });
+
+        //for the tooltip
+        var myTooltip = d3.select("#stateTooltip");
+        var toolTitle = d3.select("#stateTooltip h4");
+        var toolNumber = d3.select("#stpNumber");
+        //deletes the tooltip in case it is still there.
+        myTooltip.style("visibility", "hidden");
+
         //for the update() section
         node
             .on('mouseover', function(d) { 
                 d3.select("#idn-" + d.id).style("fill", "yellow");
                 d3.select("#idlist-" + d.id).style("background-color", "yellow").style("font-weight", "bold");
             })
+             .on('mouseenter', function(d) { 
+                toolTitle.text(d.state);
+                toolNumber.text(d.value);
+                myTooltip.style("top", (window.event.clientY)+"px").style("left",(window.event.clientX)+"px");
+                myTooltip.transition().style("visibility", "visible");
+                //$('#stateTooltip').style("visibility", "visible").fadeIn();
+            })
+            //.on("mousemove", function(){return myTooltip.style("top", (event.clientY)+"px").style("left",(event.clientX)+"px");})
             .on('mouseleave', function(d) { 
                 d3.select("#idlist-" + d.id).style("background-color", "#711a26").style("font-weight", "normal");
                 d3.select("#idn-" + d.id).style("fill", d.color);
+                myTooltip.style("visibility", "hidden");
             })
             .attr("style", function(d) { return "fill:"+d.color+";"; })
             .transition().attr("width", function(d) { return d.r * 2; })
@@ -245,9 +262,9 @@
                 return getValueFromNode(d.name, 'color');
                 }
           },
-          tooltips: function(d) {
-              return [d.name, getValueFromNode(d.name, 'value') + ' homicides per 100,000 people'];
-              },
+          //tooltips: function(d) {
+              //return [d.name, getValueFromNode(d.name, 'value') + ' homicides per 100,000 people'];
+              //},
           mouseenter: function(d, path) {
               mapLastStateColor = path.attrs.fill; //saves the last color;
               path.attr('fill', '#ff0');
@@ -266,9 +283,9 @@
                 function(d) { 
                 return getValueFromNode(d.name, 'color');
                 }
-            ).tooltips(function(d) {
-              return [d.name, getValueFromNode(d.name, 'value') + ' homicides per 100,000 people'];
-              });
+            )//.tooltips(function(d) {
+              //return [d.name, getValueFromNode(d.name, 'value') + ' homicides per 100,000 people'];
+              //});
       }
       isMapLoaded = true;
     }

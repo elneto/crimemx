@@ -43,8 +43,8 @@
   <body>
     
     <script type="text/javascript">
-        var GERROR, GSTATES, GRATES;
-        var GYEAR = 2014;
+    var GERROR, GSTATES, GRATES;
+    var GYEAR = 2014;
     $(document).ready(function(){
 
             function updateYear(){
@@ -64,9 +64,9 @@
               slide: updateYear,
               change: updateYear
             });
-          });
 
-        </script>
+    });
+    </script>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -122,5 +122,14 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <!-- A tool tip -->
+<div id="stateTooltip">
+    <h4>
+    State
+    </h4>
+    <p>
+    <span id="stpNumber">30</span> homicides per 100,000 people
+    </p>
+</div>
   </body>
 </html>

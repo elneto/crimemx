@@ -1,133 +1,141 @@
 /*For Axis*/
-		#top_part{
-			min-width:1140px;
-			height: 650px;
-			margin-top: -8em;
-		}
-		#demers {
-		    margin-left: -7em;
-		    margin-top: -3.5em;
-		    width:930px;
-		    height: 650px;
-		    float: left;
-		    position: relative;
-	    }
+#top_part{
+	min-width:1140px;
+	height: 650px;
+	margin-top: -8em;
+}
+#demers {
+    margin-left: -7em;
+    margin-top: -3.5em;
+    width:930px;
+    height: 650px;
+    float: left;
+    position: relative;
+}
 
-	    #map {
-	    	position: absolute;
-	    	bottom: 2em;
-	    	left: 7em;
-	    	display: block;
-	    	width: 250px;
-	    	height: 200px;
-	    }
-		
-		/*TODO: clean the unused chart css*/;	
-		#chart{
-			width: 300px;
-			height: 650px;
-			float: left;
-		}
+#map {
+	position: absolute;
+	bottom: 2em;
+	left: 7em;
+	display: block;
+	width: 250px;
+	height: 200px;
+}
 
-		.bar {
-		  fill: #481B18;
-		}
+/*TODO: clean the unused chart css*/;	
+#chart{
+	width: 300px;
+	height: 650px;
+	float: left;
+}
 
-		.bar:hover {
-		  fill: #99807F;
-		  /*border: 2px solid #99807F;*/
-		}
+.bar {
+  fill: #481B18;
+}
 
-		.bar_num {
-		  fill: white;
-		  font: 15px sans-serif;
-		}
-		/*TODO: clean the unused chart css*/;
+.bar:hover {
+  fill: #99807F;
+  /*border: 2px solid #99807F;*/
+}
 
-		.axis {
-		  font: 11px sans-serif;
-		}
+.bar_num {
+  fill: white;
+  font: 15px sans-serif;
+}
+/*TODO: clean the unused chart css*/;
 
-		.axis path,
-		.axis line {
-		  fill: none;
-		  stroke: #000;
-		  shape-rendering: crispEdges;
-		}
+.axis {
+  font: 11px sans-serif;
+}
 
-		.x.axis path {
-		}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
 
-		/*For Demers*/
-	    rect {
-	    fill: #eee;
-	    stroke: #000;
-	    stroke-width: 1.5px;
-	    }
+.x.axis path {
+}
 
-	    /*For geo maps*/
-		.states {
-		  fill: none;
-		}
+/*For Demers*/
+rect {
+fill: #eee;
+stroke: #000;
+stroke-width: 1.5px;
+}
 
-		.states :hover {
-		  fill: orange;
-		}
+/*For geo maps*/
+.states {
+  fill: none;
+}
 
-		.state-boundary {
-		  fill: none;
-		  stroke: #fff;
-		  stroke-opacity: .25;
-		  stroke-width: .5px;
-		  pointer-events: none;
-		}
+.states :hover {
+  fill: orange;
+}
 
+.state-boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-opacity: .25;
+  stroke-width: .5px;
+  pointer-events: none;
+}
+
+
+#slider-container{
+    float: left;
+    margin-top: 2em;
+    width: 820px;
+}
+
+#slider{
+	padding: 0;
+	margin-left: 14px;
+	width: 820px;
+}
+#slider-label{
+	padding: 0;
+	width: 820px;
 	
-	    #slider-container{
-		    float: left;
-		    margin-top: 2em;
-		    width: 820px;
-	    }
+}
 
-	    #slider{
-	    	padding: 0;
-	    	margin-left: 14px;
-	    	width: 820px;
-	    }
-	    #slider-label{
-	    	padding: 0;
-	    	width: 820px;
-	    	
-	    }
+#list-states {
+	float: right;
+	width: 16%;
+	display: block;
+	padding: 1em;
+	background-color: #EEE;
+	padding: 1em;
+	margin-right: 4em;
+	padding: 0.75em 0.2em;
+	width: 19%;
+}
 
-	    #list-states {
-	    	float: right;
-	    	width: 16%;
-	    	display: block;
-	    	padding: 1em;
-	    	background-color: #EEE;
-	    	padding: 1em;
-    		margin-right: 4em;
-    		padding: 0.75em 0.2em;
-    		width: 19%;
-	    }
+#list-states ol {
+	text-align: left;
+}
 
-	    #list-states ol {
-    		text-align: left;
-		}
+.li-background{
+	background-color: #711a26;
+	white-space: nowrap;
+}
 
-		.li-background{
-    		background-color: #711a26;
-    		white-space: nowrap;
-		}
-    
-		/*For choropleth steps*/
-		.q0-9 { fill:rgb(235,230,229); }
-		.q1-9 { fill:rgb(214,204,204); }
-		.q2-9 { fill:rgb(194,179,178); }
-		.q3-9 { fill:rgb(174,154,152); }
-		.q4-9 { fill:rgb(153,128,127); }
-		.q5-9 { fill:rgb(133,103,101); }
-		.q6-9 { fill:rgb(113,78,75); }
-		.q7-9 { fill:rgb(92,52,50); }
-		.q8-9 { fill:rgb(72,27,24); }
+/*Tooltip*/
+#stateTooltip{
+	position: absolute;
+	z-index: 99999;
+	visibility: hidden;
+	border: 1px solid #000;
+	background-color:#fff;
+	padding: 0.1em 1em;
+	width:10em;
+	display: block;
+	box-shadow: 5px 5px 10px #BBBBBB;
+}
+#stateTooltip h4{
+	
+}
+#stpNumber {
+	font-weight: bold;
+}	
