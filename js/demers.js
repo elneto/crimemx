@@ -84,7 +84,7 @@
         GRATES = rates;
         ratesNationalHomicides = rates;
 
-        var rankingPerYear = [];
+        var estadosArray = [];
       
         var colorFn = chroma.scale([colLow, colHi]).domain([0,75]);
 
@@ -125,7 +125,7 @@
             .attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
             .append("title").text(function(d) { 
-                //rankingPerYear.push({state:d.state,value:d.value});
+                //estadosArray.push({state:d.state,value:d.value});
                 return d.state +" "+ d.value; });
         //for the update() section
         node
@@ -141,27 +141,22 @@
             .transition().attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
             .select("title").text(function(d) {
-                //rankingPerYear.push({state:d.state,value:d.value, id:d.id}); 
+                estadosArray.push({state:d.state,value:d.value, id:d.id}); 
                 return d.state +" "+ d.value; });
         
         GNODE = node; //make it available globally
         if (isMapLoaded){
             updateMap();
         }
-          
-        var datosEstados = svg.selectAll("rect").data();
-         $.each(datosEstados, function(i, d) {
-            rankingPerYear.push({state:d.state,value:d.value, id:d.id});
-         });
             
-        //order by value (crime rate) rankingPerYear
-        rankingPerYear.sort(function(a, b) { 
-          return b.value - a.value;
+        //order by value (crime rate) estadosArray
+        estadosArray.sort(function(a, b) { 
+          return a.state - b.state;
         });
 
         //enter list
         ol.selectAll("li")
-            .data(rankingPerYear)
+            .data(estadosArray, function(d) { return d.id; })
             .enter()
           .append("li")
             .attr("id", function(d) { return "idlist-"+d.id; }) //add one id got from states (mx-state-centroids)
@@ -170,7 +165,7 @@
             .text(function(d) { return d.state+" "+d.value; });
         //update list
         ol.selectAll("li")
-            .data(rankingPerYear)
+            .data(estadosArray, function(d) { return d.id; }) //adds a key function
             .transition().style("width", function(d) { return d.value*2 +"px" } )
             .text(function(d) { return d.state+" "+d.value; });
 
