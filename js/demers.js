@@ -134,13 +134,13 @@
 
         //for the update() section
         node
+            .on('mouseenter', function(d) {
+                borderStateGeoMap(d.state, '#000000');
+                showTooltip(d.state, d.value, this.__data__.x, this.__data__.y);
+            })
             .on('mouseover', function(d) { 
                 d3.select("#idn-" + d.id).style("stroke", "black");
                 d3.select("#idlist-" + d.id).style("background-color", '#C0A0A4').style("font-weight", "bold");
-            })
-             .on('mouseenter', function(d) {
-                showTooltip(d.state, d.value, this.__data__.x, this.__data__.y);
-                borderStateGeoMap(d.state, '#000000');
             })
             .on('mouseleave', function(d) { 
                 d3.select("#idn-" + d.id).style("stroke", d.color);
@@ -177,6 +177,21 @@
         //update list
         ol.selectAll("li")
             .data(estadosArray, function(d) { return d.id; }) //adds a key function
+            .on('mouseenter', function(d) {
+                borderStateGeoMap(d.state, '#000000');
+                showTooltip(d.state, getValueFromNode(d.state, 'value'), +getValueFromNode(d.state, 'x'), getValueFromNode(d.state, 'y'));
+            })
+            .on('mouseover', function(d) { 
+                mapLastStateColor = getValueFromNode(d.state, 'color');
+                d3.select("#idn-" + d.id).style("stroke", "black");
+                d3.select("#idlist-" + d.id).style("background-color", '#C0A0A4').style("font-weight", "bold");
+            })
+            .on('mouseleave', function(d) { 
+                d3.select("#idn-" + d.id).style("stroke", mapLastStateColor);
+                d3.select("#idlist-" + d.id).style("background-color", "#711a26").style("font-weight", "normal");
+                hideTooltip();
+                borderStateGeoMap(d.state, '#ffffff');
+            })
             .transition().style("width", function(d) { return d.value*2 +"px" } )
             .text(function(d) { return d.state+" "+d.value; });
 
