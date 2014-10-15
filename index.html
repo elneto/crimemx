@@ -49,7 +49,7 @@
 
             function updateYear(){
                 GYEAR = $( "#slider" ).slider( "value" );
-                $("#main-title").text("Crime in Mexico "+$( "#slider" ).slider( "value" ));
+                $("#main-title").text("Homicide Rate in Mexico "+$( "#slider" ).slider( "value" ));
                 ready(GERROR, GSTATES, GRATES);
                 if (GYEAR==2014)
                     $("#main-title").append("*");
@@ -91,7 +91,7 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1 id="main-title">Crime in Mexico 2014*</h1>
+        <h1 id="main-title">Homicide Rate in Mexico 2014*</h1>
         <p class="lead">Select a state or click on the timeline.</p>
         <div id="top_part">   
               <div id="list-states"></div>
