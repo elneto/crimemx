@@ -137,6 +137,7 @@
             .on('mouseenter', function(d) {
                 borderStateGeoMap(d.state, '#000000');
                 showTooltip(d.state, d.value, this.__data__.x, this.__data__.y);
+                putMonitos(d.state,d.value);
             })
             .on('mouseover', function(d) { 
                 d3.select("#idn-" + d.id).style("stroke", "black");
@@ -148,6 +149,9 @@
                 hideTooltip();
                 borderStateGeoMap(d.state, '#ffffff');
             })
+            //.on('mousedown', function(d) {
+                //putMonitos(d.value);
+            //})
             .attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
             .transition().attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
@@ -179,7 +183,8 @@
             .data(estadosArray, function(d) { return d.id; }) //adds a key function
             .on('mouseenter', function(d) {
                 borderStateGeoMap(d.state, '#000000');
-                showTooltip(d.state, getValueFromNode(d.state, 'value'), +getValueFromNode(d.state, 'x'), getValueFromNode(d.state, 'y'));
+                showTooltip(d.state, d.value, +getValueFromNode(d.state, 'x'), getValueFromNode(d.state, 'y'));
+                putMonitos(d.state, d.value);
             })
             .on('mouseover', function(d) { 
                 mapLastStateColor = getValueFromNode(d.state, 'color');
@@ -288,6 +293,7 @@
               d3.select("#idn-" + getValueFromNode(d.name, 'id')).style("stroke", "black");  //below lighter color for bar
               d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color",'#C0A0A4').style("font-weight", "bold");
               showTooltip(d.name, getValueFromNode(d.name, 'value'), +getValueFromNode(d.name, 'x'), getValueFromNode(d.name, 'y'));
+              putMonitos(d.name,getValueFromNode(d.name, 'value'));
           }, 
           mouseleave: function(d, path) {
               path.attr('stroke', '#ffffff'); 
@@ -321,5 +327,5 @@
     function hideTooltip(){
         d3.select("#stateTooltip").style("visibility", "hidden");
     }
-  
+
 

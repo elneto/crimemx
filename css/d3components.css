@@ -139,3 +139,33 @@ stroke-width: 1.5px;
 #stpNumber {
 	font-weight: bold;
 }	
+/*humans*/
+#monoContainer{
+	clear: both;
+    float: left;
+    margin-top: -0.5em;
+}
+.monitoInline{
+	clear:both;
+}
+#monitos{
+	clear:both;
+	width: 840px;
+}
+.monitoState{
+	clear: both;
+    color: #aaa;
+    float: none;
+    text-align: left;
+    /*margin-top: 2.5em;
+    line-height: 0.2em;*/
+    line-height: 0.4em;
+    font-size: 17px;
+    padding-top: 3px;
+}
+.human{
+	float:left;
+	height:30px;
+	padding: 2px;
+	fill:#D4C2C5;
+}
