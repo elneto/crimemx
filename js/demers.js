@@ -122,7 +122,8 @@
         node
             .enter().append("rect")
             .attr("id", function(d) { return "idn-"+d.id; }) //add one id got from states (mx-state-centroids)
-          	.attr("style", function(d) { return "fill:"+d.color+";"; })
+          	.attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
+            .attr("stroke", function(d) { return d.color; })
             .attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
             .append("title").text(function(d) { 
@@ -134,21 +135,18 @@
         //for the update() section
         node
             .on('mouseover', function(d) { 
-                d3.select("#idn-" + d.id).style("fill", "yellow");
-                d3.select("#idlist-" + d.id).style("background-color", "yellow").style("font-weight", "bold");
+                d3.select("#idn-" + d.id).style("stroke", "black");
+                d3.select("#idlist-" + d.id).style("background-color", '#C0A0A4').style("font-weight", "bold");
             })
              .on('mouseenter', function(d) {
-                //console.log(this.__data__.x); 
-                //console.log(this.width.animVal.value); 
-                showTooltip(d.state, d.value, this.__data__.x+this.width.animVal.value, this.__data__.y);
+                showTooltip(d.state, d.value, this.__data__.x, this.__data__.y);
             })
-            //.on("mousemove", function(){return myTooltip.style("top", (event.clientY)+"px").style("left",(event.clientX)+"px");})
             .on('mouseleave', function(d) { 
+                d3.select("#idn-" + d.id).style("stroke", d.color);
                 d3.select("#idlist-" + d.id).style("background-color", "#711a26").style("font-weight", "normal");
-                d3.select("#idn-" + d.id).style("fill", d.color);
                 hideTooltip();
             })
-            .attr("style", function(d) { return "fill:"+d.color+";"; })
+            .attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
             .transition().attr("width", function(d) { return d.r * 2; })
             .attr("height", function(d) { return d.r * 2; })
             .select("title").text(function(d) {
@@ -262,21 +260,21 @@
   function mapLoaded(map) {
       map.addLayer('admin1', {
           styles: {
-              stroke: '#aaa',
+              stroke: '#ffffff',
               fill: function(d) { 
                 return getValueFromNode(d.name, 'color');
                 }
           },
           mouseenter: function(d, path) {
               mapLastStateColor = path.attrs.fill; //saves the last color;
-              path.attr('fill', '#ff0');
-              d3.select("#idn-" + getValueFromNode(d.name, 'id')).style("fill", "yellow");
-              d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", "yellow").style("font-weight", "bold");
-              showTooltip(d.name, getValueFromNode(d.name, 'value'), +getValueFromNode(d.name, 'x')+getValueFromRect(d.name,'width'), getValueFromNode(d.name, 'y'));
+              path.attr('stroke', '#000000');
+              d3.select("#idn-" + getValueFromNode(d.name, 'id')).style("stroke", "black");  //below lighter color for bar
+              d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color",'#C0A0A4').style("font-weight", "bold");
+              showTooltip(d.name, getValueFromNode(d.name, 'value'), +getValueFromNode(d.name, 'x'), getValueFromNode(d.name, 'y'));
           }, 
           mouseleave: function(d, path) {
-              path.attr('fill', mapLastStateColor); //restores the last color
-              d3.select("#idn-" + getValueFromNode(d.name, 'id')).style("fill", mapLastStateColor);
+              path.attr('stroke', '#ffffff'); 
+              d3.select("#idn-" + getValueFromNode(d.name, 'id')).style("stroke", mapLastStateColor); //restores the last color
               d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", "#711a26").style("font-weight", "normal");
               hideTooltip();
           }
