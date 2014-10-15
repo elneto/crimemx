@@ -1,7 +1,7 @@
       //global var that stores the rates
       var ratesNationalHomicides;
       var GNODE;
-      var updateMap;
+      var updateMap, borderStateGeoMap;
       var isMapLoaded = false;
       var mapLastStateColor;
 
@@ -140,11 +140,13 @@
             })
              .on('mouseenter', function(d) {
                 showTooltip(d.state, d.value, this.__data__.x, this.__data__.y);
+                borderStateGeoMap(d.state, '#000000');
             })
             .on('mouseleave', function(d) { 
                 d3.select("#idn-" + d.id).style("stroke", d.color);
                 d3.select("#idlist-" + d.id).style("background-color", "#711a26").style("font-weight", "normal");
                 hideTooltip();
+                borderStateGeoMap(d.state, '#ffffff');
             })
             .attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
             .transition().attr("width", function(d) { return d.r * 2; })
@@ -227,7 +229,7 @@
       }; //end ready (d3.json)
 
   //add thumbnail map
-// initialize qtip tooltip class
+  // initialize qtip tooltip class
   $.fn.qtip.defaults.style.classes = 'ui-tooltip-bootstrap';
   $.fn.qtip.defaults.style.def = false;
 
@@ -244,7 +246,7 @@
             }
         })
       return val;
-  }
+  };
 
   function getValueFromRect(name, valName){
       var val;
@@ -255,7 +257,7 @@
             }
         })
       return +val;
-  }
+  };
 
   function mapLoaded(map) {
       map.addLayer('admin1', {
@@ -281,15 +283,19 @@
       });
 
       updateMap = function() {
-          map.getLayer('admin1').style('fill', 
-                function(d) { 
-                return getValueFromNode(d.name, 'color');
-                }
-            )
+          map.getLayer('admin1')
+            .style('fill', function(d) { return getValueFromNode(d.name, 'color');});
       }
-      isMapLoaded = true;
-    }
 
+      borderStateGeoMap = function (name, color){
+          map.getLayer('admin1')
+            .style('stroke', function(d) { if (name==d.name) return color});   
+      }
+
+      isMapLoaded = true;
+    }//finish mapLoaded
+
+    //Tooltip functions
     function showTooltip(state, number, x, y){
         d3.select("#stateTooltip h4").text(state);
         d3.select("#stpNumber").text(number);
