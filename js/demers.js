@@ -144,7 +144,7 @@
             })
             .on('mouseleave', function(d) { 
                 d3.select("#idn-" + d.id).style("stroke", d.color);
-                d3.select("#idlist-" + d.id).style("background-color", "#711a26").style("font-weight", "normal");
+                d3.select("#idlist-" + d.id).style("background-color", "#D4C2C5").style("font-weight", "normal");
                 hideTooltip();
                 borderStateGeoMap(d.state, '#ffffff');
             })
