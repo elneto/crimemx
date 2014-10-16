@@ -18,7 +18,10 @@
         }
 
        //for the colors 
-      var colHi = chroma.hex("#711a26"),
+      //var barColor = "#D4C2C5", barColorOver = '#C0A0A4'; //homicides
+      var barColor = "#D4D4EF", barColorOver = '#E1E1EE'; //kidnap 
+      //var colHi = chroma.hex("#711a26"), //homicides
+      var colHi = chroma.hex("#0000FF"),
           colLow = chroma.hex("#eeeeee");
       
       //the SVG main demers map    
@@ -35,8 +38,9 @@
                 .translate([width / 2, height / 2])
                 ;
 
-      var radius = d3.scale.sqrt() //values for the square sizes
-          .domain([0, 110.71])
+      var radius = d3.scale.sqrt() //values for the square sizes //get the maximum automatically!
+          //.domain([0, 110.71]) //homicides
+          .domain([0, 15]) //kidnap
           .range([0, 58]);
 
       var force = d3.layout.force()
@@ -74,7 +78,8 @@
 
       queue()
         .defer(d3.json, "json/mx-state-centroids.json") //states
-        .defer(d3.csv, "csv/D3-national-homicide-rates.csv")
+        //.defer(d3.csv, "csv/D3-national-homicide-rates.csv")
+        .defer(d3.csv, "csv/d3-kidnap.csv")
         .await(ready);
 
       function ready(error, states, rates) {
@@ -140,16 +145,16 @@
             })
             .on('mouseover', function(d) { 
                 d3.select("#idn-" + d.id).style("stroke", "black");
-                d3.select("#idlist-" + d.id).style("background-color", '#C0A0A4').style("font-weight", "bold");
+                d3.select("#idlist-" + d.id).style("background-color", barColorOver).style("font-weight", "bold");
             })
             .on('mouseleave', function(d) { 
                 d3.select("#idn-" + d.id).style("stroke", d.color);
-                d3.select("#idlist-" + d.id).style("background-color", "#D4C2C5").style("font-weight", "normal");
+                d3.select("#idlist-" + d.id).style("background-color", barColor).style("font-weight", "normal");
                 hideTooltip();
                 borderStateGeoMap(d.state, '#ffffff');
             })
             .attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
-            .transition().attr("width", function(d) { return d.r * 2; })
+            .transition().attr("width", function(d) { return d.r * 2; }) 
             .attr("height", function(d) { return d.r * 2; })
             .select("title").text(function(d) {
                 estadosArray.push({state:d.state,value:d.value, id:d.id}); 
@@ -172,7 +177,8 @@
           .append("li")
             .attr("id", function(d) { return "idlist-"+d.id; }) //add one id got from states (mx-state-centroids)
             .classed("li-background", true)
-            .transition().style("width", function(d) { return d.value*2 +"px" } )
+            //.transition().style("width", function(d) { return d.value*2 +"px" } ) //homicides
+            .transition().style("width", function(d) { return d.value*8 +"px" } ) //kidnap
             .text(function(d) { return d.state+" "+d.value; });
         //update list
         ol.selectAll("li")
@@ -184,15 +190,16 @@
             .on('mouseover', function(d) { 
                 mapLastStateColor = getValueFromNode(d.state, 'color');
                 d3.select("#idn-" + d.id).style("stroke", "black");
-                d3.select("#idlist-" + d.id).style("background-color", '#C0A0A4').style("font-weight", "bold");
+                d3.select("#idlist-" + d.id).style("background-color", barColorOver).style("font-weight", "bold");
             })
             .on('mouseleave', function(d) { 
                 d3.select("#idn-" + d.id).style("stroke", mapLastStateColor);
-                d3.select("#idlist-" + d.id).style("background-color", "#D4C2C5").style("font-weight", "normal");
+                d3.select("#idlist-" + d.id).style("background-color", barColor).style("font-weight", "normal");
                 hideTooltip();
                 borderStateGeoMap(d.state, '#ffffff');
             })
-            .transition().style("width", function(d) { return d.value*2 +"px" } )
+            //.transition().style("width", function(d) { return d.value*2 +"px" } ) //homicides
+            .transition().style("width", function(d) { return d.value*16 +"px" } ) //kidnap
             .text(function(d) { return d.state+" "+d.value; });
 
         //all below is for the force layout
@@ -286,13 +293,13 @@
               mapLastStateColor = path.attrs.fill; //saves the last color;
               path.attr('stroke', '#000000');
               d3.select("#idn-" + getValueFromNode(d.name, 'id')).style("stroke", "black");  //below lighter color for bar
-              d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color",'#C0A0A4').style("font-weight", "bold");
+              d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", barColorOver).style("font-weight", "bold");
               showTooltip(d.name, getValueFromNode(d.name, 'value'), +getValueFromNode(d.name, 'x'), getValueFromNode(d.name, 'y'));
           }, 
           mouseleave: function(d, path) {
               path.attr('stroke', '#ffffff'); 
               d3.select("#idn-" + getValueFromNode(d.name, 'id')).style("stroke", mapLastStateColor); //restores the last color
-              d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", "#D4C2C5").style("font-weight", "normal");
+              d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", barColor).style("font-weight", "normal");
               hideTooltip();
           }
       });

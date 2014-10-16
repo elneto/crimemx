@@ -117,7 +117,8 @@ stroke-width: 1.5px;
 }
 
 .li-background{
-	background-color: #D4C2C5;
+	/*background-color: #D4C2C5;*/ /*homicides*/
+	background-color: #D4D4EF;
 	white-space: nowrap;
 }
 
