@@ -129,8 +129,8 @@
             .attr("id", function(d) { return "idn-"+d.id; }) //add one id got from states (mx-state-centroids)
           	.attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
             .attr("stroke", function(d) { return d.color; })
-            .attr("width", function(d) { return d.r * 2; })
-            .attr("height", function(d) { return d.r * 2; })
+            .attr("width", function(d) { return positive(d.r * 2); })
+            .attr("height", function(d) { return positive(d.r * 2); })
             .append("title").text(function(d) { 
                 return d.state +" "+ d.value; });
 
@@ -154,8 +154,8 @@
                 borderStateGeoMap(d.state, '#ffffff');
             })
             .attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
-            .transition().attr("width", function(d) { return d.r * 2; }) 
-            .attr("height", function(d) { return d.r * 2; })
+            .transition().attr("width", function(d) { return positive(d.r * 2); }) 
+            .attr("height", function(d) { return positive(d.r * 2); })
             .select("title").text(function(d) {
                 estadosArray.push({state:d.state,value:d.value, id:d.id}); 
                 return d.state +" "+ d.value; });
@@ -178,7 +178,7 @@
             .attr("id", function(d) { return "idlist-"+d.id; }) //add one id got from states (mx-state-centroids)
             .classed("li-background", true)
             //.transition().style("width", function(d) { return d.value*2 +"px" } ) //homicides
-            .transition().style("width", function(d) { return d.value*8 +"px" } ) //kidnap
+            .transition().style("width", function(d) { return positive(d.value*16) +"px" } ) //kidnap
             .text(function(d) { return d.state+" "+d.value; });
         //update list
         ol.selectAll("li")
@@ -199,7 +199,7 @@
                 borderStateGeoMap(d.state, '#ffffff');
             })
             //.transition().style("width", function(d) { return d.value*2 +"px" } ) //homicides
-            .transition().style("width", function(d) { return d.value*16 +"px" } ) //kidnap
+            .transition().style("width", function(d) { return positive(d.value*16) +"px" } ) //kidnap
             .text(function(d) { return d.state+" "+d.value; });
 
         //all below is for the force layout
@@ -327,6 +327,10 @@
 
     function hideTooltip(){
         d3.select("#stateTooltip").style("visibility", "hidden");
+    }
+
+    function positive(num){
+        return num <  0 ? 0 : num;
     }
   
 
