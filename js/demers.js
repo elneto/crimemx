@@ -89,7 +89,7 @@
 
       queue()
         .defer(d3.json, "json/mx-state-centroids.json") //states
-        .defer(d3.csv, "csv/d3-extortion.csv")
+        .defer(d3.csv, DATAFILE)
         .await(ready);
 
       function ready(error, states, rates) {
