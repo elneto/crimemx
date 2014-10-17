@@ -34,10 +34,10 @@
       }
 
        //for the colors 
-      var barColor = "#D4C2C5", barColorOver = '#C0A0A4'; //red
-      //var barColor = "#D4D4EF", barColorOver = '#E1E1EE'; //kidnap 
-      var colHi = chroma.hex("#711a26"), //homicides red
-      //var colHi = chroma.hex("#0000FF"),
+      //var barColor = "#D4C2C5", barColorOver = '#C0A0A4'; //homicides
+      var barColor = "#D4D4EF", barColorOver = '#E1E1EE'; //kidnap 
+      //var colHi = chroma.hex("#711a26"), //homicides
+      var colHi = chroma.hex("#0000FF"),
           colLow = chroma.hex("#eeeeee");
       
       //the SVG main demers map    
@@ -89,7 +89,7 @@
 
       queue()
         .defer(d3.json, "json/mx-state-centroids.json") //states
-        .defer(d3.csv, "csv/d3-extortion.csv")
+        .defer(d3.csv, "csv/d3-homicide.csv")
         .await(ready);
 
       function ready(error, states, rates) {
@@ -149,7 +149,9 @@
           	.attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
             .attr("stroke", function(d) { return d.color; })
             .attr("width", function(d) { return positive(d.r * 2); })
-            .attr("height", function(d) { return positive(d.r * 2); });
+            .attr("height", function(d) { return positive(d.r * 2); })
+            .append("title").text(function(d) { 
+                return d.state +" "+ d.value; });
 
         //deletes the tooltip in case it is still there.
         hideTooltip();
@@ -172,18 +174,16 @@
             })
             .attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
             .transition().attr("width", function(d) { return positive(d.r * 2); }) 
-            .attr("height", function(d) { return positive(d.r * 2); });
+            .attr("height", function(d) { return positive(d.r * 2); })
+            .select("title").text(function(d) {
+                estadosArray.push({state:d.state,value:d.value, id:d.id}); 
+                return d.state +" "+ d.value; });
         
         GNODE = node; //make it available globally
         if (isMapLoaded){
             updateMap();
         }
             
-        //var datosEstados = svg.selectAll("rect").data();
-        $.each(svg.selectAll("rect").data(), function(i, d) { //data gets an array with all the state info
-            estadosArray.push({state:d.state,value:d.value, id:d.id});
-         });
-
         //order by state (descending)
         estadosArray.sort(function(a, b) { 
           return a.state < b.state ? -1 : a.state > b.state ? 1 : 0;
