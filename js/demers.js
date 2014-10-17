@@ -1,9 +1,11 @@
       //global var that stores the rates
+      var GERROR, GSTATES, GRATES;
       var ratesNationalHomicides;
       var GNODE;
       var updateMap, borderStateGeoMap;
       var isMapLoaded = false;
       var mapLastStateColor;
+      var MAXRATE=0;
 
       //year must be between 1997 and 2014
       function rateById(year, id)
@@ -16,6 +18,20 @@
 
           return ratesNationalHomicides[year-1996][id];
         }
+
+      function maxValue(arr){
+        var max = 0;
+
+        for (var i=1; i <= 32; i++) { //ignores the total
+          for (var j=1; j <= 18; j++) {
+            if (+arr[j][i]>max){
+              max = +arr[j][i];
+            }
+          }
+        }
+        console.log(max);
+        return +max;
+      }
 
        //for the colors 
       //var barColor = "#D4C2C5", barColorOver = '#C0A0A4'; //homicides
@@ -37,11 +53,6 @@
                 .scale(1700)
                 .translate([width / 2, height / 2])
                 ;
-
-      var radius = d3.scale.sqrt() //values for the square sizes //get the maximum automatically!
-          //.domain([0, 110.71]) //homicides
-          .domain([0, 15]) //kidnap
-          .range([0, 58]);
 
       var force = d3.layout.force()
           .charge(0)
@@ -78,8 +89,7 @@
 
       queue()
         .defer(d3.json, "json/mx-state-centroids.json") //states
-        //.defer(d3.csv, "csv/D3-national-homicide-rates.csv")
-        .defer(d3.csv, "csv/d3-kidnap.csv")
+        .defer(d3.csv, "csv/d3-homicide.csv")
         .await(ready);
 
       function ready(error, states, rates) {
@@ -92,7 +102,16 @@
 
         var estadosArray = [];
       
-        var colorFn = chroma.scale([colLow, colHi]).domain([0,75]);
+        if (MAXRATE==0) {//only calculates it once
+          MAXRATE = maxValue(rates);
+        }
+
+        var radius = d3.scale.sqrt() //values for the square sizes 
+          .domain([0, MAXRATE]) 
+          .range([0, 58]);
+
+        var colorFn = chroma.scale([colLow, colHi])
+            .domain([0, MAXRATE]) 
 
         var nodes = states
             .map(function(d) {
