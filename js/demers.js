@@ -109,7 +109,14 @@
           .range([0, 58]);
 
         var colorFn = chroma.scale([colLow, colHi])
-            .domain([0, MAXRATE]) 
+            .domain([0, MAXRATE]); 
+
+        var colorLabel = chroma.scale(["#333333", "#ffffff"])
+            .domain([0,MAXRATE/2]); 
+
+        var fontSize = d3.scale.linear() //values for the font sizes
+          .domain([-1, MAXRATE]) 
+          .range([7, 41]);
 
         var nodes = states
             .map(function(d) {
@@ -117,6 +124,7 @@
               var point = projection([d.geo_longitude,d.geo_latitude])
               	value = rateById(GYEAR, +d.id),
               	color = colorFn(value),
+                colorlbl = colorLabel(value),
               	state = d.state,
                 id = +d.id;
 
@@ -128,6 +136,7 @@
                 value: value,
                 state: state,
                 color: color,
+                colorlbl: colorlbl,
                 id: id
               };
             }); //closes .map
@@ -140,9 +149,9 @@
         //the enter() section
         var grupos = svg.selectAll("g")
             .data(nodes)
-            .enter().append("g")
-            .attr("x", function(d) { return d.x; })
-            .attr("y", function(d) { return d.y; });
+            .enter().append("g");
+            //.attr("x", function(d) { return d.x; })
+            //.attr("y", function(d) { return d.y; });
 
         var node  = grupos.append("rect")
             .attr("id", function(d) { return "idn-"+d.id; }) //add one id got from states (mx-state-centroids)
@@ -153,8 +162,18 @@
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; });
 
-        //var label = grupos.append("text")
-            //attr("x")
+        var label = grupos.append("text")
+            .attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y; })
+            .attr("dy", "1.8em")
+            .attr("dx", "1.4em")
+            .attr("font-family", "Helvetica")
+            .attr("font-weight", "bold")
+            .attr("font-size", function(d) { return fontSize(d.value); })
+            .attr("fill", function(d) { return d.colorlbl;})
+            .attr("text-anchor", "middle")
+            .text(function(d){return Math.round( d.value * 10 ) / 10;});
+            
 
         //deletes the tooltip in case it is still there.
         hideTooltip();
@@ -180,7 +199,15 @@
             .transition().attr("width", function(d) { return positive(d.r * 2); }) 
             .attr("height", function(d) { return positive(d.r * 2); })
             .attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y; });
+
+        svg.selectAll("g").select("text")
+            .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
+            .attr("font-size", function(d) { return fontSize(d.value); })
+            .attr("fill", function(d) { return d.colorlbl;})
+            .text(function(d){return Math.round( d.value * 10 ) / 10;});
+            ;
         
         GNODE = nodes; //make it available globally
         if (isMapLoaded){
