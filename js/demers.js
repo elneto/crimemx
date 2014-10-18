@@ -179,7 +179,11 @@
             .attr("font-size", function(d) { return fontSize(d.value); })
             .attr("fill", function(d) { return d.colorlbl;})
             .attr("text-anchor", "middle")
-            .text(function(d){return Math.round( d.value * 10 ) / 10;});
+            .text(function(d){
+              var val = Math.round( d.value * 10 ) / 10;
+              if (val != -1)
+                return val;
+            });
             
 
         //deletes the tooltip in case it is still there.
@@ -214,8 +218,12 @@
             .attr("y", function(d) { return d.y; })
             .attr("font-size", function(d) { return fontSize(d.value); })
             .attr("fill", function(d) { return d.colorlbl;})
-            .text(function(d){return Math.round( d.value * 10 ) / 10;});
-            ;
+            .text(function(d){
+              var val = Math.round( d.value * 10 ) / 10;
+              if (val != -1)
+                return val;
+            });
+            
         
         GNODE = nodes; //make it available globally
         if (isMapLoaded){
