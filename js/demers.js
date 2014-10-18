@@ -137,23 +137,31 @@
             .on("tick", tick)
             .start();
 
-        var node = svg.selectAll("rect")
-            .data(nodes);
-
         //the enter() section
-        node
-            .enter().append("rect")
+        var grupos = svg.selectAll("g")
+            .data(nodes)
+            .enter().append("g")
+            .attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y; });
+
+        var node  = grupos.append("rect")
             .attr("id", function(d) { return "idn-"+d.id; }) //add one id got from states (mx-state-centroids)
           	.attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
             .attr("stroke", function(d) { return d.color; })
             .attr("width", function(d) { return positive(d.r * 2); })
-            .attr("height", function(d) { return positive(d.r * 2); });
+            .attr("height", function(d) { return positive(d.r * 2); })
+            .attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y; });
+
+        //var label = grupos.append("text")
+            //attr("x")
 
         //deletes the tooltip in case it is still there.
         hideTooltip();
 
         //for the update() section
-        node
+
+        svg.selectAll("g").select("rect")
             .on('mouseenter', function(d) {
                 borderStateGeoMap(d.state, '#000000');
                 showTooltip(d.state, d.value, this.__data__.x, this.__data__.y);
@@ -170,11 +178,13 @@
             })
             .attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
             .transition().attr("width", function(d) { return positive(d.r * 2); }) 
-            .attr("height", function(d) { return positive(d.r * 2); });
+            .attr("height", function(d) { return positive(d.r * 2); })
+            .attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y; })
         
-        GNODE = node; //make it available globally
+        GNODE = nodes; //make it available globally
         if (isMapLoaded){
-            updateMap();
+            updateMap(); 
         }
             
         //var datosEstados = svg.selectAll("rect").data();
@@ -278,24 +288,13 @@
 
   function getValueFromNode(name, valName){      
       var val;
-      $.each(GNODE[0], function(index, nodo) {
-          if (name == nodo.__data__.state) {
-            val = nodo.__data__[valName];
+      $.each(GNODE, function(i,n) {
+          if (name == n.state) {
+            val = n[valName];
             return false; //to break the .each
             }
         })
       return val;
-  };
-
-  function getValueFromRect(name, valName){
-      var val;
-      $.each(GNODE[0], function(index, nodo) {
-          if (name == nodo.__data__.state) {
-            val = nodo.attributes[valName].value;
-            return false; //to break the .each
-            }
-        })
-      return +val;
   };
 
   function mapLoaded(map) {
