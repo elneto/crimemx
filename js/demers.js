@@ -185,7 +185,6 @@
                 return val;
             });
             
-
         //deletes the tooltip in case it is still there.
         hideTooltip();
 
@@ -195,7 +194,7 @@
         svg.selectAll("g").select("rect")
             .on('mouseenter', function(d) {
                 borderStateGeoMap(d.state, '#000000');
-                showTooltip(d.state, d.value, this.__data__.x, this.__data__.y);
+                showTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y); //d3.select(this)[0][0].width.animVal.value
             })
             .on('mouseover', function(d) { 
                 d3.select("#idn-" + d.id).style("stroke", "black");
