@@ -35,7 +35,7 @@
       var barColor = "#D4C2C5", barColorOver = '#C0A0A4'; //red
       //var barColor = "#D4D4EF", barColorOver = '#E1E1EE'; //kidnap 
       var colHi = chroma.hex("#711a26"), //homicides red
-      //var colHi = chroma.hex("#0000FF"),
+      //var colHi = chroma.hex("#FFFF00"),
           colLow = chroma.hex("#eeeeee");
       
       //the SVG main demers map    
