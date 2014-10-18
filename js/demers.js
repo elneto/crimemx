@@ -21,7 +21,6 @@
 
       function maxValue(arr){
         var max = 0;
-
         for (var i=1; i <= 32; i++) { //ignores the total
           for (var j=1; j <= 18; j++) {
             if (+arr[j][i]>max){
@@ -29,7 +28,6 @@
             }
           }
         }
-        console.log(max);
         return +max;
       }
 
