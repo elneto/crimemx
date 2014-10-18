@@ -111,8 +111,15 @@
         var colorFn = chroma.scale([colLow, colHi])
             .domain([0, MAXRATE]); 
 
-        var colorLabel = chroma.scale(["#333333", "#ffffff"])
-            .domain([0,MAXRATE/2]); 
+        var colorLabel = function (val){
+            if (val>MAXRATE/2){ 
+              return chroma.hex("#ffffff");
+            }
+            else
+              return chroma.hex("#333333");
+          }
+            //chroma.scale(["#333333", "#ffffff"])
+            //.domain([10,MAXRATE/3]); 
 
         var fontSize = d3.scale.linear() //values for the font sizes
           .domain([-1, MAXRATE]) 
@@ -153,7 +160,7 @@
             //.attr("x", function(d) { return d.x; })
             //.attr("y", function(d) { return d.y; });
 
-        var node  = grupos.append("rect")
+        grupos.append("rect")
             .attr("id", function(d) { return "idn-"+d.id; }) //add one id got from states (mx-state-centroids)
           	.attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
             .attr("stroke", function(d) { return d.color; })
@@ -179,6 +186,7 @@
         hideTooltip();
 
         //for the update() section
+        var node  = svg.selectAll("g").data(nodes);
 
         svg.selectAll("g").select("rect")
             .on('mouseenter', function(d) {
