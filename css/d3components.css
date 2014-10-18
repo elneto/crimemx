@@ -102,7 +102,7 @@ stroke-width: 1.5px;
 
 #list-states {
 	float: right;
-	width: 16%;
+	
 	display: block;
 	padding: 1em;
 	background-color: #EEE;
@@ -110,6 +110,8 @@ stroke-width: 1.5px;
 	margin-right: 4em;
 	padding: 0.75em 0.2em;
 	width: 19%;
+
+	min-width: 290px; max-width: 300px; height: 650px; margin: 0 auto;
 }
 
 #list-states ol {

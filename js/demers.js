@@ -239,6 +239,7 @@
           return a.state < b.state ? -1 : a.state > b.state ? 1 : 0;
         });
 
+        /*
         //enter list
         ol.selectAll("li")
             .data(estadosArray, function(d) { return d.id; })
@@ -270,6 +271,68 @@
             //.transition().style("width", function(d) { return d.value*2 +"px" } ) //homicides
             .transition().style("width", function(d) { return positive(d.value*16) +"px" } ) //kidnap
             .text(function(d) { return d.state+" "+d.value; });
+            */
+        $(function () {
+          $('#list-states').highcharts({
+              chart: {
+                  type: 'bar'
+              },
+              title: {
+                  text: 'Homicide rate in 2014*'
+              },
+              subtitle: {
+                  text: 'Source: SNSP'
+              },
+              xAxis: {
+                  categories: [ 'Nacional','Aguascalientes', 'Baja California', 'Baja California Sur', 
+              'Campeche', 'Chiapas', 'Chihuahua', 'Coahuila', 'Colima', 'Distrito Federal', 'Durango', 
+              'Guanajuato','Guerrero', 'Hidalgo', 'Jalisco', 'Mexico','Michoacan', 'Morelos', 'Nayarit', 'Nuevo Leon', 
+              'Oaxaca','Puebla','Queretaro', 'Quintana Roo', 'San Luis Potosi', 'Sinaloa', 'Sonora', 'Tabasco', 
+              'Tamaulipas', 'Tlaxcala','Veracruz', 'Yucatan', 'Zacatecas'],
+                  title: {
+                      text: null
+                  }
+              },
+              yAxis: {
+                  min: 0,
+                  title: {
+                      text: 'Homicide rate (per 100,000)',
+                      align: 'high'
+                  },
+                  labels: {
+                      overflow: 'justify'
+                  }
+              },
+              tooltip: {
+                  valueSuffix: ' per 100,000'
+              },
+              plotOptions: {
+                  bar: {
+                      dataLabels: {
+                          enabled: true
+                      }
+                  }
+              },
+              legend: {
+                  layout: 'vertical',
+                  align: 'right',
+                  verticalAlign: 'top',
+                  x: -40,
+                  y: 100,
+                  floating: true,
+                  borderWidth: 1,
+                  backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+                  shadow: true
+              },
+              credits: {
+                  enabled: false
+              },
+              series: [{
+                  name: 'Homicide rate',
+                  data: [8.85,1.97,14.19,3.91,4.14,8.61,10.41,5.46,20.36,5.26,11.96,7.9,29.01,3.48,7.36,7.97,15.27,15.81,7.08,6.66,10.34,3.16,3.09,7.19,5.79,23.22,13.66,4.66,13.25,3.89,4.37,1.24,3.97]
+              }]
+          });
+      });
 
         //all below is for the force layout
         function tick(e) {
