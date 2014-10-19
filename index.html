@@ -15,13 +15,14 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="css/starter-template.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+
     <!-- CSS for the tooltips  -->
     <link rel="stylesheet" type="text/css" href="css/jquery.qtip.css">
     <!-- CSS for the map and the chart developed by me  -->
     <link rel="stylesheet" href="css/d3components.css" />
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
     <script src="js/ie-emulation-modes-warning.js"></script>
 
     <link rel="stylesheet" href="css/jquery-ui.min.css" />
@@ -45,11 +46,12 @@
     <script type="text/javascript">
     var DATAFILE = "csv/d3-homicide.csv";
     var GYEAR = 2014;
+    var varTitle = "Homicide rate";
     $(document).ready(function(){
 
             function updateYear(){
                 GYEAR = $( "#slider" ).slider( "value" );
-                $("#main-title").text("Crime in Mexico "+$( "#slider" ).slider( "value" ));
+                $("#main-title").text(varTitle+" in Mexico "+$( "#slider" ).slider( "value" ));
                 ready(GERROR, GSTATES, GRATES);
                 if (GYEAR==2014)
                     $("#main-title").append("*");
@@ -63,6 +65,32 @@
               value:2014,
               slide: updateYear,
               change: updateYear
+            });
+
+            $("button").click(function(event){
+                switch(event.target.id){
+                  case ("btnHomicide"):
+                    varTitle = "Homicide Rate";
+                    ready(GERROR, GSTATES, GHOMI);
+                    break;
+                  case ("btnKidnap"):
+                    varTitle = "Kidnapping Rate";
+                    ready(GERROR, GSTATES, GKIDNAP);
+                    break;
+                  case ("btnExtortion"):
+                    varTitle = "Extortion Rate";
+                    ready(GERROR, GSTATES, GEXTORTION);
+                    break;
+                  case ("btnCarViolence"):
+                    varTitle = "Violent Car Theft Rate";
+                    ready(GERROR, GSTATES, GCARVIO);
+                    break;
+                  case ("btnCarNoViolence"):
+                    varTitle = "Non Violent Car Theft Rate";
+                    ready(GERROR, GSTATES, GCARNOVIO);
+                    break;
+                }
+                $("#main-title").text(varTitle+" in Mexico "+$( "#slider" ).slider( "value" ));
             });
 
     });
@@ -91,7 +119,7 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1 id="main-title">Crime in Mexico 2014*</h1>
+        <h1 id="main-title">Homicide Rate in Mexico 2014*</h1>
         <p class="lead">Select a state or click on the timeline.</p>
         <div id="top_part">   
               <div id="list-states"></div>
@@ -102,6 +130,13 @@
                 <div id="slider"></div>
                 <div id="slider-label"></div>
               </div>
+              <p style="clear:both; float:left;">
+              <button type="button" class="btn btn-sm btn-danger" id="btnHomicide">Homicide</button>
+              <button type="button" class="btn btn-sm btn-warning" id="btnKidnap">Kidnapping </button>
+              <button type="button" class="btn btn-sm btn-success" id="btnExtortion">Extortion</button>
+              <button type="button" class="btn btn-sm btn-primary" id="btnCarViolence">Car theft with violence</button>
+              <button type="button" class="btn btn-sm btn-info" id="btnCarNoViolence">Car theft without violence</button>
+            </p>
               <!--<div id="chart"></div>-->
         </div>
         <!--Put geo map TODO <div id="map"></div> -->
@@ -131,7 +166,7 @@
     </h4>
     <p>
     <span id="stpNumber">30</span> 
-    <span id="stpText">homicides per 100,000 people </span>
+    <span id="stpText"> per 100,000 people </span>
     </p>
 </div>
   </body>

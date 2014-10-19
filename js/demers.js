@@ -1,5 +1,6 @@
       //global var that stores the rates
       var GERROR, GSTATES, GRATES;
+      var GHOMI, GKIDNAP, GEXTORTION, GCARVIO, GCARNOVIO;
       var ratesNationalHomicides;
       var GNODE;
       var updateMap, borderStateGeoMap;
@@ -84,6 +85,8 @@
           .attr("x", 0)
           .attr("dy", "1.8em")
           .style("text-anchor", "middle");
+
+
 
       queue()
         .defer(d3.json, "json/mx-state-centroids.json") //states
@@ -252,7 +255,7 @@
                   type: 'bar'
               },
               title: {
-                  text: 'Homicide rate in 2014*'
+                  text: varTitle+' in '+GYEAR
               },
               subtitle: {
                   text: 'Source: SNSP'
@@ -433,5 +436,23 @@
     function positive(num){
         return num <  0 ? 0 : num;
     }
+
+    //saves the CSVs in globals
+    d3.csv("csv/d3-kidnap.csv", function(states){
+          GKIDNAP = states;
+        });
+    d3.csv("csv/d3-extortion.csv", function(states){
+          GEXTORTION = states;
+        });
+    d3.csv("csv/d3-car-violence.csv", function(states){
+          GCARVIO = states;
+        });
+    d3.csv("csv/d3-car-no-violence.csv", function(states){
+          GCARNOVIO = states;
+        });
+    d3.csv("csv/d3-homicide.csv", function(states){
+          GHOMI = states;
+        });
+
   
 
