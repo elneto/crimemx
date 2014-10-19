@@ -1,12 +1,12 @@
       //global var that stores the rates
-      var GERROR, GSTATES, GRATES;
-      var GHOMI, GKIDNAP, GEXTORTION, GCARVIO, GCARNOVIO;
+      var GNODE, GERROR, GSTATES, GRATES,
+          GHOMI, GKIDNAP, GEXTORTION, GCARVIO, GCARNOVIO;
       var ratesNationalHomicides;
-      var GNODE;
       var updateMap, borderStateGeoMap;
       var isMapLoaded = false;
-      var mapLastStateColor;
       var MAXRATE=0;
+      var chart,
+          keysArray;
 
       //year must be between 1997 and 2014
       function rateById(year, id)
@@ -186,6 +186,8 @@
         svg.selectAll("g").select("rect")
             .on('mouseenter', function(d) {
                 borderStateGeoMap(d.state, '#000000');
+                var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                chart.series[0].data[index].select();
                 showTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y); //d3.select(this)[0][0].width.animVal.value
             })
             .on('mouseover', function(d) { 
@@ -194,7 +196,8 @@
             })
             .on('mouseleave', function(d) { 
                 this.setAttribute("style", "fill:"+d.color+"; stroke:"+d.color);
-                //d3.select("#idlist-" + d.id).style("background-color", barColor).style("font-weight", "normal");
+                var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                chart.series[0].data[index].select(false);
                 hideTooltip();
                 borderStateGeoMap(d.state, '#ffffff');
             })
@@ -222,9 +225,9 @@
         }
             
         var estadosArray = [],
-            valuesArray = [],
-            //colorsArray = [],
-            keysArray = [];
+            valuesArray = [];
+        keysArray = [];
+
         $.each(svg.selectAll("rect").data(), function(i, d) { //data gets an array with all the state info
             keysArray.push({'state':d.state,'value':+d.value, 'color': d.color});
          });
@@ -320,7 +323,8 @@
               }]
           };
 
-          var chart = $('#list-states').highcharts(options);//end options
+          $('#list-states').highcharts(options);//end options
+          chart = Highcharts.charts[0];
       });
 
         //all below is for the force layout
@@ -369,6 +373,7 @@
             });
           };
         } //end function collide
+        console.log(Highcharts.charts);
       }; //end ready (d3.json)
 
   //add thumbnail map
@@ -401,17 +406,18 @@
                 }
           },
           mouseenter: function(d, path) {
-              mapLastStateColor = path.attrs.fill; //saves the last color;
               path.attr('stroke', '#000000');
               d3.select("#idn-" + String(d.name).replace(/ /g,'')).style("stroke", "black");  
-              //d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", barColorOver).style("font-weight", "bold");
+              var index = keysArray.map(function(x) {return x.state; }).indexOf(d.name);
+              chart.series[0].data[index].select();
               currentNodo = getNode(d.name);
               showTooltip(d.name, currentNodo.value, currentNodo.x, currentNodo.y);
           }, 
           mouseleave: function(d, path) {
               path.attr('stroke', '#ffffff'); 
               d3.select("#idn-" + String(d.name).replace(/ /g,'')).style("stroke", getNode(d.name).color); //restores the last color
-              //d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", barColor).style("font-weight", "normal");
+              var index = keysArray.map(function(x) {return x.state; }).indexOf(d.name);
+              chart.series[0].data[index].select(false);
               hideTooltip();
           }
       });
