@@ -247,6 +247,7 @@
 
           var options = {
               chart: {
+                  renderTo: 'list-states',
                   backgroundColor: '#eeeeee',
                   type: 'bar'
               },
@@ -323,8 +324,22 @@
               }]
           };
 
-          $('#list-states').highcharts(options);//end options
-          chart = Highcharts.charts[0];
+          //chart = Highcharts.charts[0];
+          chart = new Highcharts.Chart(options);
+          //$('#list-states').highcharts(options);//end options
+          //var index=$("#list-states").data('highchartsChart');
+          //var chart=Highcharts.charts[index];
+          
+          //chart = Highcharts.charts[0];
+          /*if (typeof Highcharts.charts[0] === 'undefined')
+            {
+              chart = Highcharts.charts[1];
+            }*/
+        chart.series[0].setData(valuesArray,true);
+        //Highcharts.charts[1].series[0].setData(valuesArray,true);
+        console.log(Highcharts.charts);
+          //Highcharts.charts[1].series[0].setData(valuesArray,true);
+
       });
 
         //all below is for the force layout
@@ -373,7 +388,7 @@
             });
           };
         } //end function collide
-        console.log(Highcharts.charts);
+        
       }; //end ready (d3.json)
 
   //add thumbnail map
