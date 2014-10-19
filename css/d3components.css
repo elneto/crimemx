@@ -6,7 +6,7 @@
 }
 #demers {
     margin-left: -7em;
-    margin-top: -2em;
+    margin-top: -8em;
     width:930px;
     height: 650px;
     float: left;
@@ -147,7 +147,7 @@ stroke-width: 1.5px;
     float: right;
     position: absolute;
     right: 0;
-    top: 2.8em;
+    top: 3.6em;
 }
 #botones-box * {
     margin: 0.05em;
@@ -156,5 +156,20 @@ stroke-width: 1.5px;
     border:1px solid #eeeeee;
 }
 #main-title{
-	max-width: 16em;
+	min-width: 16em;
+}
+#top-image{
+	float: left;
+    margin-right: 1em;
+    position: relative;
+    width: 72px;
+}
+#main-blob{
+	display: inline;
+}
+
+.btn-danger {
+    background-image: linear-gradient(to bottom, #eeeeee -10px, #711a26 100%);
+    background-repeat: repeat-x;
+    border-color: #b92c28;
 }

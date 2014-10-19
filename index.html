@@ -52,10 +52,10 @@
             function updateYear(){
                 GYEAR = $( "#slider" ).slider( "value" );
                 $("#main-title").text(varTitle+" in "+$( "#slider" ).slider( "value" ));
-                ready(GERROR, GSTATES, GRATES);
                 if (GYEAR==2014)
                     $("#main-title").append("*");
 
+                ready(GERROR, GSTATES, GRATES);
             }
          //slider         
             $( "#slider" ).slider({
@@ -92,6 +92,8 @@
                     break;
                 }
                 $("#main-title").text(varTitle+" in "+$( "#slider" ).slider( "value" ));
+                if (GYEAR==2014)
+                    $("#main-title").append("*");
             });
 
     });
@@ -120,8 +122,10 @@
     <div class="container">
 
       <div class="starter-template">
+        <section id="main-blob"><img src="images/homicides.png" id="top-image">
         <h1 id="main-title" class="text-left">Homicide Rate in 2014*</h1>
         <p class="lead text-left">Select a state or click on the timeline.</p>
+      </section>
         
         <div id="top_part">   
               <div id="list-states"></div>
