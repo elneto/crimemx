@@ -59,7 +59,7 @@
 }
 
 /*For Demers*/
-rect {
+#demers rect {
 fill: #eee;
 stroke: #000;
 stroke-width: 1.5px;
@@ -105,13 +105,12 @@ stroke-width: 1.5px;
 	
 	display: block;
 	padding: 1em;
-	background-color: #EEE;
 	padding: 1em;
 	margin-right: 4em;
 	padding: 0.75em 0.2em;
 	width: 19%;
 
-	min-width: 290px; max-width: 300px; height: 650px; margin: 0 auto;
+	min-width: 290px; max-width: 300px; height: 695px; margin: 0 auto;
 }
 
 #list-states ol {

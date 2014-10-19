@@ -97,9 +97,6 @@
         GSTATES = states;
         GRATES = rates;
         ratesNationalHomicides = rates;
-
-        var estadosArray = [],
-            valuesArray = [];
       
         if (MAXRATE==0) {//only calculates it once
           MAXRATE = maxValue(rates);
@@ -141,7 +138,7 @@
                 x: point[0], y: point[1],
                 x0: point[0], y0: point[1],
                 r: radius(value),
-                value: value,
+                value: Math.round( value * 10 ) / 10,
                 state: state,
                 color: color,
                 colorlbl: colorlbl,
@@ -230,24 +227,28 @@
             updateMap(); 
         }
             
-        estadosArray = [];
-        valuesArray = [];
+        var estadosArray = [],
+            valuesArray = [],
+            keysArray = [];
         $.each(svg.selectAll("rect").data(), function(i, d) { //data gets an array with all the state info
-            estadosArray.push(d.state);
-            valuesArray.push(+d.value);
+            keysArray.push({'state':d.state,'value':+d.value});
          });
 
-        //order by state (ascending)
-        estadosArray.sort(function(a, b) { 
-          return a < b ? -1 : a > b ? 1 : 0;
+        //Todo, order the states according to the estadosArraysort
+        keysArray.sort(function(b, a) { 
+            return a.value < b.value ? -1 : a.value > b.value ? 1 : 0;
         });
 
-        //Todo, order the states according to the estadosArraysort
+        for (var i=0; i < keysArray.length; i++){
+            estadosArray.push(keysArray[i].state);
+            valuesArray.push(+keysArray[i].value);
+        }
 
         $(function () {
 
           var options = {
               chart: {
+                  backgroundColor: '#ffffff',
                   type: 'bar'
               },
               title: {
@@ -296,7 +297,16 @@
               credits: {
                   enabled: false
               },
-              series: [{name:'Homicide rate', data: valuesArray}]
+              series: [{
+                name:'Homicide rate', 
+                data: valuesArray,
+                showInLegend: false,
+                color: '#D4C2C5',
+                animation: {
+                    duration: 300,
+                    easing: 'easeOutBounce'
+                }
+                }]
           };
 
           //options.series = {'name':'Homicide rate', 'data': valuesArray};
