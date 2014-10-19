@@ -3,7 +3,8 @@
           GHOMI, GKIDNAP, GEXTORTION, GCARVIO, GCARNOVIO;
       var ratesNationalHomicides;
       var updateMap, borderStateGeoMap;
-      var isMapLoaded = false;
+      var isMapLoaded = false
+          isChartCreated = false;
       var MAXRATE=0;
       var chart,
           keysArray;
@@ -324,22 +325,14 @@
               }]
           };
 
-          //chart = Highcharts.charts[0];
-          chart = new Highcharts.Chart(options);
-          //$('#list-states').highcharts(options);//end options
-          //var index=$("#list-states").data('highchartsChart');
-          //var chart=Highcharts.charts[index];
-          
-          //chart = Highcharts.charts[0];
-          /*if (typeof Highcharts.charts[0] === 'undefined')
-            {
-              chart = Highcharts.charts[1];
-            }*/
-        chart.series[0].setData(valuesArray,true);
-        //Highcharts.charts[1].series[0].setData(valuesArray,true);
-        console.log(Highcharts.charts);
-          //Highcharts.charts[1].series[0].setData(valuesArray,true);
-
+          if (!isChartCreated){
+            chart = new Highcharts.Chart(options);  
+            isChartCreated = true;
+          }
+          else{
+            chart.series[0].setData(valuesArray,true);
+          }
+        //console.log(Highcharts.charts);
       });
 
         //all below is for the force layout
