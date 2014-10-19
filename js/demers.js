@@ -228,9 +228,10 @@
             
         var estadosArray = [],
             valuesArray = [],
+            //colorsArray = [],
             keysArray = [];
         $.each(svg.selectAll("rect").data(), function(i, d) { //data gets an array with all the state info
-            keysArray.push({'state':d.state,'value':+d.value});
+            keysArray.push({'state':d.state,'value':+d.value, 'color': d.color});
          });
 
         //Todo, order the states according to the estadosArraysort
@@ -240,7 +241,7 @@
 
         for (var i=0; i < keysArray.length; i++){
             estadosArray.push(keysArray[i].state);
-            valuesArray.push(+keysArray[i].value);
+            valuesArray.push({'y':+keysArray[i].value, 'color':keysArray[i].color.toString()});
         }
 
         $(function () {
