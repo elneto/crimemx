@@ -239,6 +239,7 @@
             valuesArray.push({'y':+keysArray[i].value, 'color':keysArray[i].color.toString()});
         }
 
+        //the highchart bar
         $(function () {
 
           var options = {
@@ -305,11 +306,14 @@
                     events: {
                         mouseOver: function () {
                             d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", "black");
-                            showTooltip(this.category, getValueFromNode(String(this.category).replace(/ /g,''), 'value'), 
-                                +getValueFromNode(String(this.category).replace(/ /g,''), 'x'), getValueFromNode(String(this.category).replace(/ /g,''), 'y'));  
+                            currentNodo = getNode(this.category);
+                            showTooltip(this.category, currentNodo.value, currentNodo.x, currentNodo.y);
+                            borderStateGeoMap(this.category, '#000000');
                         },
                         mouseOut: function () {
-                            console.log('Ciao ' +this.category);
+                            d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", getNode(this.category).color); //restores the fill color
+                            hideTooltip();
+                            borderStateGeoMap(this.category, '#ffffff');
                         }
                     }
                 },
@@ -376,23 +380,24 @@
   var map = kartograph.map('#map');
   map.loadMap('svg/MEX.svg', mapLoaded, opts);
 
-  function getValueFromNode(name, valName){      
-      var val;
+  function getNode(name){      
+    var nodo;
       $.each(GNODE, function(i,n) {
           if (name == n.state) {
-            val = n[valName];
-            return false; //to break the .each
+            nodo = n;
+            return false;
             }
         })
-      return val;
+      return nodo;
   };
 
   function mapLoaded(map) {
+      var currentNodo;
       map.addLayer('admin1', {
           styles: {
               stroke: '#ffffff',
               fill: function(d) { 
-                return getValueFromNode(d.name, 'color');
+                return getNode(d.name).color;
                 }
           },
           mouseenter: function(d, path) {
@@ -400,11 +405,12 @@
               path.attr('stroke', '#000000');
               d3.select("#idn-" + String(d.name).replace(/ /g,'')).style("stroke", "black");  
               //d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", barColorOver).style("font-weight", "bold");
-              showTooltip(d.name, getValueFromNode(d.name, 'value'), +getValueFromNode(d.name, 'x'), getValueFromNode(d.name, 'y'));
+              currentNodo = getNode(d.name);
+              showTooltip(d.name, currentNodo.value, currentNodo.x, currentNodo.y);
           }, 
           mouseleave: function(d, path) {
               path.attr('stroke', '#ffffff'); 
-              d3.select("#idn-" + String(d.name).replace(/ /g,'')).style("stroke", mapLastStateColor); //restores the last color
+              d3.select("#idn-" + String(d.name).replace(/ /g,'')).style("stroke", getNode(d.name).color); //restores the last color
               //d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", barColor).style("font-weight", "normal");
               hideTooltip();
           }
@@ -412,7 +418,7 @@
 
       updateMap = function() {
           map.getLayer('admin1')
-            .style('fill', function(d) { return getValueFromNode(d.name, 'color');});
+            .style('fill', function(d) { return getNode(d.name).color;});
       }
 
       borderStateGeoMap = function (name, color){
