@@ -62,8 +62,6 @@
           .attr("width", width)
           .attr("height", height);
 
-      var ol = d3.select("#list-states").append("ol");
-
       var xSlider = d3.time.scale()
           .domain([new Date(1997, 0, 1), new Date(2014, 0, 1)])
           .range([0, 820]);
@@ -85,8 +83,6 @@
           .attr("x", 0)
           .attr("dy", "1.8em")
           .style("text-anchor", "middle");
-
-
 
       queue()
         .defer(d3.json, "json/mx-state-centroids.json") //states
