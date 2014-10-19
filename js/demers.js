@@ -98,7 +98,8 @@
         GRATES = rates;
         ratesNationalHomicides = rates;
 
-        var estadosArray = [];
+        var estadosArray = [],
+            valuesArray = [];
       
         if (MAXRATE==0) {//only calculates it once
           MAXRATE = maxValue(rates);
@@ -215,7 +216,7 @@
         svg.selectAll("g").select("text")
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
-            .attr("font-size", function(d) { return fontSize(d.value); })
+            .transition().attr("font-size", function(d) { return fontSize(d.value); })
             .attr("fill", function(d) { return d.colorlbl;})
             .text(function(d){
               var val = Math.round( d.value * 10 ) / 10;
@@ -229,51 +230,23 @@
             updateMap(); 
         }
             
-        //var datosEstados = svg.selectAll("rect").data();
+        estadosArray = [];
+        valuesArray = [];
         $.each(svg.selectAll("rect").data(), function(i, d) { //data gets an array with all the state info
-            estadosArray.push({state:d.state,value:d.value, id:d.id});
+            estadosArray.push(d.state);
+            valuesArray.push(+d.value);
          });
 
-        //order by state (descending)
+        //order by state (ascending)
         estadosArray.sort(function(a, b) { 
-          return a.state < b.state ? -1 : a.state > b.state ? 1 : 0;
+          return a < b ? -1 : a > b ? 1 : 0;
         });
 
-        /*
-        //enter list
-        ol.selectAll("li")
-            .data(estadosArray, function(d) { return d.id; })
-            .enter()
-          .append("li")
-            .attr("id", function(d) { return "idlist-"+d.id; }) //add one id got from states (mx-state-centroids)
-            .classed("li-background", true)
-            //.transition().style("width", function(d) { return d.value*2 +"px" } ) //homicides
-            .transition().style("width", function(d) { return positive(d.value*16) +"px" } ) //kidnap
-            .text(function(d) { return d.state+" "+d.value; });
-        //update list
-        ol.selectAll("li")
-            .data(estadosArray, function(d) { return d.id; }) //adds a key function
-            .on('mouseenter', function(d) {
-                borderStateGeoMap(d.state, '#000000');
-                showTooltip(d.state, d.value, +getValueFromNode(d.state, 'x'), getValueFromNode(d.state, 'y'));
-            })
-            .on('mouseover', function(d) { 
-                mapLastStateColor = getValueFromNode(d.state, 'color');
-                d3.select("#idn-" + d.id).style("stroke", "black");
-                d3.select("#idlist-" + d.id).style("background-color", barColorOver).style("font-weight", "bold");
-            })
-            .on('mouseleave', function(d) { 
-                d3.select("#idn-" + d.id).style("stroke", mapLastStateColor);
-                d3.select("#idlist-" + d.id).style("background-color", barColor).style("font-weight", "normal");
-                hideTooltip();
-                borderStateGeoMap(d.state, '#ffffff');
-            })
-            //.transition().style("width", function(d) { return d.value*2 +"px" } ) //homicides
-            .transition().style("width", function(d) { return positive(d.value*16) +"px" } ) //kidnap
-            .text(function(d) { return d.state+" "+d.value; });
-            */
+        //Todo, order the states according to the estadosArraysort
+
         $(function () {
-          $('#list-states').highcharts({
+
+          var options = {
               chart: {
                   type: 'bar'
               },
@@ -284,11 +257,7 @@
                   text: 'Source: SNSP'
               },
               xAxis: {
-                  categories: [ 'Nacional','Aguascalientes', 'Baja California', 'Baja California Sur', 
-              'Campeche', 'Chiapas', 'Chihuahua', 'Coahuila', 'Colima', 'Distrito Federal', 'Durango', 
-              'Guanajuato','Guerrero', 'Hidalgo', 'Jalisco', 'Mexico','Michoacan', 'Morelos', 'Nayarit', 'Nuevo Leon', 
-              'Oaxaca','Puebla','Queretaro', 'Quintana Roo', 'San Luis Potosi', 'Sinaloa', 'Sonora', 'Tabasco', 
-              'Tamaulipas', 'Tlaxcala','Veracruz', 'Yucatan', 'Zacatecas'],
+                  categories: estadosArray,
                   title: {
                       text: null
                   }
@@ -327,11 +296,12 @@
               credits: {
                   enabled: false
               },
-              series: [{
-                  name: 'Homicide rate',
-                  data: [8.85,1.97,14.19,3.91,4.14,8.61,10.41,5.46,20.36,5.26,11.96,7.9,29.01,3.48,7.36,7.97,15.27,15.81,7.08,6.66,10.34,3.16,3.09,7.19,5.79,23.22,13.66,4.66,13.25,3.89,4.37,1.24,3.97]
-              }]
-          });
+              series: [{name:'Homicide rate', data: valuesArray}]
+          };
+
+          //options.series = {'name':'Homicide rate', 'data': valuesArray};
+
+          var chart = $('#list-states').highcharts(options);//end options
       });
 
         //all below is for the force layout
