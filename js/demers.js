@@ -33,12 +33,10 @@
       }
 
        //for the colors 
-      var barColor = "#D4C2C5", barColorOver = '#C0A0A4'; //red
-      //var barColor = "#D4D4EF", barColorOver = '#E1E1EE'; //kidnap 
-      //var colHi = chroma.hex("#711a26"), //homicides red
-      var colHi = chroma.hex("#FF0000"),
-          //colLow = chroma.hex("#eeeeee");
-          colLow = chroma.hex("#00FF00");
+      var colHi = chroma.hex("#711a26"), //homicides red
+      //var colHi = chroma.hex("#FF0000"),
+          colLow = chroma.hex("#eeeeee");
+          //colLow = chroma.hex("#00FF00");
       
       //the SVG main demers map    
       var margin = {top: 0, right: 0, bottom: 0, left: 0},
@@ -159,7 +157,7 @@
             //.attr("y", function(d) { return d.y; });
 
         grupos.append("rect")
-            .attr("id", function(d) { return "idn-"+d.id; }) //add one id got from states (mx-state-centroids)
+            .attr("id", function(d) { return "idn-"+String(d.state).replace(/ /g,''); }) //add one id got from states (mx-state-centroids)
           	.attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
             .attr("stroke", function(d) { return d.color; })
             .attr("width", function(d) { return positive(d.r * 2); })
@@ -177,11 +175,7 @@
             .attr("font-size", function(d) { return fontSize(d.value); })
             .attr("fill", function(d) { return d.colorlbl;})
             .attr("text-anchor", "middle")
-            .text(function(d){
-              var val = Math.round( d.value * 10 ) / 10;
-              if (val != -1)
-                return val;
-            });
+            .text(function(d){return (d.value != -1)? d.value:''});
             
         //deletes the tooltip in case it is still there.
         hideTooltip();
@@ -195,12 +189,12 @@
                 showTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y); //d3.select(this)[0][0].width.animVal.value
             })
             .on('mouseover', function(d) { 
-                d3.select("#idn-" + d.id).style("stroke", "black");
-                d3.select("#idlist-" + d.id).style("background-color", barColorOver).style("font-weight", "bold");
+                this.setAttribute("style", "fill:"+d.color+"; stroke:#000000; z-index:999");
+                //d3.select("#idlist-" + d.id).style("background-color", barColorOver).style("font-weight", "bold");
             })
             .on('mouseleave', function(d) { 
-                d3.select("#idn-" + d.id).style("stroke", d.color);
-                d3.select("#idlist-" + d.id).style("background-color", barColor).style("font-weight", "normal");
+                this.setAttribute("style", "fill:"+d.color+"; stroke:"+d.color);
+                //d3.select("#idlist-" + d.id).style("background-color", barColor).style("font-weight", "normal");
                 hideTooltip();
                 borderStateGeoMap(d.state, '#ffffff');
             })
@@ -306,11 +300,21 @@
                 animation: {
                     duration: 300,
                     easing: 'easeOutBounce'
-                }
-                }]
+                },
+                point: {
+                    events: {
+                        mouseOver: function () {
+                            d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", "black");
+                            showTooltip(this.category, getValueFromNode(String(this.category).replace(/ /g,''), 'value'), 
+                                +getValueFromNode(String(this.category).replace(/ /g,''), 'x'), getValueFromNode(String(this.category).replace(/ /g,''), 'y'));  
+                        },
+                        mouseOut: function () {
+                            console.log('Ciao ' +this.category);
+                        }
+                    }
+                },
+              }]
           };
-
-          //options.series = {'name':'Homicide rate', 'data': valuesArray};
 
           var chart = $('#list-states').highcharts(options);//end options
       });
@@ -394,14 +398,14 @@
           mouseenter: function(d, path) {
               mapLastStateColor = path.attrs.fill; //saves the last color;
               path.attr('stroke', '#000000');
-              d3.select("#idn-" + getValueFromNode(d.name, 'id')).style("stroke", "black");  //below lighter color for bar
-              d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", barColorOver).style("font-weight", "bold");
+              d3.select("#idn-" + String(d.name).replace(/ /g,'')).style("stroke", "black");  
+              //d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", barColorOver).style("font-weight", "bold");
               showTooltip(d.name, getValueFromNode(d.name, 'value'), +getValueFromNode(d.name, 'x'), getValueFromNode(d.name, 'y'));
           }, 
           mouseleave: function(d, path) {
               path.attr('stroke', '#ffffff'); 
-              d3.select("#idn-" + getValueFromNode(d.name, 'id')).style("stroke", mapLastStateColor); //restores the last color
-              d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", barColor).style("font-weight", "normal");
+              d3.select("#idn-" + String(d.name).replace(/ /g,'')).style("stroke", mapLastStateColor); //restores the last color
+              //d3.select("#idlist-" + getValueFromNode(d.name, 'id')).style("background-color", barColor).style("font-weight", "normal");
               hideTooltip();
           }
       });
