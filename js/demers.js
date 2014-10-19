@@ -265,7 +265,7 @@
               yAxis: {
                   min: 0,
                   title: {
-                      text: 'Homicide rate (per 100,000)',
+                      text: varTitle+' (per 100,000)',
                       align: 'high'
                   },
                   labels: {
@@ -297,7 +297,7 @@
                   enabled: false
               },
               series: [{
-                name:'Homicide rate', 
+                name:varTitle, 
                 data: valuesArray,
                 showInLegend: false,
                 color: '#D4C2C5',
