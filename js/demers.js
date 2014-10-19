@@ -247,11 +247,11 @@
 
           var options = {
               chart: {
-                  backgroundColor: '#ffffff',
+                  backgroundColor: '#eeeeee',
                   type: 'bar'
               },
               title: {
-                  text: varTitle+' in '+GYEAR
+                  text: 'Rank by State ('+GYEAR+')'
               },
               subtitle: {
                   text: 'Source: SNSP'

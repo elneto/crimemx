@@ -6,7 +6,7 @@
 }
 #demers {
     margin-left: -7em;
-    margin-top: -3.5em;
+    margin-top: -2em;
     width:930px;
     height: 650px;
     float: left;
@@ -133,7 +133,7 @@ stroke-width: 1.5px;
 	padding: 0.1em 1em;
 	width:10em;
 	display: block;
-	box-shadow: 5px 5px 10px #BBBBBB;
+	box-shadow: 5px 5px 10px #bbbbbb;
 	margin: 3.5em 0 0 4em;
 }
 #stateTooltip h4{
@@ -142,3 +142,19 @@ stroke-width: 1.5px;
 #stpNumber {
 	font-weight: bold;
 }	
+#botones-box{
+	clear: both;
+    float: right;
+    position: absolute;
+    right: 0;
+    top: 2.8em;
+}
+#botones-box * {
+    margin: 0.05em;
+    width: 15em;
+    box-shadow: 5px 5px 10px #bbbbbb;
+    border:1px solid #eeeeee;
+}
+#main-title{
+	max-width: 16em;
+}

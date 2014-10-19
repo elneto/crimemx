@@ -51,7 +51,7 @@
 
             function updateYear(){
                 GYEAR = $( "#slider" ).slider( "value" );
-                $("#main-title").text(varTitle+" in Mexico "+$( "#slider" ).slider( "value" ));
+                $("#main-title").text(varTitle+" in "+$( "#slider" ).slider( "value" ));
                 ready(GERROR, GSTATES, GRATES);
                 if (GYEAR==2014)
                     $("#main-title").append("*");
@@ -91,7 +91,7 @@
                     ready(GERROR, GSTATES, GCARNOVIO);
                     break;
                 }
-                $("#main-title").text(varTitle+" in Mexico "+$( "#slider" ).slider( "value" ));
+                $("#main-title").text(varTitle+" in "+$( "#slider" ).slider( "value" ));
             });
 
     });
@@ -120,24 +120,26 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1 id="main-title">Homicide Rate in Mexico 2014*</h1>
-        <p class="lead">Select a state or click on the timeline.</p>
+        <h1 id="main-title" class="text-left">Homicide Rate in 2014*</h1>
+        <p class="lead text-left">Select a state or click on the timeline.</p>
+        
         <div id="top_part">   
               <div id="list-states"></div>
               <div id="demers">
+                <div id="botones-box">
+                  <button type="button" class="btn btn-sm btn-danger" id="btnHomicide">Homicide</button><br>
+                  <button type="button" class="btn btn-sm btn-warning" id="btnKidnap">Kidnapping </button><br>
+                  <button type="button" class="btn btn-sm btn-success" id="btnExtortion">Extortion</button><br>
+                  <button type="button" class="btn btn-sm btn-primary" id="btnCarViolence">Car theft with violence</button><br>
+                  <button type="button" class="btn btn-sm btn-info" id="btnCarNoViolence">Car theft without violence</button><br>
+              </div>
                 <div id="map"></div>
               </div>
               <div id="slider-container">
                 <div id="slider"></div>
                 <div id="slider-label"></div>
               </div>
-              <p style="clear:both; float:left;">
-              <button type="button" class="btn btn-sm btn-danger" id="btnHomicide">Homicide</button>
-              <button type="button" class="btn btn-sm btn-warning" id="btnKidnap">Kidnapping </button>
-              <button type="button" class="btn btn-sm btn-success" id="btnExtortion">Extortion</button>
-              <button type="button" class="btn btn-sm btn-primary" id="btnCarViolence">Car theft with violence</button>
-              <button type="button" class="btn btn-sm btn-info" id="btnCarNoViolence">Car theft without violence</button>
-            </p>
+              
               <!--<div id="chart"></div>-->
         </div>
         <!--Put geo map TODO <div id="map"></div> -->
