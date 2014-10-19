@@ -151,8 +151,8 @@ stroke-width: 1.5px;
 }
 #botones-box * {
     margin: 0.05em;
-    width: 15em;
-    box-shadow: 5px 5px 10px #bbbbbb;
+    width: 13em;
+    /*box-shadow: 5px 5px 10px #bbbbbb;*/
     border:1px solid #eeeeee;
 }
 #main-title{
