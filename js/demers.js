@@ -330,6 +330,7 @@
             isChartCreated = true;
           }
           else{
+            chart.setTitle({ text: 'Rank by State ('+GYEAR+')'});
             chart.series[0].setData(valuesArray,true);
           }
         //console.log(Highcharts.charts);
