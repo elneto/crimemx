@@ -68,7 +68,7 @@
               change: updateYear
             });
 
-            $("button").click(function(event){
+            $("#botones-box .list-group-item").click(function(event){
                 MAXRATE=0;
                 switch(event.target.id){
                   case ("btnHomicide"):
@@ -137,13 +137,13 @@
         <div id="top_part">   
               <div id="list-states"></div>
               <div id="demers">
-                <div id="botones-box">
-                  <button type="button" class="btn btn-sm btn-danger" id="btnHomicide">Homicide</button><br>
-                  <button type="button" class="btn btn-sm btn-warning" id="btnKidnap">Kidnapping </button><br>
-                  <button type="button" class="btn btn-sm btn-success" id="btnExtortion">Extortion</button><br>
-                  <button type="button" class="btn btn-sm btn-primary" id="btnCarViolence">Car theft with violence</button><br>
-                  <button type="button" class="btn btn-sm btn-info" id="btnCarNoViolence">Car theft without violence</button><br>
-              </div>
+                <list id="botones-box" class="list-group">
+                  <li class="list-group-item" id="btnHomicide">Homicide</li>
+                  <li class="list-group-item" id="btnKidnap">Kidnapping </li>
+                  <li class="list-group-item" id="btnExtortion">Extortion</li>
+                  <li class="list-group-item" id="btnCarViolence">Car theft with violence</li>
+                  <li class="list-group-item" id="btnCarNoViolence">Car theft without violence</li><br>
+                </list>
                 <div id="map"></div>
               </div>
               <div id="slider-container">
