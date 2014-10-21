@@ -162,7 +162,8 @@ stroke-width: 1.5px;
 	float: left;
     margin-right: 1em;
     position: relative;
-    width: 72px;
+    max-height:75px; 
+    width:auto;
 }
 #main-blob{
 	display: inline;
@@ -173,3 +174,4 @@ stroke-width: 1.5px;
     background-repeat: repeat-x;
     border-color: #b92c28;
 }
+

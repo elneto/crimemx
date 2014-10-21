@@ -47,6 +47,7 @@
     var DATAFILE = "csv/d3-homicide.csv";
     var GYEAR = 2014;
     var varTitle = "Homicide rate";
+    var varImgFile = "images/homicide.png";
     $(document).ready(function(){
 
             function updateYear(){
@@ -71,26 +72,32 @@
                 MAXRATE=0;
                 switch(event.target.id){
                   case ("btnHomicide"):
+                    varImgFile = "images/homicide.png";
                     varTitle = "Homicide Rate";
                     ready(GERROR, GSTATES, GHOMI);
                     break;
                   case ("btnKidnap"):
+                    varImgFile = "images/kidnap.png";
                     varTitle = "Kidnapping Rate";
                     ready(GERROR, GSTATES, GKIDNAP);
                     break;
                   case ("btnExtortion"):
+                    varImgFile = "images/extortion.png";
                     varTitle = "Extortion Rate";
                     ready(GERROR, GSTATES, GEXTORTION);
                     break;
                   case ("btnCarViolence"):
+                    varImgFile = "images/car.png";
                     varTitle = "Violent Car Theft Rate";
                     ready(GERROR, GSTATES, GCARVIO);
                     break;
                   case ("btnCarNoViolence"):
+                    varImgFile = "images/carvio.png";
                     varTitle = "Non Violent Car Theft Rate";
                     ready(GERROR, GSTATES, GCARNOVIO);
                     break;
                 }
+                $("#top-image").attr("src", varImgFile);
                 $("#main-title").text(varTitle+" in "+$( "#slider" ).slider( "value" ));
                 if (GYEAR==2014)
                     $("#main-title").append("*");
@@ -122,7 +129,7 @@
     <div class="container">
 
       <div class="starter-template">
-        <section id="main-blob"><img src="images/homicides.png" id="top-image">
+        <section id="main-blob"><img src="images/homicide.png" id="top-image" >
         <h1 id="main-title" class="text-left">Homicide Rate in 2014*</h1>
         <p class="lead text-left">Select a state or click on the timeline.</p>
       </section>
