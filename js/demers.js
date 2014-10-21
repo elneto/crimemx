@@ -332,6 +332,7 @@
           else{
             chart.setTitle({ text: 'Rank by State ('+GYEAR+')'});
             chart.series[0].setData(valuesArray,true);
+            chart.xAxis[0].setCategories(estadosArray,true);
           }
         //console.log(Highcharts.charts);
       });
