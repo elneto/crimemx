@@ -168,10 +168,24 @@ stroke-width: 1.5px;
     color: #555;
 }
 
-#botones-box > .list-group-item.active, 
-#botones-box > .list-group-item.active:hover, 
-#botones-box > .list-group-item.active:focus {
-    background-image: linear-gradient(to bottom, #711a26 0px, #a8787f 100%);
+#btnHomicide.active{
+	background-image: linear-gradient(to bottom, #711a26 0px, #a8787f 100%);
+}
+#btnKidnap.active{
+	background-image: linear-gradient(to bottom, #96adbd 0px, #C5D0D7 100%);
+}
+#btnExtortion.active{
+	background-image: linear-gradient(to bottom, #ae560d 0px, #C89469 100%);
+}
+#btnCarNoViolence.active{
+	background-image: linear-gradient(to bottom, #3b615f 0px, #839998 100%);
+}
+#btnCarViolence.active{
+	background-image: linear-gradient(to bottom, #6b6694 0px, #8D8AAB 100%);
+}
+
+#botones-box > .list-group-item.active {
+    /*background-image: linear-gradient(to bottom, #711a26 0px, #a8787f 100%);*/
     background-repeat: repeat-x;
     border-color: #eee;
     text-shadow: 0 -1px 0 #3071a9;

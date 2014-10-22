@@ -114,8 +114,6 @@
             else
               return chroma.hex("#333333");
           }
-            //chroma.scale(["#333333", "#ffffff"])
-            //.domain([10,MAXRATE/3]); 
 
         var fontSize = d3.scale.linear() //values for the font sizes
           .domain([-1, MAXRATE]) 
