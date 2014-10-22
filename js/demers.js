@@ -408,9 +408,7 @@
       map.addLayer('admin1', {
           styles: {
               stroke: '#ffffff',
-              fill: function(d) { 
-                return getNode(d.name).color;
-                }
+              fill: function(d) { return getNode(d.name).color;}
           },
           mouseenter: function(d, path) {
               path.attr('stroke', '#000000');
@@ -436,7 +434,7 @@
 
       borderStateGeoMap = function (name, color){
           map.getLayer('admin1')
-            .style('stroke', function(d) { if (name==d.name) return color});   
+            .style('stroke', function(d) { if (name==d.name) return color; else return 'white';});   
       }
 
       isMapLoaded = true;
