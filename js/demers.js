@@ -164,6 +164,7 @@
             .attr("y", function(d) { return d.y; });
 
         var label = grupos.append("text")
+            .attr("class", "lblValue")
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
             .attr("dy", "1.8em")
@@ -174,6 +175,19 @@
             .attr("fill", function(d) { return d.colorlbl;})
             .attr("text-anchor", "middle")
             .text(function(d){return (d.value != -1)? d.value:''});
+
+            grupos.append("text")
+              .attr("class", "lblEstado")
+              .attr("x", function(d) { return d.x; })
+              .attr("y", function(d) { return d.y; })
+              .attr("dy", "3.5em")
+              .attr("dx", "0.8em")
+              .attr("font-family", "Helvetica")
+              .attr("font-weight", "bold")
+              .attr("font-size", function(d) { return fontSize(d.value)/1.2; })
+              .attr("fill", function(d) { return d.colorlbl;})
+              .attr("text-anchor", "start")
+              .text(function(d){return (d.value != -1)? ABBREV[d.state]:''});
             
         //deletes the tooltip in case it is still there.
         hideTooltip();
@@ -205,12 +219,19 @@
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; });
 
-        svg.selectAll("g").select("text")
+        svg.selectAll("g").select(".lblValue")
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
             .transition().attr("font-size", function(d) { return fontSize(d.value); })
             .attr("fill", function(d) { return d.colorlbl;})
             .text(function(d){return (d.value != -1)? d.value:''});
+
+         svg.selectAll("g").select(".lblEstado")
+            .attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y; })
+            .attr("font-size", function(d) { return fontSize(d.value)/1.2; })
+            .attr("fill", function(d) { return d.colorlbl;})
+            .text(function(d){return (d.value != -1)? ABBREV[d.state]:''});
             
         GNODE = nodes; //make it available globally
         if (isMapLoaded){
@@ -468,5 +489,11 @@
           GHOMI = states;
         });
 
+    var ABBREV = {'Aguascalientes':'AGU','Baja California':'BCN','Baja California Sur':'BCS','Campeche':'CAM',
+'Chiapas':'CHP','Chihuahua':'CHH','Coahuila':'COA','Colima':'COL','Distrito Federal':'DIF',
+'Durango':'DUR','Guanajuato':'GUA','Guerrero':'GRO','Hidalgo':'HID','Jalisco':'JAL','Mexico':'MEX',
+'Michoacan':'MIC','Morelos':'MOR','Nayarit':'NAY','Nuevo Leon':'NLE','Oaxaca':'OAX','Puebla':'PUE',
+'Queretaro':'QUE','Quintana Roo':'ROO','San Luis Potosi':'SLP','Sinaloa':'SIN','Sonora':'SON',
+'Tabasco':'TAB','Tamaulipas':'TAM','Tlaxcala':'TLA','Veracruz':'VER','Yucatan':'YUC','Zacatecas':'ZAC'};
   
 
