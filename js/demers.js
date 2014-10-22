@@ -288,7 +288,7 @@
                   }
               },
               tooltip: {
-                  valueSuffix: ' per 100,000'
+                  enabled: false
               },
               plotOptions: {
                   bar: {
