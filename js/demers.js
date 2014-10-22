@@ -406,7 +406,7 @@
 
   var opts = { padding: 0 };
   var map = kartograph.map('#map');
-  map.loadMap('svg/MEX.svg', mapLoaded, opts);
+  map.loadMap('svg/MEXandUSA.svg', mapLoaded, opts);
 
   function getNode(name){      
     var nodo;
@@ -424,7 +424,10 @@
       map.addLayer('admin1', {
           styles: {
               stroke: '#ffffff',
-              fill: function(d) { return getNode(d.name).color;}
+              fill: function(d) { 
+                if (getNode(d.name)===undefined) 
+                  return '#eeeeee';
+                return getNode(d.name).color;}
           },
           mouseenter: function(d, path) {
               path.attr('stroke', '#000000');
@@ -442,6 +445,8 @@
               hideTooltip();
           }
       });
+
+      map.addLayer('admin2');
 
       updateMap = function() {
           map.getLayer('admin1')
