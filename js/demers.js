@@ -117,7 +117,7 @@
 
         var fontSize = d3.scale.linear() //values for the font sizes
           .domain([-1, MAXRATE]) 
-          .range([7, 41]);
+          .range([7, 36]);
 
         var nodes = states
             .map(function(d) {
@@ -167,7 +167,7 @@
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
             .attr("dy", "1.8em")
-            .attr("dx", "1.4em")
+            .attr("dx", "1.6em")
             .attr("font-family", "Helvetica")
             .attr("font-weight", "bold")
             .attr("font-size", function(d) { return fontSize(d.value); })
@@ -210,13 +210,8 @@
             .attr("y", function(d) { return d.y; })
             .transition().attr("font-size", function(d) { return fontSize(d.value); })
             .attr("fill", function(d) { return d.colorlbl;})
-            .text(function(d){
-              var val = Math.round( d.value * 10 ) / 10;
-              if (val != -1)
-                return val;
-            });
+            .text(function(d){return (d.value != -1)? d.value:''});
             
-        
         GNODE = nodes; //make it available globally
         if (isMapLoaded){
             updateMap(); 
