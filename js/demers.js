@@ -34,10 +34,8 @@
       }
 
        //for the colors 
-      var colHi = chroma.hex("#711a26"), //homicides red
-      //var colHi = chroma.hex("#FF0000"),
+      var colHi = chroma.hex(varColor), //homicides red
           colLow = chroma.hex("#eeeeee");
-          //colLow = chroma.hex("#00FF00");
       
       //the SVG main demers map    
       var margin = {top: 0, right: 0, bottom: 0, left: 0},
@@ -105,6 +103,7 @@
           .domain([0, MAXRATE]) 
           .range([0, 58]);
 
+        colHi = chroma.hex(varColor); //updates the color
         var colorFn = chroma.scale([colLow, colHi])
             .domain([0, MAXRATE]); 
 

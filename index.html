@@ -48,6 +48,7 @@
     var GYEAR = 2014;
     var varTitle = "Homicide rate";
     var varImgFile = "images/homicide.png";
+    var varColor = "#711a26";
     $(document).ready(function(){
 
             function updateYear(){
@@ -74,26 +75,31 @@
                   case ("btnHomicide"):
                     varImgFile = "images/homicide.png";
                     varTitle = "Homicide Rate";
+                    varColor = "#711a26";
                     ready(GERROR, GSTATES, GHOMI);
                     break;
                   case ("btnKidnap"):
                     varImgFile = "images/kidnap.png";
                     varTitle = "Kidnapping Rate";
+                    varColor = "#96adbd";
                     ready(GERROR, GSTATES, GKIDNAP);
                     break;
                   case ("btnExtortion"):
                     varImgFile = "images/extortion.png";
                     varTitle = "Extortion Rate";
+                    varColor = "#ae560d";
                     ready(GERROR, GSTATES, GEXTORTION);
                     break;
                   case ("btnCarViolence"):
                     varImgFile = "images/car.png";
                     varTitle = "Violent Car Theft Rate";
+                    varColor = "#6b6694";
                     ready(GERROR, GSTATES, GCARVIO);
                     break;
                   case ("btnCarNoViolence"):
                     varImgFile = "images/carvio.png";
                     varTitle = "Non Violent Car Theft Rate";
+                    varColor = "#3b615f";
                     ready(GERROR, GSTATES, GCARNOVIO);
                     break;
                 }
