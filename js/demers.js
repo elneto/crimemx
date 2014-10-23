@@ -406,7 +406,7 @@
 
   var opts = { padding: 0 };
   var map = kartograph.map('#map');
-  map.loadMap('svg/MEXandUSA.svg', mapLoaded, opts);
+  map.loadMap('svg/mexusa.svg', mapLoaded, opts);
 
   function getNode(name){      
     var nodo;
@@ -421,7 +421,7 @@
 
   function mapLoaded(map) {
       var currentNodo;
-      map.addLayer('admin1', {
+      map.addLayer('mylayer', {
           styles: {
               stroke: '#ffffff',
               fill: function(d) { 
@@ -446,15 +446,15 @@
           }
       });
 
-      map.addLayer('admin2');
+
 
       updateMap = function() {
-          map.getLayer('admin1')
+          map.getLayer('mylayer')
             .style('fill', function(d) { return getNode(d.name).color;});
       }
 
       borderStateGeoMap = function (name, color){
-          map.getLayer('admin1')
+          map.getLayer('mylayer')
             .style('stroke', function(d) { if (name==d.name) return color; else return 'white';});   
       }
 
