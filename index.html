@@ -59,6 +59,8 @@
     var varTitle = "Homicide rate";
     var varImgFile = "images/homicide.png";
     var varColor = "#711a26";
+
+
     var resInterval;
     $(document).ready(function(){
 
@@ -81,46 +83,7 @@
             });
 
             $("#botones-box .list-group-item").click(function(event){
-                MAXRATE=0;
-                switch(event.target.id){
-                  case ("btnHomicide"):
-                    varImgFile = "images/homicide.png";
-                    varTitle = "Homicide Rate";
-                    varColor = "#711a26";
-                    ready(GERROR, GSTATES, GHOMI);
-                    break;
-                  case ("btnKidnap"):
-                    varImgFile = "images/kidnap.png";
-                    varTitle = "Kidnapping Rate";
-                    varColor = "#96adbd";
-                    ready(GERROR, GSTATES, GKIDNAP);
-                    break;
-                  case ("btnExtortion"):
-                    varImgFile = "images/extortion.png";
-                    varTitle = "Extortion Rate";
-                    varColor = "#ae560d";
-                    ready(GERROR, GSTATES, GEXTORTION);
-                    break;
-                  case ("btnCarViolence"):
-                    varImgFile = "images/car.png";
-                    varTitle = "Violent Car Theft Rate";
-                    varColor = "#6b6694";
-                    ready(GERROR, GSTATES, GCARVIO);
-                    break;
-                  case ("btnCarNoViolence"):
-                    varImgFile = "images/carvio.png";
-                    varTitle = "Non Violent Car Theft Rate";
-                    varColor = "#3b615f";
-                    ready(GERROR, GSTATES, GCARNOVIO);
-                    break;
-                }
-                
-                $('#botones-box > .list-group-item').removeClass("active");
-                $('#'+event.target.id).addClass("active");
-                $("#top-image").attr("src", varImgFile);
-                $("#main-title").text(varTitle+" in "+$( "#slider" ).slider( "value" ));
-                if (GYEAR==2014)
-                    $("#main-title").append("*");
+                goToPoint(event.target.id,GYEAR); 
             });
       
     });
@@ -144,7 +107,54 @@
 
       });
 
-   
+    function goToPoint(crime, year){
+      MAXRATE=0;
+      GYEAR = year;
+      $("#slider").slider("value", GYEAR);
+      switch(crime){
+        case ("btnHomicide"):
+          varImgFile = "images/homicide.png";
+          varTitle = "Homicide Rate";
+          varColor = "#711a26";
+          MAXRATE=0;
+          ready(GERROR, GSTATES, GHOMI);
+          break;
+        case ("btnKidnap"):
+          varImgFile = "images/kidnap.png";
+          varTitle = "Kidnapping Rate";
+          varColor = "#96adbd";
+          MAXRATE=0;
+          ready(GERROR, GSTATES, GKIDNAP);
+          break;
+        case ("btnExtortion"):
+          varImgFile = "images/extortion.png";
+          varTitle = "Extortion Rate";
+          varColor = "#ae560d";
+          MAXRATE=0;
+          ready(GERROR, GSTATES, GEXTORTION);
+          break;
+        case ("btnCarViolence"):
+          varImgFile = "images/car.png";
+          varTitle = "Violent Car Theft Rate";
+          varColor = "#6b6694";
+          MAXRATE=0;
+          ready(GERROR, GSTATES, GCARVIO);
+          break;
+        case ("btnCarNoViolence"):
+          varImgFile = "images/carvio.png";
+          varTitle = "Non Violent Car Theft Rate";
+          varColor = "#3b615f";
+          MAXRATE=0;
+          ready(GERROR, GSTATES, GCARNOVIO);
+          break;
+        }
+      $('#botones-box > .list-group-item').removeClass("active");
+      $('#'+crime).addClass("active");
+      $("#top-image").attr("src", varImgFile);
+      $("#main-title").text(varTitle+" in "+$( "#slider" ).slider( "value" ));
+      if (GYEAR==2014)
+          $("#main-title").append("*");
+    }
 
     </script>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -210,22 +220,22 @@
 
         <hr>
         <div class="col-md-4">
-          <h3>Homicides in Guerrero</h3> <p>Guerrero has always been in the top four states in homicide rates except for 2004</p>
+          <h3>Homicides in Guerrero</h3> <p>Guerrero has always been in the top four states in homicide rates except for <a href="javascript:goToPoint('btnHomicide',2004)">2004</a></p>
         </div>
         <div class="col-md-4">
-          <h3>Tlaxcala's Kidnaps</h3> <p>Kidnaps increased trmendously in Tlaxcala in 2006</p>
+          <h3>Tlaxcala's Kidnaps</h3> <p>Kidnaps increased tremendously in Tlaxcala in <a href="javascript:goToPoint('btnKidnap',2006)">2006</a></p>
         </div>
         <div class="col-md-4">
-          <h3>Baja California cars</h3> <p>Baja California was not a good place to leave your car during 1998-2003. Data was not available from 2004-2008.</p>
+          <h3>Baja California cars</h3> <p>Baja California was not a good place to drive your car during <a href="javascript:goToPoint('btnCarViolence',1998)">1998</a>-2003. Data was not available from 2004-2008.</p>
         </div>
         <div class="col-md-4">
-          <h3>Homicides in Chihuahua</h3> <p>2006-2013 had been years where Chihuahu has suffered many homicides. It coincides with the War on Drugs launched by Felipe Calderón</p>
+          <h3>Homicides in Chihuahua</h3> <p><a href="javascript:goToPoint('btnHomicide',2010)">2006-2013</a> had been years where Chihuahu has suffered many homicides. It coincides with the War on Drugs launched by Felipe Calderón</p>
         </div>
         <div class="col-md-4">
           <h3>Peaceful Yucatán</h3> <p>Yucatán is almost always at the bottom of the list in homicides </p>
         </div>
         <div class="col-md-4">
-          <h3>Extortion in Morelos</h3> <p>Morelos appears almost always at the top of the list in extortions</p>
+          <h3>Extortion in Morelos</h3> <p>Morelos appears almost always at the top of the list in extortions. <a <a href="javascript:goToPoint('btnExtortion',2009)">2009</a> was its worst year</p>
         </div>
       </section>
 

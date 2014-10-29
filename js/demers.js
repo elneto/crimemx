@@ -5,9 +5,9 @@
       var updateMap, borderStateGeoMap;
       var isMapLoaded = false
           isChartCreated = false;
-      var MAXRATE=0;
       var chart,
           keysArray;
+      var MAXRATE=0;
 
       //year must be between 1997 and 2014
       function rateById(year, id)
