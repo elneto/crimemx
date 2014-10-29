@@ -55,14 +55,15 @@
     
     <script type="text/javascript">
     var DATAFILE = "csv/d3-homicide.csv";
-    var GYEAR = 2014;
+    var GYEAR = 1997;
     var varTitle = "Homicide rate";
     var varImgFile = "images/homicide.png";
     var varColor = "#711a26";
+    var resInterval;
     $(document).ready(function(){
 
             function updateYear(){
-                GYEAR = $( "#slider" ).slider( "value" );
+                GYEAR = $("#slider").slider("value");
                 $("#main-title").text(varTitle+" in "+$( "#slider" ).slider( "value" ));
                 if (GYEAR==2014)
                     $("#main-title").append("*");
@@ -74,7 +75,7 @@
               min: 1997,
               max: 2014,
               step: 1,
-              value:2014,
+              value:1997,
               slide: updateYear,
               change: updateYear
             });
@@ -121,8 +122,30 @@
                 if (GYEAR==2014)
                     $("#main-title").append("*");
             });
-
+      
     });
+
+    $(window).load(function() {
+   
+        function changeYear(){
+          if (GYEAR >= 2014){
+            clearInterval(resInterval); //stop! 
+            }
+          $("#slider").slider("value", GYEAR+=1);
+        }
+        resInterval = setInterval(changeYear, 400);
+
+         $("#play-button").click(function(){
+            GYEAR=1996;
+            resInterval = setInterval(changeYear, 400);
+            //$(this).animate({bottom:"4.8em",left:"0.8em"},10).animate({bottom:"5em",left:"1em"},50);
+            
+          });
+
+      });
+
+   
+
     </script>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
@@ -149,7 +172,7 @@
 
       <div class="starter-template">
         <section id="main-blob"><img src="images/homicide.png" id="top-image" >
-        <h1 id="main-title" class="text-left">Homicide Rate in 2014*</h1>
+        <h1 id="main-title" class="text-left">Homicide Rate in 1997</h1>
         <p class="lead text-left">Select a crime indicator and move the timeline slider.</p>
         
       
@@ -167,6 +190,7 @@
                 <div id="map"></div>
               </div>
               <div id="slider-container">
+                <img src="images/play.png" width="20" height="20" id="play-button"/>
                 <div id="slider"></div>
                 <div id="slider-label"></div>
               </div>
