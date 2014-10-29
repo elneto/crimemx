@@ -212,3 +212,8 @@ stroke-width: 1.5px;
     border-color: #b92c28;
 }
 
+h2{
+		background-color: black;
+		color: white;
+		padding-left: 0.2em;
+	}
