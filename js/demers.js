@@ -117,7 +117,7 @@
 
         var fontSize = d3.scale.linear() //values for the font sizes
           .domain([-1, MAXRATE]) 
-          .range([7, 36]);
+          .range([9, 36]);
 
         var nodes = states
             .map(function(d) {
