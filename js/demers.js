@@ -142,10 +142,10 @@
               };
             }); //closes .map
 
-        force
+        /*force
             .nodes(nodes)
             .on("tick", tick)
-            .start();
+            .start();*/
 
         //the enter() section
         var grupos = svg.selectAll("g")
