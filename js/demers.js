@@ -148,13 +148,10 @@
             .start();
 
         //the enter() section
-        var grupos = svg.selectAll("g")
+        var node = svg.selectAll(".node")
             .data(nodes)
-            .enter().append("g");
-            //.attr("x", function(d) { return d.x; })
-            //.attr("y", function(d) { return d.y; });
-
-        grupos.append("rect")
+            .enter().append("g").append("rect")
+            .attr('class', 'node')
             .attr("id", function(d) { return "idn-"+String(d.state).replace(/ /g,''); }) //add one id got from states (mx-state-centroids)
           	.attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
             .attr("stroke", function(d) { return d.color; })
@@ -163,7 +160,7 @@
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; });
 
-        var label = grupos.append("text")
+        var label = svg.selectAll("g").append("text")
             .attr("class", "lblValue")
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
@@ -176,7 +173,7 @@
             .attr("text-anchor", "middle")
             .text(function(d){return (d.value != -1)? d.value:''});
 
-            grupos.append("text")
+        var nEstado = svg.selectAll("g").append("text")
               .attr("class", "lblEstado")
               .attr("x", function(d) { return d.x; })
               .attr("y", function(d) { return d.y; })
@@ -193,9 +190,8 @@
         hideTooltip();
 
         //for the update() section
-        var node  = svg.selectAll("g").data(nodes);
 
-        var nodeR = svg.selectAll("g").select("rect")
+        node
             .on('mouseenter', function(d) {
                 borderStateGeoMap(d.state, '#000000');
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
@@ -219,19 +215,24 @@
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; });
 
-        svg.selectAll("g").select(".lblValue")
+        label
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
             .transition().attr("font-size", function(d) { return fontSize(d.value); })
             .attr("fill", function(d) { return d.colorlbl;})
             .text(function(d){return (d.value != -1)? d.value:''});
 
-         svg.selectAll("g").select(".lblEstado")
+         nEstado
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
             .attr("font-size", function(d) { return fontSize(d.value)/1.2; })
             .attr("fill", function(d) { return d.colorlbl;})
             .text(function(d){return (d.value != -1)? ABBREV[d.state]:''});
+
+        //node.data(nodes);
+        force
+            .nodes(nodes)
+            .start();
             
         GNODE = nodes; //make it available globally
         if (isMapLoaded){
@@ -352,7 +353,15 @@
 
         //all below is for the force layout
         function tick(e) {
-          nodeR.each(gravity(e.alpha * .1))
+          node.each(gravity(e.alpha * .1))
+              .each(collide(.2))
+              .attr("x", function(d) { return d.x - d.r; })
+              .attr("y", function(d) { return d.y - d.r; });
+          label.each(gravity(e.alpha * .1))
+              .each(collide(.2))
+              .attr("x", function(d) { return d.x - d.r; })
+              .attr("y", function(d) { return d.y - d.r; });
+          nEstado.each(gravity(e.alpha * .1))
               .each(collide(.2))
               .attr("x", function(d) { return d.x - d.r; })
               .attr("y", function(d) { return d.y - d.r; });
