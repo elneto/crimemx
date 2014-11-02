@@ -215,7 +215,7 @@
                 borderStateGeoMap(d.state, '#ffffff');
             })
             .attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
-            .transition().attr("width", function(d) { return positive(d.r * 2); }) 
+            .attr("width", function(d) { return positive(d.r * 2); }) 
             .attr("height", function(d) { return positive(d.r * 2); })
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; });
@@ -224,7 +224,7 @@
         label.data(nodes)
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
-            .transition().attr("font-size", function(d) { return fontSize(d.value); })
+            .attr("font-size", function(d) { return fontSize(d.value); })
             .attr("fill", function(d) { return d.colorlbl;})
             .text(function(d){return (d.value != -1)? d.value:''});
 
