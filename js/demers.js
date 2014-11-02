@@ -195,7 +195,7 @@
         //for the update() section
         var node  = svg.selectAll("g").data(nodes);
 
-        svg.selectAll("g").select("rect")
+        var nodeR = svg.selectAll("g").select("rect")
             .on('mouseenter', function(d) {
                 borderStateGeoMap(d.state, '#000000');
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
@@ -352,7 +352,7 @@
 
         //all below is for the force layout
         function tick(e) {
-          node.each(gravity(e.alpha * .1))
+          nodeR.each(gravity(e.alpha * .1))
               .each(collide(.2))
               .attr("x", function(d) { return d.x - d.r; })
               .attr("y", function(d) { return d.y - d.r; });
