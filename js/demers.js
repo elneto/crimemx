@@ -148,9 +148,11 @@
             .start();
 
         //the enter() section
-        var node = svg.selectAll(".node")
-            .data(nodes)
-            .enter().append("g").append("rect")
+        var nodeData = svg.selectAll(".nodeG")
+            .data(nodes);
+
+        nodeData
+            .enter().append("g").attr('class', 'nodeG').append("rect")
             .attr('class', 'node')
             .attr("id", function(d) { return "idn-"+String(d.state).replace(/ /g,''); }) //add one id got from states (mx-state-centroids)
           	.attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
@@ -159,8 +161,10 @@
             .attr("height", function(d) { return positive(d.r * 2); })
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; });
-
-        var label = svg.selectAll("g").append("text")
+    
+        
+        nodeData.enter()
+            .append("text")
             .attr("class", "lblValue")
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
@@ -173,7 +177,8 @@
             .attr("text-anchor", "middle")
             .text(function(d){return (d.value != -1)? d.value:''});
 
-        var nEstado = svg.selectAll("g").append("text")
+        nodeData.enter()
+              .append("text")
               .attr("class", "lblEstado")
               .attr("x", function(d) { return d.x; })
               .attr("y", function(d) { return d.y; })
@@ -190,8 +195,8 @@
         hideTooltip();
 
         //for the update() section
-
-        node
+        var node = svg.selectAll(".node");
+        node.data(nodes)
             .on('mouseenter', function(d) {
                 borderStateGeoMap(d.state, '#000000');
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
@@ -215,14 +220,16 @@
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; });
 
-        label
+        var label = svg.selectAll(".lblValue");
+        label.data(nodes)
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
             .transition().attr("font-size", function(d) { return fontSize(d.value); })
             .attr("fill", function(d) { return d.colorlbl;})
             .text(function(d){return (d.value != -1)? d.value:''});
 
-         nEstado
+        var nEstado = svg.selectAll(".lblEstado");
+         nEstado.data(nodes)
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
             .attr("font-size", function(d) { return fontSize(d.value)/1.2; })
@@ -364,7 +371,7 @@
           nEstado.each(gravity(e.alpha * .1))
               .each(collide(.2))
               .attr("x", function(d) { return d.x - d.r; })
-              .attr("y", function(d) { return d.y - d.r; });
+              .attr("y", function(d) { return d.y - d.r; }); 
         }
 
         function gravity(k) {
