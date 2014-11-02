@@ -148,13 +148,12 @@
             .start();*/
 
         //the enter() section
-        var grupos = svg.selectAll("g")
-            .data(nodes)
-            .enter().append("g");
-            //.attr("x", function(d) { return d.x; })
-            //.attr("y", function(d) { return d.y; });
+        var nodeData = svg.selectAll(".nodeG")
+            .data(nodes);
 
-        grupos.append("rect")
+        nodeData
+            .enter().append("g").attr('class', 'nodeG').append("rect")
+            .attr('class', 'node')
             .attr("id", function(d) { return "idn-"+String(d.state).replace(/ /g,''); }) //add one id got from states (mx-state-centroids)
           	.attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
             .attr("stroke", function(d) { return d.color; })
@@ -162,8 +161,10 @@
             .attr("height", function(d) { return positive(d.r * 2); })
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; });
-
-        var label = grupos.append("text")
+    
+        
+        nodeData.enter()
+            .append("text")
             .attr("class", "lblValue")
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
@@ -176,7 +177,8 @@
             .attr("text-anchor", "middle")
             .text(function(d){return (d.value != -1)? d.value:''});
 
-            grupos.append("text")
+        nodeData.enter()
+              .append("text")
               .attr("class", "lblEstado")
               .attr("x", function(d) { return d.x; })
               .attr("y", function(d) { return d.y; })
@@ -193,9 +195,8 @@
         hideTooltip();
 
         //for the update() section
-        var node  = svg.selectAll("g").data(nodes);
-
-        svg.selectAll("g").select("rect")
+        var node = svg.selectAll(".node");
+        node.data(nodes)
             .on('mouseenter', function(d) {
                 borderStateGeoMap(d.state, '#000000');
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
@@ -214,24 +215,31 @@
                 borderStateGeoMap(d.state, '#ffffff');
             })
             .attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
-            .transition().attr("width", function(d) { return positive(d.r * 2); }) 
+            .attr("width", function(d) { return positive(d.r * 2); }) 
             .attr("height", function(d) { return positive(d.r * 2); })
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; });
 
-        svg.selectAll("g").select(".lblValue")
+        var label = svg.selectAll(".lblValue");
+        label.data(nodes)
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
-            .transition().attr("font-size", function(d) { return fontSize(d.value); })
+            .attr("font-size", function(d) { return fontSize(d.value); })
             .attr("fill", function(d) { return d.colorlbl;})
             .text(function(d){return (d.value != -1)? d.value:''});
 
-         svg.selectAll("g").select(".lblEstado")
+        var nEstado = svg.selectAll(".lblEstado");
+         nEstado.data(nodes)
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
             .attr("font-size", function(d) { return fontSize(d.value)/1.2; })
             .attr("fill", function(d) { return d.colorlbl;})
             .text(function(d){return (d.value != -1)? ABBREV[d.state]:''});
+
+        //node.data(nodes);
+        force
+            .nodes(nodes)
+            .start();
             
         GNODE = nodes; //make it available globally
         if (isMapLoaded){
@@ -356,6 +364,14 @@
               .each(collide(.2))
               .attr("x", function(d) { return d.x - d.r; })
               .attr("y", function(d) { return d.y - d.r; });
+          label.each(gravity(e.alpha * .1))
+              .each(collide(.2))
+              .attr("x", function(d) { return d.x - d.r; })
+              .attr("y", function(d) { return d.y - d.r; });
+          nEstado.each(gravity(e.alpha * .1))
+              .each(collide(.2))
+              .attr("x", function(d) { return d.x - d.r; })
+              .attr("y", function(d) { return d.y - d.r; }); 
         }
 
         function gravity(k) {
