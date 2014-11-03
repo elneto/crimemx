@@ -254,6 +254,8 @@
             keysArray.push({'state':d.state,'value':+d.value, 'color': d.color});
          });
 
+        keysArray.push({'state':'Total','value':rateById(GYEAR,0), 'color': '#FF0000'});
+
         //Todo, order the states according to the estadosArraysort
         keysArray.sort(function(b, a) { 
             return a.value < b.value ? -1 : a.value > b.value ? 1 : 0;
@@ -331,15 +333,19 @@
                 point: {
                     events: {
                         mouseOver: function () {
-                            d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", "black");
-                            currentNodo = getNode(this.category);
-                            showTooltip(this.category, currentNodo.value, currentNodo.x, currentNodo.y);
-                            borderStateGeoMap(this.category, '#000000');
+                            if (String(this.category)!='Total'){
+                              d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", "black");
+                              currentNodo = getNode(this.category);
+                              showTooltip(this.category, currentNodo.value, currentNodo.x, currentNodo.y);
+                              borderStateGeoMap(this.category, '#000000');
+                            }
                         },
                         mouseOut: function () {
-                            d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", getNode(this.category).color); //restores the fill color
-                            hideTooltip();
-                            borderStateGeoMap(this.category, '#ffffff');
+                            if (String(this.category)!='Total'){
+                              d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", getNode(this.category).color); //restores the fill color
+                              hideTooltip();
+                              borderStateGeoMap(this.category, '#ffffff');
+                            }
                         }
                     }
                 },
