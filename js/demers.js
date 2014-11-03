@@ -83,7 +83,7 @@
           .style("text-anchor", "middle");
 
       queue()
-        .defer(d3.json, "json/mx-state-centroids.json") //states
+        .defer(d3.json, LANGPATH+"json/mx-state-centroids.json") //states
         .defer(d3.csv, DATAFILE)
         .await(ready);
 
@@ -274,10 +274,10 @@
                   type: 'bar'
               },
               title: {
-                  text: 'Rank by State ('+GYEAR+')'
+                  text: barTitulo +' ('+GYEAR+')'
               },
               subtitle: {
-                  text: 'Source: SNSP'
+                  text: barFuente
               },
               xAxis: {
                   categories: estadosArray,
@@ -288,7 +288,7 @@
               yAxis: {
                   min: 0,
                   title: {
-                      text: 'Rate per 100,000 inhabitants',
+                      text: barTasa,
                       align: 'high'
                   },
                   labels: {
@@ -351,7 +351,7 @@
             isChartCreated = true;
           }
           else{
-            chart.setTitle({ text: 'Rank by State ('+GYEAR+')'});
+            chart.setTitle({ text: barTitulo+' ('+GYEAR+')'});
             chart.series[0].setData(valuesArray,true);
             chart.xAxis[0].setCategories(estadosArray,true);
             //chart.yAxis[0].setTitle({text: varTitle+' (per 100,000) inhabitants'});
@@ -423,7 +423,7 @@
 
   var opts = { padding: 0 };
   var map = kartograph.map('#map');
-  map.loadMap('svg/MEX.svg', mapLoaded, opts);
+  map.loadMap(LANGPATH+'svg/MEX.svg', mapLoaded, opts);
 
   function getNode(name){      
     var nodo;
@@ -490,19 +490,19 @@
     }
 
     //saves the CSVs in globals
-    d3.csv("csv/d3-kidnap.csv", function(states){
+    d3.csv(LANGPATH+"csv/d3-kidnap.csv", function(states){
           GKIDNAP = states;
         });
-    d3.csv("csv/d3-extortion.csv", function(states){
+    d3.csv(LANGPATH+"csv/d3-extortion.csv", function(states){
           GEXTORTION = states;
         });
-    d3.csv("csv/d3-car-violence.csv", function(states){
+    d3.csv(LANGPATH+"csv/d3-car-violence.csv", function(states){
           GCARVIO = states;
         });
-    d3.csv("csv/d3-car-no-violence.csv", function(states){
+    d3.csv(LANGPATH+"csv/d3-car-no-violence.csv", function(states){
           GCARNOVIO = states;
         });
-    d3.csv("csv/d3-homicide.csv", function(states){
+    d3.csv(LANGPATH+"csv/d3-homicide.csv", function(states){
           GHOMI = states;
         });
 
