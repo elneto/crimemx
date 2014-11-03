@@ -288,7 +288,7 @@
               yAxis: {
                   min: 0,
                   title: {
-                      text: varTitle+' (per 100,000)',
+                      text: 'Rate per 100,000 inhabitants',
                       align: 'high'
                   },
                   labels: {
@@ -354,6 +354,7 @@
             chart.setTitle({ text: 'Rank by State ('+GYEAR+')'});
             chart.series[0].setData(valuesArray,true);
             chart.xAxis[0].setCategories(estadosArray,true);
+            //chart.yAxis[0].setTitle({text: varTitle+' (per 100,000) inhabitants'});
           }
         //console.log(Highcharts.charts);
       });
