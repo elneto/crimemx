@@ -107,7 +107,7 @@
         function colorFn (value){
           if (value == -1)
             return chroma.hex("#eeeeee");
-          
+
           var v = radius(value);
           if (-1 > v && v < 11)
             return chroma.hex("#258687");
@@ -268,7 +268,8 @@
         keysArray = [];
 
         $.each(svg.selectAll("rect").data(), function(i, d) { //data gets an array with all the state info
-            keysArray.push({'state':d.state,'value':+d.value, 'color': d.color});
+            if (d.value != -1) //don't put in the list 
+              keysArray.push({'state':d.state,'value':+d.value, 'color': d.color});
          });
 
         keysArray.push({'state':'Total','value':rateById(GYEAR,0), 'color': '#FF0000'});
