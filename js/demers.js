@@ -267,7 +267,8 @@
         keysArray = [];
 
         $.each(svg.selectAll("rect").data(), function(i, d) { //data gets an array with all the state info
-            keysArray.push({'state':d.state,'value':+d.value, 'color': d.color});
+            if (d.value != -1) //don't put in the list if no value
+              keysArray.push({'state':d.state,'value':+d.value, 'color': d.color});
          });
 
         keysArray.push({'state':'Total','value':rateById(GYEAR,0), 'color': '#FF0000'});
