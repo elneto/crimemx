@@ -104,6 +104,9 @@
           .range([0, 58]);
 
         function colorFn (value){
+          if (value == -1)
+            return chroma.hex("#eeeeee");
+
           var v = radius(value);
           if (-1 > v && v < 11)
             return chroma.hex("#258687");
