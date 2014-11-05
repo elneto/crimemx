@@ -104,8 +104,19 @@
           .range([0, 58]);
 
         colHi = chroma.hex(varColor); //updates the color
-        var colorFn = chroma.scale([colLow, colHi])
-            .domain([0, MAXRATE]); 
+        function colorFn (value){
+          var v = radius(value);
+          if (-1 > v && v < 11)
+            return chroma.hex("#258687");
+          else if (11 >= v && v < 23)
+            return chroma.hex("#5DBEAB");
+          else if (23 >= v && v < 35)
+            return chroma.hex("#F4EB9E");
+          else if (35 >= v && v < 46)
+            return chroma.hex("#F5C28D");
+          else 
+            return chroma.hex("#FA5050");
+        }
 
         var colorLabel = function (val){
             if (val>MAXRATE/2){ 
