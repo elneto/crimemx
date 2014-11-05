@@ -145,7 +145,7 @@
         force
             .nodes(nodes)
             .on("tick", tick)
-            .start();
+            .start().stop();
 
         //the enter() section
         var nodeData = svg.selectAll(".nodeG")
@@ -367,15 +367,16 @@
 
         //all below is for the force layout
         function tick(e) {
-          node.each(gravity(e.alpha * .1))
+          var grav = 0.15;
+          node.each(gravity(grav))
               .each(collide(.2))
               .attr("x", function(d) { return d.x - d.r; })
               .attr("y", function(d) { return d.y - d.r; });
-          label.each(gravity(e.alpha * .1))
+          label.each(gravity(grav))
               .each(collide(.2))
               .attr("x", function(d) { return d.x - d.r; })
               .attr("y", function(d) { return d.y - d.r; });
-          nEstado.each(gravity(e.alpha * .1))
+          nEstado.each(gravity(grav))
               .each(collide(.2))
               .attr("x", function(d) { return d.x - d.r; })
               .attr("y", function(d) { return d.y - d.r; }); 
