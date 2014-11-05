@@ -168,7 +168,7 @@
             .attr("class", "lblValue")
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
-            .attr("dy", "1.8em")
+            .attr("dy", "1.4em")
             .attr("dx", "1.6em")
             .attr("font-family", "Helvetica")
             .attr("font-weight", "bold")
@@ -182,7 +182,7 @@
               .attr("class", "lblEstado")
               .attr("x", function(d) { return d.x; })
               .attr("y", function(d) { return d.y; })
-              .attr("dy", "3.5em")
+              .attr("dy", "3.1em")
               .attr("dx", "0.8em")
               .attr("font-family", "Helvetica")
               .attr("font-weight", "bold")
@@ -215,15 +215,17 @@
                 borderStateGeoMap(d.state, '#ffffff');
             })
             .attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
-            .attr("width", function(d) { return positive(d.r * 2); }) 
-            .attr("height", function(d) { return positive(d.r * 2); })
             .attr("x", function(d) { return d.x; })
-            .attr("y", function(d) { return d.y; });
+            .attr("y", function(d) { return d.y; })
+            .transition().duration(500)
+            .attr("width", function(d) { return positive(d.r * 2); }) 
+            .attr("height", function(d) { return positive(d.r * 2); });
 
         var label = svg.selectAll(".lblValue");
         label.data(nodes)
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
+            .transition().duration(500)
             .attr("font-size", function(d) { return fontSize(d.value); })
             .attr("fill", function(d) { return d.colorlbl;})
             .text(function(d){return (d.value != -1)? d.value:''});
@@ -232,6 +234,7 @@
          nEstado.data(nodes)
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
+            .transition().duration(500)
             .attr("font-size", function(d) { return fontSize(d.value)/1.2; })
             .attr("fill", function(d) { return d.colorlbl;})
             .text(function(d){return (d.value != -1)? ABBREV[d.state]:''});
