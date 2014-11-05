@@ -155,8 +155,8 @@
             .enter().append("g").attr('class', 'nodeG').append("rect")
             .attr('class', 'node')
             .attr("id", function(d) { return "idn-"+String(d.state).replace(/ /g,''); }) //add one id got from states (mx-state-centroids)
-          	.attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
-            .attr("stroke", function(d) { return d.color; })
+          	//.attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
+            //.attr("stroke", function(d) { return d.color; })
             .attr("width", function(d) { return positive(d.r * 2); })
             .attr("height", function(d) { return positive(d.r * 2); })
             .attr("x", function(d) { return d.x; })
@@ -173,7 +173,7 @@
             .attr("font-family", "Helvetica")
             .attr("font-weight", "bold")
             .attr("font-size", function(d) { return fontSize(d.value); })
-            .attr("fill", function(d) { return d.colorlbl;})
+            //.attr("fill", function(d) { return d.colorlbl;})
             .attr("text-anchor", "middle")
             .text(function(d){return (d.value != -1)? d.value:''});
 
@@ -187,7 +187,7 @@
               .attr("font-family", "Helvetica")
               .attr("font-weight", "bold")
               .attr("font-size", function(d) { return fontSize(d.value)/1.2; })
-              .attr("fill", function(d) { return d.colorlbl;})
+              //.attr("fill", function(d) { return d.colorlbl;})
               .attr("text-anchor", "start")
               .text(function(d){return (d.value != -1)? ABBREV[d.state]:''});
             
@@ -196,6 +196,7 @@
 
         //for the update() section
         var node = svg.selectAll(".node");
+        
         node.data(nodes)
             .on('mouseenter', function(d) {
                 borderStateGeoMap(d.state, '#000000');
@@ -204,20 +205,19 @@
                 showTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y); //d3.select(this)[0][0].width.animVal.value
             })
             .on('mouseover', function(d) { 
-                this.setAttribute("style", "fill:"+d.color+"; stroke:#000000; z-index:999");
-                //d3.select("#idlist-" + d.id).style("background-color", barColorOver).style("font-weight", "bold");
+                //this.setAttribute("style", "fill:"+d.color+"; stroke:#000000; z-index:999");
             })
             .on('mouseleave', function(d) { 
-                this.setAttribute("style", "fill:"+d.color+"; stroke:"+d.color);
+                //this.setAttribute("style", "fill:"+d.color+"; stroke:"+d.color);
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                 chart.series[0].data[index].select(false);
                 hideTooltip();
                 borderStateGeoMap(d.state, '#ffffff');
             })
-            .attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
+            //.attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
-            .transition().duration(500)
+            //.transition().duration(500)
             .attr("width", function(d) { return positive(d.r * 2); }) 
             .attr("height", function(d) { return positive(d.r * 2); });
 
@@ -227,7 +227,7 @@
             .attr("y", function(d) { return d.y; })
             .transition().duration(500)
             .attr("font-size", function(d) { return fontSize(d.value); })
-            .attr("fill", function(d) { return d.colorlbl;})
+            //.attr("fill", function(d) { return d.colorlbl;})
             .text(function(d){return (d.value != -1)? d.value:''});
 
         var nEstado = svg.selectAll(".lblEstado");
@@ -236,7 +236,7 @@
             .attr("y", function(d) { return d.y; })
             .transition().duration(500)
             .attr("font-size", function(d) { return fontSize(d.value)/1.2; })
-            .attr("fill", function(d) { return d.colorlbl;})
+            //.attr("fill", function(d) { return d.colorlbl;})
             .text(function(d){return (d.value != -1)? ABBREV[d.state]:''});
 
         //node.data(nodes);
@@ -337,7 +337,7 @@
                     events: {
                         mouseOver: function () {
                             if (String(this.category)!='Total'){
-                              d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", "black");
+                              //d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", "black");
                               currentNodo = getNode(this.category);
                               showTooltip(this.category, currentNodo.value, currentNodo.x, currentNodo.y);
                               borderStateGeoMap(this.category, '#000000');
@@ -345,7 +345,7 @@
                         },
                         mouseOut: function () {
                             if (String(this.category)!='Total'){
-                              d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", getNode(this.category).color); //restores the fill color
+                              //d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", getNode(this.category).color); //restores the fill color
                               hideTooltip();
                               borderStateGeoMap(this.category, '#ffffff');
                             }
@@ -370,7 +370,7 @@
 
         //all below is for the force layout
         function tick(e) {
-          var grav = 0.15;
+          var grav = 1;
           node.each(gravity(grav))
               .each(collide(.2))
               .attr("x", function(d) { return d.x - d.r; })

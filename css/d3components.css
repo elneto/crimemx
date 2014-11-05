@@ -11,15 +11,17 @@
     height: 650px;
     float: left;
     position: relative;
+    z-index: 2;
 }
 
 #map {
 	position: absolute;
-	bottom: 2em;
-	left: 7em;
+	top: 3em;
+	left: 6em;
 	display: block;
-	width: 250px;
-	height: 200px;
+	width: 800px;
+	z-index: -1;
+	/*height: 200px;*/
 }
 
 /*TODO: clean the unused chart css*/;	
@@ -60,9 +62,12 @@
 
 /*For Demers*/
 #demers rect {
-fill: #eee;
-stroke: #000;
-stroke-width: 1.5px;
+fill: none;
+stroke: #f00;
+stroke-width: 0.5px;
+}
+.lblValue, .lblEstado {
+	fill:#000;
 }
 
 /*For geo maps*/
