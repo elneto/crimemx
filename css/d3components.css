@@ -63,8 +63,8 @@
 /*For Demers*/
 #demers rect {
 fill: none;
-stroke: #f00;
-stroke-width: 0.5px;
+stroke: none;
+
 }
 .lblValue, .lblEstado {
 	fill:#000;
@@ -229,4 +229,10 @@ h2{
 	bottom: 5em;
     left: 1em;
     z-index: 9999;
+}
+
+#scale{
+	position: absolute;
+	bottom: 3em;
+    left: 7.4em;
 }

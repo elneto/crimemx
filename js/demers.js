@@ -34,8 +34,8 @@
       }
 
        //for the colors 
-      var colHi = chroma.hex(varColor), //homicides red
-          colLow = chroma.hex("#eeeeee");
+      var colHi = chroma.hex('#FA5050'), //homicides red
+          colLow = chroma.hex("#5DBEAB");
       
       //the SVG main demers map    
       var margin = {top: 0, right: 0, bottom: 0, left: 0},
@@ -103,9 +103,19 @@
           .domain([0, MAXRATE]) 
           .range([0, 58]);
 
-        colHi = chroma.hex(varColor); //updates the color
-        var colorFn = chroma.scale([colLow, colHi])
-            .domain([0, MAXRATE]); 
+        function colorFn (value){
+          var v = radius(value);
+          if (-1 > v && v < 11)
+            return chroma.hex("#258687");
+          else if (11 >= v && v < 23)
+            return chroma.hex("#5DBEAB");
+          else if (23 >= v && v < 35)
+            return chroma.hex("#F4EB9E");
+          else if (35 >= v && v < 46)
+            return chroma.hex("#F5C28D");
+          else 
+            return chroma.hex("#FA5050");
+        }
 
         var colorLabel = function (val){
             if (val>MAXRATE/2){ 
@@ -189,7 +199,7 @@
               .attr("font-size", function(d) { return fontSize(d.value)/1.2; })
               //.attr("fill", function(d) { return d.colorlbl;})
               .attr("text-anchor", "start")
-              .text(function(d){return (d.value != -1)? ABBREV[d.state]:''});
+              .text(function(d){return (d.value != -1)? d.state:''});
             
         //deletes the tooltip in case it is still there.
         hideTooltip();
@@ -237,7 +247,7 @@
             .transition().duration(500)
             .attr("font-size", function(d) { return fontSize(d.value)/1.2; })
             //.attr("fill", function(d) { return d.colorlbl;})
-            .text(function(d){return (d.value != -1)? ABBREV[d.state]:''});
+            .text(function(d){return (d.value != -1)? d.state:''});
 
         //node.data(nodes);
         force
@@ -266,7 +276,10 @@
 
         for (var i=0; i < keysArray.length; i++){
             estadosArray.push(keysArray[i].state);
-            valuesArray.push({'y':+keysArray[i].value, 'color':keysArray[i].color.toString()});
+            if (typeof keysArray[i].color != 'undefined')
+              valuesArray.push({'y':+keysArray[i].value, 'color':keysArray[i].color.toString()});
+            else
+              console.log(keysArray[i])
         }
 
         //the highchart bar
