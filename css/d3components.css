@@ -20,8 +20,6 @@
 	left: 6em;
 	display: block;
 	width: 800px;
-	z-index: -1;
-	/*height: 200px;*/
 }
 
 /*TODO: clean the unused chart css*/;	
@@ -157,6 +155,7 @@ stroke: none;
     position: absolute;
     right: 0;
     top: 7em;
+    z-index: 99;
 
     -webkit-box-shadow: 6px 6px 6px #b3b3b3;
     -moz-box-shadow: 6px 6px 6px #b3b3b3;
