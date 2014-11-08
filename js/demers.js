@@ -101,23 +101,27 @@
 
         var radius = d3.scale.sqrt() //values for the square sizes 
           .domain([0, MAXRATE]) 
-          .range([0, 58]);
+          .range([0, 63]);
 
         function colorFn (value){
           if (value == -1)
-            return chroma.hex("#eeeeee");
+            return chroma.hex("#eeeeee"); //no data
 
           var v = radius(value);
-          if (-1 > v && v < 11)
-            return chroma.hex("#258687");
-          else if (11 >= v && v < 23)
-            return chroma.hex("#5DBEAB");
-          else if (23 >= v && v < 35)
-            return chroma.hex("#F4EB9E");
-          else if (35 >= v && v < 46)
-            return chroma.hex("#F5C28D");
+          if (0 > v && v < 9)
+            return chroma.hex("#4575b4"); //less crime
+          else if (9 >= v && v < 18)
+            return chroma.hex("#91bfdb");
+          else if (18 >= v && v < 27)
+            return chroma.hex("#e0f3f8");
+          else if (27 >= v && v < 36)
+            return chroma.hex("#ffffbf");
+          else if (36 >= v && v < 45)
+            return chroma.hex("#fee090");
+          else if ( 45>= v && v < 42)
+            return chroma.hex("#fc8d59");
           else 
-            return chroma.hex("#FA5050");
+            return chroma.hex("#d73027"); //more crime
         }
 
         var colorLabel = function (val){
