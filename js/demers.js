@@ -341,37 +341,57 @@
               fill: function(d) { return getNode(d.name).color;}
           },
           mouseenter: function(d, path) {
-              path.attr('stroke', '#000000');
-              var index = keysArray.map(function(x) {return x.state; }).indexOf(d.name);
-              chart.series[0].data[index].select();
+              borderStateGeoMap(d.name, '#000000');
               currentNodo = getNode(d.name);
-              showTooltip(d.name, currentNodo.value, currentNodo.x, currentNodo.y);
-          }, 
-          mouseleave: function(d, path) {
-              path.attr('stroke', '#ffffff'); 
-              var index = keysArray.map(function(x) {return x.state; }).indexOf(d.name);
-              chart.series[0].data[index].select(false);
+              if (currentNodo.value!=-1){ //select list item just if it exists
+                var index = keysArray.map(function(x) {return x.state; }).indexOf(d.name);
+                chart.series[0].data[index].select();  
+                showTooltip(d.name, currentNodo.value, currentNodo.x, currentNodo.y);
+              }
+              else{
+                showTooltip(d.name, "NA", currentNodo.x, currentNodo.y);
+              }
+              
+            }, 
+            mouseleave: function(d, path) {
+              borderStateGeoMap(d.name, '#ffffff');
+              if (currentNodo.value!=-1){ //select list item just if it exists
+                var index = keysArray.map(function(x) {return x.state; }).indexOf(d.name);
+                chart.series[0].data[index].select(false);
+              }
               hideTooltip();
-          }
+            }
       });
       //values
       map.addSymbols({
             type: kartograph.Label,
             data: centroids,
             location: function(d) { return [d.geo_longitude, d.geo_latitude] },
-            text: function(d) { return getNode(d.state).value; },
+            text: function(d) { 
+                  var val = getNode(d.state).value;
+                  if (val==-1)
+                    val = "NA"
+                  return val},
             style: function(d){ return "font-size:"+getNode(d.state).value+"px;"},
             mouseenter: function(d, path) {
               currentNodo = getNode(d.state);
               borderStateGeoMap(d.state, '#000000');
-              var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
-              chart.series[0].data[index].select();
-              showTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
+              if (currentNodo.value!=-1){ //select list item just if it exists
+                var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                chart.series[0].data[index].select();  
+                showTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
+              }
+              else{                
+                showTooltip(d.state, "NA", currentNodo.x, currentNodo.y);
+              }
+              
             }, 
             mouseleave: function(d, path) {
               borderStateGeoMap(d.state, '#ffffff');
-              var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
-              chart.series[0].data[index].select(false);
+              if (currentNodo.value!=-1){ //select list item just if it exists
+                var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                chart.series[0].data[index].select(false);
+              }
               hideTooltip();
             }
         });
@@ -381,18 +401,25 @@
             data: centroids,
             location: function(d) { return [d.geo_longitude, d.geo_latitude-0.4] },
             text: function(d) { return d.state; },
-            //style: function(d){ return "font-family:Helvetica; font-weight:bold font-size:"+getNode(d.state).value+"px;"},
             mouseenter: function(d, path) {
               currentNodo = getNode(d.state);
               borderStateGeoMap(d.state, '#000000');
-              var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
-              chart.series[0].data[index].select();
-              showTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
+              if (currentNodo.value!=-1){ //select list item just if it exists
+                var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                chart.series[0].data[index].select();  
+                showTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
+              }
+              else{
+                showTooltip(d.state, "NA", currentNodo.x, currentNodo.y);
+              }
+              
             }, 
             mouseleave: function(d, path) {
               borderStateGeoMap(d.state, '#ffffff');
-              var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
-              chart.series[0].data[index].select(false);
+              if (currentNodo.value!=-1){ //select list item just if it exists
+                var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                chart.series[0].data[index].select(false);
+              }
               hideTooltip();
             }
           });
@@ -411,19 +438,29 @@
                 type: kartograph.Label,
                 data: centroids,
                 location: function(d) { return [d.geo_longitude, d.geo_latitude] },
-                text: function(d) { return getNode(d.state).value; },
-                //style: function(d){ return "font-family:Helvetica; font-weight:bold font-size:"+getNode(d.state).value+"px;"},
+                text: function(d) { 
+                  var val = getNode(d.state).value;
+                  if (val==-1)
+                    val = "NA"
+                  return val},
                 mouseenter: function(d, path) {
                   currentNodo = getNode(d.state);
                   borderStateGeoMap(d.state, '#000000');
-                  var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
-                  chart.series[0].data[index].select();
-                  showTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
+                  if (currentNodo.value!=-1){ //select list item just if it exists
+                    var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                    chart.series[0].data[index].select();  
+                    showTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
+                  }
+                  else{                    
+                    showTooltip(d.state, "NA", currentNodo.x, currentNodo.y);
+                  }
                 }, 
                 mouseleave: function(d, path) {
                   borderStateGeoMap(d.state, '#ffffff');
-                  var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
-                  chart.series[0].data[index].select(false);
+                  if (currentNodo.value!=-1){ //select list item just if it exists
+                    var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                    chart.series[0].data[index].select(false);
+                  }
                   hideTooltip();
                 }
             });
@@ -433,18 +470,24 @@
                 data: centroids,
                 location: function(d) { return [d.geo_longitude, d.geo_latitude-0.4] },
                 text: function(d) { return d.state; },
-                //style: function(d){ return "font-family:Helvetica; font-weight:bold font-size:"+getNode(d.state).value+"px;"},
                 mouseenter: function(d, path) {
                   currentNodo = getNode(d.state);
                   borderStateGeoMap(d.state, '#000000');
-                  var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
-                  chart.series[0].data[index].select();
-                  showTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
+                  if (currentNodo.value!=-1){ //select list item just if it exists
+                    var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                    chart.series[0].data[index].select();  
+                    showTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
+                  }
+                  else{                    
+                    showTooltip(d.state, "NA", currentNodo.x, currentNodo.y);
+                  }
                 }, 
                 mouseleave: function(d, path) {
                   borderStateGeoMap(d.state, '#ffffff');
-                  var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
-                  chart.series[0].data[index].select(false);
+                  if (currentNodo.value!=-1){ //select list item just if it exists
+                    var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                    chart.series[0].data[index].select(false);
+                  }
                   hideTooltip();
                 }
               });
@@ -452,7 +495,6 @@
           d3.selectAll("#map.kartograph tspan")
             .data(GNODE)
             .style("font-size", function(d) { return fontSize(d.value) + "px"; });
-          //$('text:contains("Chihuahua")').attr("font-size","20px");
       }
 
       borderStateGeoMap = function (name, color){
