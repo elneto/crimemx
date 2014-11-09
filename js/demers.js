@@ -21,6 +21,7 @@
           return ratesNationalHomicides[year-1996][id];
         }
 
+      //Calculates the maximum value per CSV of crime
       function maxValue(arr){
         var max = 0;
         for (var i=1; i <= 32; i++) { //ignores the total
@@ -31,6 +32,17 @@
           }
         }
         return +max;
+      }
+
+      //draws the appropriate scale values for this current CSV
+      function scaleValues(max){
+        $( "#ol-scale li:eq(0)" ).text(Math.round( max*10 )/10);
+        $( "#ol-scale li:eq(1)" ).text(Math.round( max/7*6*10 )/10);
+        $( "#ol-scale li:eq(2)" ).text(Math.round( max/7*5*10 )/10);
+        $( "#ol-scale li:eq(3)" ).text(Math.round( max/7*4*10 )/10);
+        $( "#ol-scale li:eq(4)" ).text(Math.round( max/7*3*10 )/10);
+        $( "#ol-scale li:eq(5)" ).text(Math.round( max/7*2*10 )/10);
+        $( "#ol-scale li:eq(6)" ).text(Math.round( max/7*1*10 )/10);
       }
       
       //the SVG main demers map    
@@ -84,6 +96,7 @@
       
         if (MAXRATE==0) {//only calculates it once
           MAXRATE = maxValue(rates);
+          scaleValues(MAXRATE);
         }
 
         var radius = d3.scale.sqrt() //values for the square sizes 
