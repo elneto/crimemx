@@ -105,7 +105,7 @@
             return chroma.hex("#ffffbf");
           else if (v >= 36 && v < 45)
             return chroma.hex("#fee090");
-          else if ( v >= 45 && v < 42)
+          else if ( v >= 45 && v < 54)
             return chroma.hex("#fc8d59");
           else 
             return chroma.hex("#d73027"); //more crime
