@@ -2,7 +2,7 @@
       var GNODE, GERROR, GSTATES, GRATES,
           GHOMI, GKIDNAP, GEXTORTION, GCARVIO, GCARNOVIO;
       var ratesNationalHomicides;
-      var updateMap, borderStateGeoMap;
+      var updateMap, borderStateGeoMap, fontSize;
       var isMapLoaded = false
           isChartCreated = false;
       var chart,
@@ -119,7 +119,7 @@
               return chroma.hex("#333333");
           }
 
-        var fontSize = d3.scale.linear() //values for the font sizes
+        fontSize = d3.scale.linear() //values for the font sizes
           .domain([-1, MAXRATE]) 
           .range([9, 36]);
 
@@ -294,18 +294,18 @@
 {"id":"10","state":"Durango","geo_longitude":-104.833333,"geo_latitude":24.33333},
 {"id":"11","state":"Guanajuato","geo_longitude":-101.5,"geo_latitude":21},
 {"id":"12","state":"Guerrero","geo_longitude":-100,"geo_latitude":17.666667},
-{"id":"13","state":"Hidalgo","geo_longitude":-99,"geo_latitude":20.5},
+{"id":"13","state":"Hidalgo","geo_longitude":-99.2,"geo_latitude":20.5},
 {"id":"14","state":"Jalisco","geo_longitude":-103.6666671,"geo_latitude":20.3333331},
-{"id":"15","state":"Mexico","geo_longitude":-100.1045803,"geo_latitude":19.9253628},
+{"id":"15","state":"Mexico","geo_longitude":-100.4045803,"geo_latitude":19.9253628},
 {"id":"16","state":"Michoacan","geo_longitude":-101.878113,"geo_latitude":19.707098},
-{"id":"17","state":"Morelos","geo_longitude":-99,"geo_latitude":18.75},
+{"id":"17","state":"Morelos","geo_longitude":-99,"geo_latitude":18.65},
 {"id":"18","state":"Nayarit","geo_longitude":-105.0000001,"geo_latitude":22.3500001},
 {"id":"19","state":"Nuevo Leon","geo_longitude":-99.8873,"geo_latitude":26.2384363},
 {"id":"20","state":"Oaxaca","geo_longitude":-96.5,"geo_latitude":17},
 {"id":"21","state":"Puebla","geo_longitude":-97.6,"geo_latitude":18.433333},
 {"id":"22","state":"Queretaro","geo_longitude":-99.54756,"geo_latitude":21.4242575},
 {"id":"23","state":"Quintana Roo","geo_longitude":-88.5000001,"geo_latitude":19.6666671},
-{"id":"24","state":"San Luis Potosi","geo_longitude":-100.5000001,"geo_latitude":22.5000001},
+{"id":"24","state":"San Luis Potosi","geo_longitude":-100.5000001,"geo_latitude":22.8000001},
 {"id":"25","state":"Sinaloa","geo_longitude":-107.5000001,"geo_latitude":25.0000001},
 {"id":"26","state":"Sonora","geo_longitude":-110.6666671,"geo_latitude":29.3333331},
 {"id":"27","state":"Tabasco","geo_longitude":-92.6666671,"geo_latitude":18.3000001},
@@ -360,7 +360,7 @@
             data: centroids,
             location: function(d) { return [d.geo_longitude, d.geo_latitude] },
             text: function(d) { return getNode(d.state).value; },
-            //style: function(d){ return "font-family:Helvetica; font-weight:bold font-size:"+getNode(d.state).value+"px;"},
+            style: function(d){ return "font-size:"+getNode(d.state).value+"px;"},
             mouseenter: function(d, path) {
               currentNodo = getNode(d.state);
               borderStateGeoMap(d.state, '#000000');
@@ -397,7 +397,10 @@
             }
           });
       
-      
+      d3.selectAll("#map.kartograph tspan")
+        .data(GNODE)
+        .style("font-size", function(d) { return fontSize(d.value) + "px"; });
+
       updateMap = function() {
           map.getLayer('admin1')
             .style('fill', function(d) { return getNode(d.name).color;});
@@ -445,7 +448,10 @@
                   hideTooltip();
                 }
               });
-
+          
+          d3.selectAll("#map.kartograph tspan")
+            .data(GNODE)
+            .style("font-size", function(d) { return fontSize(d.value) + "px"; });
           //$('text:contains("Chihuahua")').attr("font-size","20px");
       }
 
