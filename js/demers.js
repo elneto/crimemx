@@ -59,6 +59,15 @@
                 .translate([width / 2, height / 2])
                 ;
 
+       var force = d3.layout.force()
+          .charge(0)
+          .gravity(0)
+          .size([width, height]);
+
+      var svg = d3.select("#demers").append("svg")
+          .attr("width", width)
+          .attr("height", height);
+
       var xSlider = d3.time.scale()
           .domain([new Date(1997, 0, 1), new Date(2014, 0, 1)])
           .range([0, 820]);
@@ -101,13 +110,17 @@
 
         var radius = d3.scale.sqrt() //values for the square sizes 
           .domain([0, MAXRATE]) 
+          .range([7, 63]);
+
+        var colorDomRange = d3.scale.sqrt() //values for the square sizes 
+          .domain([0, MAXRATE]) 
           .range([0, 63]);
 
         function colorFn (value){
           if (value == -1)
             return chroma.hex("#eeeeee"); //no data
 
-          var v = radius(value);
+          var v = colorDomRange(value);
           if ( v < 9)
             return chroma.hex("#4575b4"); //less crime
           else if (v >= 9 && v < 18)
@@ -159,9 +172,155 @@
                 id: id
               };
             }); //closes .map
+
+        force
+            .nodes(nodes)
+            .on("tick", tick)
+            .start().stop();
+
+        //the enter() section
+        var nodeData = svg.selectAll(".nodeG")
+            .data(nodes);
+        //squares enter
+        nodeData
+            .enter().append("g").attr('class', 'nodeG').append("rect")
+            .on('mouseenter', function(d) {
+                borderStateGeoMap(d.state, '#000000');
+                if (d.value!=-1){ //select list item just if it exists
+                  var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                  chart.series[0].data[index].select();
+                  showTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y); //d3.select(this)[0][0].width.animVal.value
+                }
+                else
+                  showTooltip(d.state, "NA", d3.select(this).datum().x, d3.select(this).datum().y); 
+            })
+            .on('mouseover', function(d) { 
+                this.setAttribute("style", "fill:"+d.color+"; stroke:#000000; z-index:999");
+            })
+            .on('mouseleave', function(d) { 
+                this.setAttribute("style", "fill:"+d.color+"; stroke:"+d.color);
+                if (d.value!=-1){ //select list item just if it exists
+                  var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                  chart.series[0].data[index].select(false);
+                }
+                hideTooltip();
+                borderStateGeoMap(d.state, '#ffffff');
+            })
+            .attr('class', 'node')
+            .attr("id", function(d) { return "idn-"+String(d.state).replace(/ /g,''); }) //add one id got from states (mx-state-centroids)
+            .attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
+            .attr("stroke", function(d) { return d.color; })
+            .attr("width", function(d) { return positive(d.r * 2); })
+            .attr("height", function(d) { return positive(d.r * 2); })
+            .attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y; });
+        //rate  enter
+        nodeData.enter()
+            .append("text")
+            .on('mouseenter', function(d) {
+                borderStateGeoMap(d.state, '#000000');
+                if (d.value!=-1){ //select list item just if it exists
+                  var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                  chart.series[0].data[index].select();
+                  showTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y); //d3.select(this)[0][0].width.animVal.value
+                }
+                else
+                  showTooltip(d.state, "NA", d3.select(this).datum().x, d3.select(this).datum().y); 
+            })
+            .on('mouseover', function(d) { 
+                d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black");
+            })
+            .on('mouseleave', function(d) {
+                d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", d.color); 
+                if (d.value!=-1){ //select list item just if it exists
+                  var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                  chart.series[0].data[index].select(false);
+                }
+                hideTooltip();
+                borderStateGeoMap(d.state, '#ffffff');
+            })
+            .attr("class", "lblValue")
+            .attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y; })
+            .attr("dy", "2.5em")
+            .attr("dx", function(d) { return positive(d.r);}) //half the size of the square
+            .attr("font-size", function(d) { return fontSize(d.value); })
+            .attr("fill", function(d) { return d.colorlbl;})
+            .attr("text-anchor", "middle")
+            .text(function(d){return (d.value != -1)? d.value:''});
+        //state name label enter
+        nodeData.enter()
+              .append("text")
+              .on('mouseenter', function(d) {
+                borderStateGeoMap(d.state, '#000000');
+                if (d.value!=-1){ //select list item just if it exists
+                  var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                  chart.series[0].data[index].select();
+                  showTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y); //d3.select(this)[0][0].width.animVal.value
+                }
+                else
+                  showTooltip(d.state, "NA", d3.select(this).datum().x, d3.select(this).datum().y); 
+            })
+            .on('mouseover', function(d) { 
+                d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black");
+            })
+            .on('mouseleave', function(d) { 
+                d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", d.color); 
+                if (d.value!=-1){ //select list item just if it exists
+                  var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                  chart.series[0].data[index].select(false);
+                }
+                hideTooltip();
+                borderStateGeoMap(d.state, '#ffffff');
+            })
+              .attr("class", "lblEstado")
+              .attr("x", function(d) { return d.x; })
+              .attr("y", function(d) { return d.y; })
+              .attr("dx", function(d) { return positive(d.r);}) //half the size of the square
+              .attr("dy", "1.4em")
+              //.attr("font-size", function(d) { return fontSize(d.value)/1.2; })
+              .attr("fill", function(d) { return d.colorlbl;})
+              .attr("text-anchor", "middle")
+              .text(function(d){return (d.value != -1)? d.state:''});
     
         //deletes the tooltip in case it is still there.
         hideTooltip();
+
+         //for the update() section
+        var node = svg.selectAll(".node");
+        //squares update
+        node.data(nodes)
+            .attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
+            .attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y; })
+            .transition().duration(500)
+            .attr("width", function(d) { return positive(d.r * 2); }) 
+            .attr("height", function(d) { return positive(d.r * 2); });
+        //rate value update
+        var label = svg.selectAll(".lblValue");
+        label.data(nodes)
+            .attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y; })
+            .attr("dx", function(d) { return positive(d.r);}) //half the size of the square
+            .transition().duration(500)
+            .attr("font-size", function(d) { return fontSize(d.value); })
+            .attr("fill", function(d) { return d.colorlbl;})
+            .text(function(d){return (d.value != -1)? d.value:''});
+        //state name label update
+        var nEstado = svg.selectAll(".lblEstado");
+         nEstado.data(nodes)
+            .attr("x", function(d) { return d.x; })
+            .attr("y", function(d) { return d.y + 20; })
+            .attr("dx", function(d) { return positive(d.r);}) //half the size of the square
+            .transition().duration(500)
+            //.attr("font-size", function(d) { return d.value/1.2; })
+            .attr("fill", function(d) { return d.colorlbl;})
+            .text(function(d){return (d.value != -1)? d.state:''});
+
+        //node.data(nodes);
+        force
+            .nodes(nodes)
+            .start();
             
         GNODE = nodes; //make it available globally
         if (isMapLoaded){
@@ -260,6 +419,7 @@
                     events: {
                         mouseOver: function () {
                             if (String(this.category)!='Total'){
+                              d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", "black");
                               currentNodo = getNode(this.category);
                               showTooltip(this.category, currentNodo.value, currentNodo.x, currentNodo.y);
                               borderStateGeoMap(this.category, '#000000');
@@ -267,6 +427,7 @@
                         },
                         mouseOut: function () {
                             if (String(this.category)!='Total'){
+                              d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", getNode(this.category).color); //restores the fill color
                               hideTooltip();
                               borderStateGeoMap(this.category, '#ffffff');
                             }
@@ -274,7 +435,7 @@
                     }
                 },
               }]
-          };
+          }; 
 
           if (!isChartCreated){
             chart = new Highcharts.Chart(options);  
@@ -284,16 +445,66 @@
             chart.setTitle({ text: barTitulo+' ('+GYEAR+')'});
             chart.series[0].setData(valuesArray,true);
             chart.xAxis[0].setCategories(estadosArray,true);
-            //chart.yAxis[0].setTitle({text: varTitle+' (per 100,000) inhabitants'});
           }
-        //console.log(Highcharts.charts);
-      });
+      }); //ends the highchart bar
 
-        
-        
+      //all below is for the force layout
+        function tick(e) {
+          var grav = 0.15;
+          node.each(gravity(grav))
+              .each(collide(.2))
+              .attr("x", function(d) { return d.x - d.r; })
+              .attr("y", function(d) { return d.y - d.r; });
+          label.each(gravity(grav))
+              .each(collide(.2))
+              .attr("x", function(d) { return d.x - d.r; })
+              .attr("y", function(d) { return d.y - d.r; });
+          nEstado.each(gravity(grav))
+              .each(collide(.2))
+              .attr("x", function(d) { return d.x - d.r; })
+              .attr("y", function(d) { return d.y - d.r; }); 
+        }
+
+        function gravity(k) {
+          return function(d) {
+            d.x += (d.x0 - d.x) * k;
+            d.y += (d.y0 - d.y) * k;
+          };
+        }
+
+        function collide(k) {
+          var q = d3.geom.quadtree(nodes);
+          return function(node) {
+            var nr = node.r + padding,
+                nx1 = node.x - nr,
+                nx2 = node.x + nr,
+                ny1 = node.y - nr,
+                ny2 = node.y + nr;
+            q.visit(function(quad, x1, y1, x2, y2) {
+              if (quad.point && (quad.point !== node)) {
+                var x = node.x - quad.point.x,
+                    y = node.y - quad.point.y,
+                    lx = Math.abs(x),
+                    ly = Math.abs(y),
+                    r = nr + quad.point.r;
+                if (lx < r && ly < r) {
+                  if (lx > ly) {
+                    lx = (lx - r) * (x < 0 ? -k : k);
+                    node.x -= lx;
+                    quad.point.x += lx;
+                  } else {
+                    ly = (ly - r) * (y < 0 ? -k : k);
+                    node.y -= ly;
+                    quad.point.y += ly;
+                  }
+                }
+              }
+              return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+            });
+          };
+        } //end function collide
+
       }; //end ready (d3.json)
-
-
 
   //add geo map
   var centroids = [{"id":"01","state":"Aguascalientes","geo_longitude":-102.2950405,"geo_latitude":21.8823971},
@@ -356,6 +567,7 @@
           },
           mouseenter: function(d, path) {
               borderStateGeoMap(d.name, '#000000');
+              d3.select("#idn-" + String(d.name).replace(/ /g,'')).style("stroke", "black");
               currentNodo = getNode(d.name);
               if (currentNodo.value!=-1){ //select list item just if it exists
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.name);
@@ -369,6 +581,7 @@
             }, 
             mouseleave: function(d, path) {
               borderStateGeoMap(d.name, '#ffffff');
+              d3.select("#idn-" + String(d.name).replace(/ /g,'')).style("stroke", getNode(d.name).color); //restores the square border color 
               if (currentNodo.value!=-1){ //select list item just if it exists
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.name);
                 chart.series[0].data[index].select(false);
@@ -388,8 +601,9 @@
                   return val},
             style: function(d){ return "font-size:"+getNode(d.state).value+"px;"},
             mouseenter: function(d, path) {
-              currentNodo = getNode(d.state);
               borderStateGeoMap(d.state, '#000000');
+              d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black");
+              currentNodo = getNode(d.state);
               if (currentNodo.value!=-1){ //select list item just if it exists
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                 chart.series[0].data[index].select();  
@@ -402,6 +616,7 @@
             }, 
             mouseleave: function(d, path) {
               borderStateGeoMap(d.state, '#ffffff');
+              d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", getNode(d.state).color); //restores the square border color 
               if (currentNodo.value!=-1){ //select list item just if it exists
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                 chart.series[0].data[index].select(false);
@@ -409,38 +624,10 @@
               hideTooltip();
             }
         });
-        //state name
-        map.addSymbols({
-            type: kartograph.Label,
-            data: centroids,
-            location: function(d) { return [d.geo_longitude, d.geo_latitude-0.4] },
-            text: function(d) { return d.state; },
-            mouseenter: function(d, path) {
-              currentNodo = getNode(d.state);
-              borderStateGeoMap(d.state, '#000000');
-              if (currentNodo.value!=-1){ //select list item just if it exists
-                var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
-                chart.series[0].data[index].select();  
-                showTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
-              }
-              else{
-                showTooltip(d.state, "NA", currentNodo.x, currentNodo.y);
-              }
-              
-            }, 
-            mouseleave: function(d, path) {
-              borderStateGeoMap(d.state, '#ffffff');
-              if (currentNodo.value!=-1){ //select list item just if it exists
-                var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
-                chart.series[0].data[index].select(false);
-              }
-              hideTooltip();
-            }
-          });
       
-      d3.selectAll("#map.kartograph tspan")
-        .data(GNODE)
-        .style("font-size", function(d) { return fontSize(d.value) + "px"; });
+      //d3.selectAll("#map.kartograph tspan")
+        //.data(GNODE)
+        //.style("font-size", function(d) { return fontSize(d.value) + "px"; });
 
       updateMap = function() {
           map.getLayer('admin1')
@@ -458,8 +645,9 @@
                     val = "NA"
                   return val},
                 mouseenter: function(d, path) {
-                  currentNodo = getNode(d.state);
                   borderStateGeoMap(d.state, '#000000');
+                  d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black"); 
+                  currentNodo = getNode(d.state);
                   if (currentNodo.value!=-1){ //select list item just if it exists
                     var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                     chart.series[0].data[index].select();  
@@ -471,6 +659,7 @@
                 }, 
                 mouseleave: function(d, path) {
                   borderStateGeoMap(d.state, '#ffffff');
+                  d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", getNode(d.state).color); //restores the square border color 
                   if (currentNodo.value!=-1){ //select list item just if it exists
                     var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                     chart.series[0].data[index].select(false);
@@ -478,37 +667,10 @@
                   hideTooltip();
                 }
             });
-            //state name
-            map.addSymbols({
-                type: kartograph.Label,
-                data: centroids,
-                location: function(d) { return [d.geo_longitude, d.geo_latitude-0.4] },
-                text: function(d) { return d.state; },
-                mouseenter: function(d, path) {
-                  currentNodo = getNode(d.state);
-                  borderStateGeoMap(d.state, '#000000');
-                  if (currentNodo.value!=-1){ //select list item just if it exists
-                    var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
-                    chart.series[0].data[index].select();  
-                    showTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
-                  }
-                  else{                    
-                    showTooltip(d.state, "NA", currentNodo.x, currentNodo.y);
-                  }
-                }, 
-                mouseleave: function(d, path) {
-                  borderStateGeoMap(d.state, '#ffffff');
-                  if (currentNodo.value!=-1){ //select list item just if it exists
-                    var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
-                    chart.series[0].data[index].select(false);
-                  }
-                  hideTooltip();
-                }
-              });
           
-          d3.selectAll("#map.kartograph tspan")
-            .data(GNODE)
-            .style("font-size", function(d) { return fontSize(d.value) + "px"; });
+          //d3.selectAll("#map.kartograph tspan")
+            //.data(GNODE)
+            //.style("font-size", function(d) { return fontSize(d.value) + "px"; });
       }
 
       borderStateGeoMap = function (name, color){

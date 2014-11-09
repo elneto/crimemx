@@ -4,22 +4,41 @@
 	height: 650px;
 	margin-top: -8em;
 }
-#demers {
-    margin-left: -7em;
-    margin-top: -6em;
+
+/*For Demers*/
+#demers-container {
     width:930px;
     height: 650px;
     float: left;
-    position: relative;
-    
+    position: relative;  
+    margin-left: -7em;
+    margin-top: -6em; 
+}
+
+#demers{
+	position: relative;
+	left: 1.5em;
+}
+
+#demers rect {
+	fill: #eee;
+	stroke: #000;
+	stroke-width: 1.5px;
 }
 
 #map {
 	position: absolute;
-	top: 3em;
-	left: 6em;
+	bottom: -0.6em;
+	left: 12em;
 	display: block;
-	width: 800px;
+	width: 250px;
+	height: 200px;
+}
+
+#map.kartograph svg text tspan {
+	font-family:"Helvetica";
+	/*font-weight: bold;*/
+	font-size: 8px;
 }
 
 /*TODO: clean the unused chart css*/;	
@@ -58,15 +77,15 @@
 .x.axis path {
 }
 
-/*For Demers*/
-#demers rect {
-fill: none;
-stroke: none;
+.lblEstado {
+	font-size: 11px;
+}
 
-}
 .lblValue, .lblEstado {
-	fill:#000;
+	font-family:"Helvetica";
+	font-weight: bold;
 }
+
 
 /*For geo maps*/
 .states {
@@ -85,7 +104,6 @@ stroke: none;
   pointer-events: none;
 }
 
-
 #slider-container{
     float: left;
     margin-top: 2em;
@@ -98,6 +116,7 @@ stroke: none;
 	padding: 0;
 	margin-left: 14px;
 	width: 820px;
+	z-index: 1000;
 }
 #slider-label{
 	padding: 0;
@@ -217,8 +236,8 @@ h2{
 
 #scale{
 	position: absolute;
-	bottom: 3em;
-    left: 7.4em;
+	bottom: 0;
+	left: 7.4em;
 }
 
 #img-scale{
@@ -237,9 +256,4 @@ ol#ol-scale li {
 	color: #606060;
 }
 
-#map.kartograph svg text tspan {
-	font-family:"Helvetica";
-	/*font-weight: bold;*/
-	font-size: 11px;
-}
 
