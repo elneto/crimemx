@@ -290,29 +290,29 @@
 {"id":"06","state":"Colima","geo_longitude":-104,"geo_latitude":19.166667},
 {"id":"07","state":"Chiapas","geo_longitude":-92.5000001,"geo_latitude":16.5000001},
 {"id":"08","state":"Chihuahua","geo_longitude":-106.0000001,"geo_latitude":28.5000001},
-{"id":"09","state":"Distrito Federal","geo_longitude":-99.166667,"geo_latitude":19.25},
+{"id":"09","state":"Distrito Federal","geo_longitude":-99.166667,"geo_latitude":19.45},
 {"id":"10","state":"Durango","geo_longitude":-104.833333,"geo_latitude":24.33333},
-{"id":"11","state":"Guanajuato","geo_longitude":-101,"geo_latitude":21},
+{"id":"11","state":"Guanajuato","geo_longitude":-101.5,"geo_latitude":21},
 {"id":"12","state":"Guerrero","geo_longitude":-100,"geo_latitude":17.666667},
 {"id":"13","state":"Hidalgo","geo_longitude":-99,"geo_latitude":20.5},
 {"id":"14","state":"Jalisco","geo_longitude":-103.6666671,"geo_latitude":20.3333331},
-{"id":"15","state":"Mexico","geo_longitude":-99.6045803,"geo_latitude":19.7253628},
+{"id":"15","state":"Mexico","geo_longitude":-100.1045803,"geo_latitude":19.9253628},
 {"id":"16","state":"Michoacan","geo_longitude":-101.878113,"geo_latitude":19.707098},
 {"id":"17","state":"Morelos","geo_longitude":-99,"geo_latitude":18.75},
 {"id":"18","state":"Nayarit","geo_longitude":-105.0000001,"geo_latitude":22.3500001},
 {"id":"19","state":"Nuevo Leon","geo_longitude":-99.8873,"geo_latitude":26.2384363},
 {"id":"20","state":"Oaxaca","geo_longitude":-96.5,"geo_latitude":17},
-{"id":"21","state":"Puebla","geo_longitude":-98,"geo_latitude":18.333333},
-{"id":"22","state":"Queretaro","geo_longitude":-99.84756,"geo_latitude":21.4242575},
-{"id":"23","state":"Quintana Roo","geo_longitude":-88.8000001,"geo_latitude":19.6666671},
+{"id":"21","state":"Puebla","geo_longitude":-97.6,"geo_latitude":18.433333},
+{"id":"22","state":"Queretaro","geo_longitude":-99.54756,"geo_latitude":21.4242575},
+{"id":"23","state":"Quintana Roo","geo_longitude":-88.5000001,"geo_latitude":19.6666671},
 {"id":"24","state":"San Luis Potosi","geo_longitude":-100.5000001,"geo_latitude":22.5000001},
 {"id":"25","state":"Sinaloa","geo_longitude":-107.5000001,"geo_latitude":25.0000001},
 {"id":"26","state":"Sonora","geo_longitude":-110.6666671,"geo_latitude":29.3333331},
-{"id":"27","state":"Tabasco","geo_longitude":-92.6666671,"geo_latitude":18.0000001},
+{"id":"27","state":"Tabasco","geo_longitude":-92.6666671,"geo_latitude":18.3000001},
 {"id":"28","state":"Tamaulipas","geo_longitude":-98.7500001,"geo_latitude":24.0000001},
-{"id":"29","state":"Tlaxcala","geo_longitude":-97.23671533,"geo_latitude":19.3180485},
-{"id":"30","state":"Veracruz","geo_longitude":-95.666667,"geo_latitude":19.733333},
-{"id":"31","state":"Yucatan","geo_longitude":-89.09984681,"geo_latitude":20.5878917},
+{"id":"29","state":"Tlaxcala","geo_longitude":-97.93671533,"geo_latitude":19.9180485},
+{"id":"30","state":"Veracruz","geo_longitude":-96.066667,"geo_latitude":20.033333},
+{"id":"31","state":"Yucatan","geo_longitude":-89.09984681,"geo_latitude":20.8878917},
 {"id":"32","state":"Zacatecas","geo_longitude":-103.0000001,"geo_latitude":23.3000001}];
   // initialize qtip tooltip class
   $.fn.qtip.defaults.style.classes = 'ui-tooltip-bootstrap';
@@ -354,12 +354,13 @@
               hideTooltip();
           }
       });
-
+      //values
       map.addSymbols({
             type: kartograph.Label,
             data: centroids,
             location: function(d) { return [d.geo_longitude, d.geo_latitude] },
-            text: function(d) { return d.state + " " +getNode(d.state).value; },
+            text: function(d) { return getNode(d.state).value; },
+            //style: function(d){ return "font-family:Helvetica; font-weight:bold font-size:"+getNode(d.state).value+"px;"},
             mouseenter: function(d, path) {
               currentNodo = getNode(d.state);
               borderStateGeoMap(d.state, '#000000');
@@ -373,18 +374,14 @@
               chart.series[0].data[index].select(false);
               hideTooltip();
             }
-      });
-      
-      updateMap = function() {
-          map.getLayer('admin1')
-            .style('fill', function(d) { return getNode(d.name).color;});
-
-          map.removeSymbols();
-          map.addSymbols({
+        });
+        //state name
+        map.addSymbols({
             type: kartograph.Label,
             data: centroids,
-            location: function(d) { return [d.geo_longitude, d.geo_latitude] },
-            text: function(d) { return d.state + " " +getNode(d.state).value; },
+            location: function(d) { return [d.geo_longitude, d.geo_latitude-0.4] },
+            text: function(d) { return d.state; },
+            //style: function(d){ return "font-family:Helvetica; font-weight:bold font-size:"+getNode(d.state).value+"px;"},
             mouseenter: function(d, path) {
               currentNodo = getNode(d.state);
               borderStateGeoMap(d.state, '#000000');
@@ -397,7 +394,59 @@
               var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
               chart.series[0].data[index].select(false);
               hideTooltip();
-            }});
+            }
+          });
+      
+      
+      updateMap = function() {
+          map.getLayer('admin1')
+            .style('fill', function(d) { return getNode(d.name).color;});
+
+          map.removeSymbols();
+          //values
+          map.addSymbols({
+                type: kartograph.Label,
+                data: centroids,
+                location: function(d) { return [d.geo_longitude, d.geo_latitude] },
+                text: function(d) { return getNode(d.state).value; },
+                //style: function(d){ return "font-family:Helvetica; font-weight:bold font-size:"+getNode(d.state).value+"px;"},
+                mouseenter: function(d, path) {
+                  currentNodo = getNode(d.state);
+                  borderStateGeoMap(d.state, '#000000');
+                  var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                  chart.series[0].data[index].select();
+                  showTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
+                }, 
+                mouseleave: function(d, path) {
+                  borderStateGeoMap(d.state, '#ffffff');
+                  var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                  chart.series[0].data[index].select(false);
+                  hideTooltip();
+                }
+            });
+            //state name
+            map.addSymbols({
+                type: kartograph.Label,
+                data: centroids,
+                location: function(d) { return [d.geo_longitude, d.geo_latitude-0.4] },
+                text: function(d) { return d.state; },
+                //style: function(d){ return "font-family:Helvetica; font-weight:bold font-size:"+getNode(d.state).value+"px;"},
+                mouseenter: function(d, path) {
+                  currentNodo = getNode(d.state);
+                  borderStateGeoMap(d.state, '#000000');
+                  var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                  chart.series[0].data[index].select();
+                  showTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
+                }, 
+                mouseleave: function(d, path) {
+                  borderStateGeoMap(d.state, '#ffffff');
+                  var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
+                  chart.series[0].data[index].select(false);
+                  hideTooltip();
+                }
+              });
+
+          //$('text:contains("Chihuahua")').attr("font-size","20px");
       }
 
       borderStateGeoMap = function (name, color){

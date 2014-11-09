@@ -235,3 +235,9 @@ h2{
 	bottom: 3em;
     left: 7.4em;
 }
+
+#map.kartograph svg text tspan {
+	font-family:"Helvetica";
+	/*font-weight: bold;*/
+	font-size: 11px;
+}
