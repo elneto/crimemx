@@ -91,6 +91,7 @@ stroke: none;
     margin-top: 2em;
     width: 820px;
     position: relative;
+    z-index: 999;
 }
 
 #slider{
