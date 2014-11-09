@@ -95,17 +95,17 @@
             return chroma.hex("#eeeeee"); //no data
 
           var v = radius(value);
-          if (0 > v && v < 9)
+          if ( v < 9)
             return chroma.hex("#4575b4"); //less crime
-          else if (9 >= v && v < 18)
+          else if (v >= 9 && v < 18)
             return chroma.hex("#91bfdb");
-          else if (18 >= v && v < 27)
+          else if (v >= 18 && v < 27)
             return chroma.hex("#e0f3f8");
-          else if (27 >= v && v < 36)
+          else if (v >= 27 && v < 36)
             return chroma.hex("#ffffbf");
-          else if (36 >= v && v < 45)
+          else if (v >= 36 && v < 45)
             return chroma.hex("#fee090");
-          else if ( 45>= v && v < 42)
+          else if ( v >= 45 && v < 42)
             return chroma.hex("#fc8d59");
           else 
             return chroma.hex("#d73027"); //more crime
@@ -134,6 +134,7 @@
                 id = +d.id;
 
               if (isNaN(value)) throw { name: 'FatalError', message: 'Values for squares are not numbers' };
+              
               return {
                 x: point[0], y: point[1],
                 x0: point[0], y0: point[1],
