@@ -22,6 +22,15 @@
 	z-index: 5;
 }
 
+#bgmap{
+	position: absolute;
+	width: 780px;
+	height: 700px;
+	left: 8.6em;
+	top: -1em;
+	z-index: -1;
+}
+
 #demers rect {
 	fill: #eee;
 	stroke: #000;

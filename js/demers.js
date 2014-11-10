@@ -547,7 +547,9 @@
 
   var opts = { padding: 0 };
   var map = kartograph.map('#map');
+  var bgmap = kartograph.map('#bgmap');
   map.loadMap(LANGPATH+'svg/MEX.svg', mapLoaded, opts);
+  bgmap.loadMap(LANGPATH+'svg/MEX.svg', bgmapLoaded, opts);
 
   function getNode(name){      
     var nodo;
@@ -559,6 +561,16 @@
         })
       return nodo;
   };
+
+  function bgmapLoaded(bgmap) {
+      bgmap.addLayer('admin1', {
+          name: 'background',
+          styles: {
+              stroke: '#ffffff',
+              fill: '#eeeeee'
+          },
+      });
+    }
 
   function mapLoaded(map) {
       var currentNodo;
