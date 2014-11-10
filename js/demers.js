@@ -452,8 +452,8 @@
 
       //all below is for the force layout
         function tick(e) {
-          var grav = 0.015;
-          var coll = 0.13;
+          var grav = 0.02;
+          var coll = 0.05;
           node.each(gravity(grav))
               .each(collide(coll))
               .attr("x", function(d) { return d.x - d.r; })
