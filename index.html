@@ -185,10 +185,11 @@
 
       <div class="starter-template">
         <section id="main-blob"><img src="images/homicide.png" id="top-image" >
-        <h1 id="main-title" class="text-left">Homicide Rate in 1997</h1>
-        <p class="lead text-left">Select a crime indicator and move the timeline slider.</p>
-        
         <div id="top_part">   
+              <div id="top-header">
+                <h1 id="main-title" class="text-left">Homicide Rate in 1997</h1>
+                <p class="lead text-left">Select a crime indicator and move the timeline slider.</p>
+              </div>
               <div id="list-states"></div>
               <div id="demers-container">
                 <div id="bgmap"></div>
@@ -214,28 +215,22 @@
                   </ol>
                 </div>
                 <div id="map"></div>
+                <div id="legend">
+                  <p>All rates are values per 100,000 inhabitants
+                  <br>*2014 data is available until September 2014
+                  <br>Source: <a href="http://www.secretariadoejecutivosnsp.gob.mx/" target="_blank">SNSP, rates per 100,000 inhabitants</a>
+                  </p>
+                </div>
               </div>
               <div id="slider-container">
                 <img src="images/play.png" width="20" height="20" id="play-button"/>
                 <div id="slider"></div>
                 <div id="slider-label"></div>
               </div>
-
-              
-              <!--<div id="chart"></div>-->
         </div>
-
-        <!--Put geo map TODO <div id="map"></div> -->
-
       </div>
       </section>
-      <div style="clear:both"></div>
       <section id="stories">
-        <p>All rates are values per 100,000 inhabitants</p>
-        <p>*2014 data is only available until September 2014</p>
-        <p>Source: <a href="http://www.secretariadoejecutivosnsp.gob.mx/" target="_blank">SNSP, rates of crime per 100,000 inhabitants</a></p>
-
-        <hr>
         <div class="col-md-4">
           <h3>Homicides in Guerrero</h3> <p>Guerrero has always been in the top four states in homicide rates except for <a href="javascript:goToPoint('btnHomicide',2004)">2004</a></p>
         </div>

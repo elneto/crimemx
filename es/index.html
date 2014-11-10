@@ -187,10 +187,11 @@
 
       <div class="starter-template">
         <section id="main-blob"><img src="../images/homicide.png" id="top-image" >
-        <h1 id="main-title" class="text-left">Tasa de homicidios en 1997</h1>
-        <p class="lead text-left">Selecciona un indicador o desplaza la línea de tiempo.</p>
- 
-        <div id="top_part">   
+        <div id="top_part">
+              <div id="top-header">
+                <h1 id="main-title" class="text-left">Tasa de homicidios en 1997</h1>
+                <p class="lead text-left">Selecciona un indicador o desplaza la línea de tiempo.</p>
+              </div>   
               <div id="list-states"></div>
               <div id="demers-container">
                 <div id="bgmap"></div>
@@ -216,28 +217,23 @@
                   </ol>
                 </div>
                 <div id="map"></div>
+                <div id="legend">
+                    <p>Tasas por cada 100,000 habitantes
+                    <br>*2014 está disponible hasta Septiembre
+                    <br>Fuente: <a href="http://www.secretariadoejecutivosnsp.gob.mx/" target="_blank">SNSP, tasas por cada 100,000 habitantes</a></p>
+                  </p>
+                </div>
               </div>
               <div id="slider-container">
                 <img src="../images/play.png" width="20" height="20" id="play-button"/>
                 <div id="slider"></div>
                 <div id="slider-label"></div>
               </div>
-
-              
-              <!--<div id="chart"></div>-->
         </div>
-
-        <!--Put geo map TODO <div id="map"></div> -->
 
       </div>
       </section>
-      <div style="clear:both"></div>
       <section id="stories">
-        <p>Todos los valores son tasas por cada 100,000 habitantes</p>
-        <p>*Los datos del 2014 están disponibles sólo hasta September del 2014</p>
-        <p>Fuente: <a href="http://www.secretariadoejecutivosnsp.gob.mx/" target="_blank">SNSP, tasas por cada 100,000 habitantes</a></p>
-
-        <hr>
         <div class="col-md-4">
           <h3>Homicidios en Guerrero</h3> <p>Guerrero has always been in the top four states in homicide rates except for <a href="javascript:goToPoint('btnHomicide',2004)">2004</a></p>
         </div>

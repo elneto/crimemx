@@ -1,8 +1,12 @@
-/*For Axis*/
+
 #top_part{
 	min-width:1140px;
 	height: 650px;
-	margin-top: -8em;
+}
+
+#top-header {
+	height: 6em;
+	margin-top: -1.33em;
 }
 
 /*For Demers*/
@@ -163,14 +167,13 @@ ol#ol-scale li {
 
 #list-states {
 	float: right;
-	
 	display: block;
 	padding: 1em;
 	padding: 1em;
-	margin-right: 4em;
 	padding: 0.75em 0.2em;
 	width: 19%;
-	min-width: 290px; max-width: 300px; height: 695px; margin: 0 auto;
+	min-width: 290px; max-width: 300px; height: 715px; 
+	margin-top: -6.8em;
 }
 
 #list-states ol {
@@ -181,6 +184,13 @@ ol#ol-scale li {
 	background-color: #D4C2C5; /*homicides*/
 	/*background-color: #D4D4EF; /*Blue*/
 	white-space: nowrap;
+}
+
+#legend{
+	text-align: right;
+	position: absolute;
+	right: 0;
+	bottom: -2em;
 }
 
 /*Tooltip*/
@@ -210,7 +220,7 @@ ol#ol-scale li {
     padding: 0.6em;
     position: absolute;
     right: 0;
-    top: 7em;
+    top: 5.7em;
     z-index: 99;
 
     -webkit-box-shadow: 6px 6px 6px #b3b3b3;
