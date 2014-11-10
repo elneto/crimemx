@@ -47,15 +47,15 @@
       
       //the SVG main demers map    
       var margin = {top: 0, right: 0, bottom: 0, left: 0},
-          width = 960 - margin.left - margin.right,
-          height = 700 - margin.top - margin.bottom,
+          width = 900 - margin.left - margin.right,
+          height = 600 - margin.top - margin.bottom,
           padding = 3;
 
       var projection = d3.geo.conicConformal()
                 .rotate([102, 0])
                 .center([0, 24])
                 .parallels([17.5, 29.5])
-                .scale(1700)
+                .scale(1000)
                 .translate([width / 2, height / 2])
                 ;
 
@@ -110,7 +110,7 @@
 
         var radius = d3.scale.sqrt() //values for the square sizes 
           .domain([0, MAXRATE]) 
-          .range([7, 63]);
+          .range([6, 43]);
 
         var colorDomRange = d3.scale.sqrt() //values for the square sizes 
           .domain([0, MAXRATE]) 

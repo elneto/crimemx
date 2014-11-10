@@ -17,7 +17,8 @@
 
 #demers{
 	position: relative;
-	left: 1.5em;
+	left: 3.6em;
+	z-index: 5;
 }
 
 #demers rect {
@@ -28,17 +29,39 @@
 
 #map {
 	position: absolute;
-	bottom: -0.6em;
-	left: 12em;
+	bottom: -4em;
+	left: 0;
 	display: block;
-	width: 250px;
-	height: 200px;
+	width: 430px;
+	height: 300px;
 }
 
 #map.kartograph svg text tspan {
 	font-family:"Helvetica";
 	/*font-weight: bold;*/
 	font-size: 8px;
+}
+
+#scale{
+	position: absolute;
+	top: 16em;
+	left: 3.5em;
+}
+
+#img-scale{
+	float:left;
+}
+ol#ol-scale li {
+	padding-top: 0.82em;
+	text-align: left;
+}
+#ol-scale {
+	float: right;
+	list-style-type: none;
+	padding-left: 0.2em;
+	font-size: 11px;
+	margin-top: -1.4em;
+	color: #606060;
 }
 
 /*TODO: clean the unused chart css*/;	
@@ -234,26 +257,6 @@ h2{
     z-index: 9999;
 }
 
-#scale{
-	position: absolute;
-	bottom: 0;
-	left: 7.4em;
-}
 
-#img-scale{
-	float:left;
-}
-ol#ol-scale li {
-	padding-top: 0.82em;
-	text-align: left;
-}
-#ol-scale {
-	float: right;
-	list-style-type: none;
-	padding-left: 0.2em;
-	font-size: 11px;
-	margin-top: -1.4em;
-	color: #606060;
-}
 
 
