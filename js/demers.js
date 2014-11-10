@@ -48,7 +48,7 @@
       //the SVG main demers map    
       var margin = {top: 0, right: 0, bottom: 0, left: 0},
           width = 900 - margin.left - margin.right,
-          height = 600 - margin.top - margin.bottom,
+          height = 650 - margin.top - margin.bottom,
           padding = 3;
 
       var projection = d3.geo.conicConformal()
@@ -110,7 +110,7 @@
 
         var radius = d3.scale.sqrt() //values for the square sizes 
           .domain([0, MAXRATE]) 
-          .range([10, 60]);
+          .range([12, 60]);
 
         var colorDomRange = d3.scale.sqrt() //values for the square sizes 
           .domain([0, MAXRATE]) 
@@ -138,7 +138,7 @@
         }
 
         var colorLabel = function (val){
-            if (val>MAXRATE/2){ 
+            if (val>=MAXRATE/7*3.7 || (val < MAXRATE/(7*5.9)) &&val>0) { 
               return chroma.hex("#ffffff");
             }
             else
@@ -720,18 +720,12 @@
           GHOMI = states;
         });
 
-    var shortenLbl = {'Aguascalientes':'Ags.','Baja California':'Baja Calif.','Baja California Sur':'Baja Calif. S.','Campeche':'Campeche',
-'Chiapas':'Chiapas','Chihuahua':'Chihuahua','Coahuila':'Coah.','Colima':'Col.','Distrito Federal':'DF',
+    var shortenLbl = {'Aguascalientes':'Ags.','Baja California':'Baja Calif.','Baja California Sur':'Baja Calif. S.','Campeche':'Camp.',
+'Chiapas':'Chia.','Chihuahua':'Chihuahua','Coahuila':'Coah.','Colima':'Col.','Distrito Federal':'DF',
 'Durango':'Dur.','Guanajuato':'Gto.','Guerrero':'Guerrero','Hidalgo':'Hgo.','Jalisco':'Jal.','Mexico':'Mex.',
 'Michoacan':'Mich.','Morelos':'Mor.','Nayarit':'Nay.','Nuevo Leon':'N. Leon','Oaxaca':'Oax.','Puebla':'Puebla',
 'Queretaro':'Quer.','Quintana Roo':'Q. Roo','San Luis Potosi':'Sn Luis','Sinaloa':'Sinaloa','Sonora':'Sonora',
 'Tabasco':'Tabasco','Tamaulipas':'Tamp.','Tlaxcala':'Tlax.','Veracruz':'Ver.','Yucatan':'Yuc.','Zacatecas':'Zac.'};
 
-    var ABBREV = {'Aguascalientes':'AGU','Baja California':'BCN','Baja California Sur':'BCS','Campeche':'CAM',
-'Chiapas':'CHP','Chihuahua':'CHH','Coahuila':'COA','Colima':'COL','Distrito Federal':'DIF',
-'Durango':'DUR','Guanajuato':'GUA','Guerrero':'GRO','Hidalgo':'HID','Jalisco':'JAL','Mexico':'MEX',
-'Michoacan':'MIC','Morelos':'MOR','Nayarit':'NAY','Nuevo Leon':'NLE','Oaxaca':'OAX','Puebla':'PUE',
-'Queretaro':'QUE','Quintana Roo':'ROO','San Luis Potosi':'SLP','Sinaloa':'SIN','Sonora':'SON',
-'Tabasco':'TAB','Tamaulipas':'TAM','Tlaxcala':'TLA','Veracruz':'VER','Yucatan':'YUC','Zacatecas':'ZAC'};
   
 
