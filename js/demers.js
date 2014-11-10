@@ -282,7 +282,7 @@
               //.attr("font-size", function(d) { return fontSize(d.value)/1.2; })
               .attr("fill", function(d) { return d.colorlbl;})
               .attr("text-anchor", "middle")
-              .text(function(d){return (d.value != -1)? d.state:''});
+              .text(function(d){return (d.value != -1)? shortenLbl[d.state]:''});
     
         //deletes the tooltip in case it is still there.
         hideTooltip();
@@ -316,7 +316,7 @@
             .transition().duration(500)
             //.attr("font-size", function(d) { return d.value/1.2; })
             .attr("fill", function(d) { return d.colorlbl;})
-            .text(function(d){return (d.value != -1)? d.state:''});
+            //.text(function(d){return (d.value != -1)? d.state:''});
 
         //node.data(nodes);
         force
@@ -452,8 +452,8 @@
 
       //all below is for the force layout
         function tick(e) {
-          var grav = 0.01;
-          var coll = 0.01;
+          var grav = 0.015;
+          var coll = 0.13;
           node.each(gravity(grav))
               .each(collide(coll))
               .attr("x", function(d) { return d.x - d.r; })
@@ -728,6 +728,13 @@
     d3.csv(LANGPATH+"csv/d3-homicide.csv", function(states){
           GHOMI = states;
         });
+
+    var shortenLbl = {'Aguascalientes':'Ags.','Baja California':'Baja Calif.','Baja California Sur':'Baja Calif. S.','Campeche':'Campeche',
+'Chiapas':'Chiapas','Chihuahua':'Chihuahua','Coahuila':'Coah.','Colima':'Col.','Distrito Federal':'DF',
+'Durango':'Dur.','Guanajuato':'Gto.','Guerrero':'Guerrero','Hidalgo':'Hgo.','Jalisco':'Jal.','Mexico':'Mex.',
+'Michoacan':'Mich.','Morelos':'Mor.','Nayarit':'Nay.','Nuevo Leon':'N. Leon','Oaxaca':'Oax.','Puebla':'Puebla',
+'Queretaro':'Quer.','Quintana Roo':'Q. Roo','San Luis Potosi':'Sn Luis','Sinaloa':'Sinaloa','Sonora':'Sonora',
+'Tabasco':'Tabasco','Tamaulipas':'Tamp.','Tlaxcala':'Tlax.','Veracruz':'Ver.','Yucatan':'Yuc.','Zacatecas':'Zac.'};
 
     var ABBREV = {'Aguascalientes':'AGU','Baja California':'BCN','Baja California Sur':'BCS','Campeche':'CAM',
 'Chiapas':'CHP','Chihuahua':'CHH','Coahuila':'COA','Colima':'COL','Distrito Federal':'DIF',
