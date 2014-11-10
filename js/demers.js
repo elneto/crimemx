@@ -108,11 +108,11 @@
           scaleValues(MAXRATE);
         }
 
-        var radius = d3.scale.sqrt() //values for the square sizes 
+        var radius = d3.scale.linear() //values for the square sizes 
           .domain([0, MAXRATE]) 
-          .range([12, 60]);
+          .range([0, 120*120]); //140 pixels per side as maximum
 
-        var colorDomRange = d3.scale.sqrt() //values for the square sizes 
+        var colorDomRange = d3.scale.linear() //values for the square sizes 
           .domain([0, MAXRATE]) 
           .range([0, 63]);
 
@@ -158,13 +158,16 @@
                 colorlbl = colorLabel(value),
               	state = d.state,
                 id = +d.id;
+                
+              var l = positive(Math.sqrt(radius(value)));
 
               if (isNaN(value)) throw { name: 'FatalError', message: 'Values for squares are not numbers' };
               
               return {
                 x: point[0], y: point[1],
                 x0: point[0], y0: point[1],
-                r: radius(value),
+                l: l,
+                r: Math.sqrt(l*l/2),
                 value: Math.round( value * 10 ) / 10,
                 state: state,
                 color: color,
@@ -176,15 +179,16 @@
         force
             .nodes(nodes)
             .on("tick", tick)
-            .start().stop();
-            //.start();
+            //.start().stop();
+            .start();
 
         //the enter() section
         var nodeData = svg.selectAll(".nodeG")
             .data(nodes);
         //squares enter
         nodeData
-            .enter().append("g").attr('class', 'nodeG').append("rect")
+            //.enter().append("g").attr('class', 'nodeG').append("rect")
+            .enter().append("g").attr('class', 'nodeG').append("circle")
             .on('mouseenter', function(d) {
                 borderStateGeoMap(d.state, '#000000');
                 if (d.value!=-1){ //select list item just if it exists
@@ -210,11 +214,11 @@
             .attr('class', 'node')
             .attr("id", function(d) { return "idn-"+String(d.state).replace(/ /g,''); }) //add one id got from states (mx-state-centroids)
             .attr("style", function(d) { return "fill:"+d.color+";"; })
-            //.attr("stroke", function(d) { return d.color; })
-            .attr("width", function(d) { return positive(d.r * 2); })
-            .attr("height", function(d) { return positive(d.r * 2); })
-            .attr("x", function(d) { return d.x; })
-            .attr("y", function(d) { return d.y; });
+            //.attr("width", function(d) { return d.l; })
+            //.attr("height", function(d) { return d.l; })
+            .attr("r", function(d) { return d.r; })
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; });
         //rate  enter
         nodeData.enter()
             .append("text")
@@ -244,7 +248,7 @@
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
             .attr("dy", "2.5em")
-            .attr("dx", function(d) { return positive(d.r);}) //half the size of the square
+            .attr("dx", function(d) { return d.l/2;}) //half the size of the square
             .attr("font-size", function(d) { return fontSize(d.value); })
             .attr("fill", function(d) { return d.colorlbl;})
             .attr("text-anchor", "middle")
@@ -277,7 +281,7 @@
               .attr("class", "lblEstado")
               .attr("x", function(d) { return d.x; })
               .attr("y", function(d) { return d.y; })
-              .attr("dx", function(d) { return positive(d.r);}) //half the size of the square
+              .attr("dx", function(d) { return d.l/2;}) //half the size of the square
               .attr("dy", "1.4em")
               //.attr("font-size", function(d) { return fontSize(d.value)/1.2; })
               .attr("fill", function(d) { return d.colorlbl;})
@@ -291,18 +295,19 @@
         var node = svg.selectAll(".node");
         //squares update
         node.data(nodes)
-            .attr("x", function(d) { return d.x; })
-            .attr("y", function(d) { return d.y; })
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; })
             .attr("style", function(d) { return "fill:"+d.color+";"; })
             .transition().duration(500)
-            .attr("width", function(d) { return positive(d.r * 2); }) 
-            .attr("height", function(d) { return positive(d.r * 2); });
+            //.attr("width", function(d) { return d.l; }) 
+            //.attr("height", function(d) { return d.l; });
+            .attr("r", function(d) { return d.r; })
         //rate value update
         var label = svg.selectAll(".lblValue");
         label.data(nodes)
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
-            .attr("dx", function(d) { return positive(d.r);}) //half the size of the square
+            .attr("dx", function(d) { return d.l/2;}) //half the size of the square
             .transition().duration(500)
             .attr("font-size", function(d) { return fontSize(d.value); })
             .attr("fill", function(d) { return d.colorlbl;})
@@ -312,7 +317,7 @@
          nEstado.data(nodes)
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
-            .attr("dx", function(d) { return positive(d.r);}) //half the size of the square
+            .attr("dx", function(d) { return d.l/2;}) //half the size of the square
             .transition().duration(500)
             //.attr("font-size", function(d) { return d.value/1.2; })
             .attr("fill", function(d) { return d.colorlbl;})
@@ -452,12 +457,12 @@
 
       //all below is for the force layout
         function tick(e) {
-          var grav = 0.02;
-          var coll = 0.05;
-          node.each(gravity(grav))
+          var grav = 0.1;
+          var coll = 0.5;
+          node.each(gravity(e.alpha*grav))
               .each(collide(coll))
-              .attr("x", function(d) { return d.x - d.r; })
-              .attr("y", function(d) { return d.y - d.r; });
+              .attr("cx", function(d) { return d.x - d.r; })
+              .attr("cy", function(d) { return d.y - d.r; });
           label.each(gravity(grav))
               .each(collide(coll))
               .attr("x", function(d) { return d.x - d.r; })
@@ -700,7 +705,7 @@
     }
 
     function positive(num){
-        return num <  0 ? 0 : num;
+        return isNaN(num) ? 1 : num;
     }
 
     //saves the CSVs in globals
