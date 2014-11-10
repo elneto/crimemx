@@ -55,7 +55,7 @@
                 .rotate([102, 0])
                 .center([0, 24])
                 .parallels([17.5, 29.5])
-                .scale(1000)
+                .scale(1600)
                 .translate([width / 2, height / 2])
                 ;
 
@@ -110,7 +110,7 @@
 
         var radius = d3.scale.sqrt() //values for the square sizes 
           .domain([0, MAXRATE]) 
-          .range([6, 43]);
+          .range([10, 60]);
 
         var colorDomRange = d3.scale.sqrt() //values for the square sizes 
           .domain([0, MAXRATE]) 
