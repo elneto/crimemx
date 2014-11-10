@@ -59,13 +59,13 @@
         barFuente = "Fuente: SNSP",
         barTasa = "Tasa por cada 100,000 habitantes";
     var DATAFILE = "../csv/d3-homicide.csv";
-    var GYEAR = 1997;
+    var GYEAR = 2014;
     var varTitle = "Tasa de homicidios";
     var varImgFile = "../images/homicide.png";
     var varColor = "#711a26";
-
-
+    var playFn;
     var resInterval;
+
     $(document).ready(function(){
 
             function updateYear(){
@@ -81,7 +81,7 @@
               min: 1997,
               max: 2014,
               step: 1,
-              value:1997,
+              value:GYEAR,
               slide: updateYear,
               change: updateYear
             });
@@ -100,14 +100,14 @@
             }
           $("#slider").slider("value", GYEAR+=1);
         }
-        resInterval = setInterval(changeYear, 600); //starts the animation
+        //resInterval = setInterval(changeYear, 600); //starts the animation
 
-         $("#play-button").click(function(){
+         playFn = function(){
             GYEAR=1996;
             resInterval = setInterval(changeYear, 600);
-            //$(this).animate({bottom:"4.8em",left:"0.8em"},10).animate({bottom:"5em",left:"1em"},50);
-            
-          });
+        }
+
+        $("#play-button").click(playFn);
 
       });
 
@@ -189,8 +189,8 @@
         <section id="main-blob"><img src="../images/homicide.png" id="top-image" >
         <div id="top_part">
               <div id="top-header">
-                <h1 id="main-title" class="text-left">Tasa de homicidios en 1997</h1>
-                <p class="lead text-left">Selecciona un indicador o desplaza la línea de tiempo.</p>
+                <h1 id="main-title" class="text-left">Tasa de homicidios en 2014</h1>
+                <p class="lead text-left">Selecciona un indicador, desplaza la línea de tiempo o presiona <a href="javascript:playFn()">empezar</a></p>
               </div>   
               <div id="list-states"></div>
               <div id="demers-container">
