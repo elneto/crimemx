@@ -4,22 +4,65 @@
 	height: 650px;
 	margin-top: -8em;
 }
-#demers {
-    margin-left: -7em;
-    margin-top: -6em;
+
+/*For Demers*/
+#demers-container {
     width:930px;
     height: 650px;
     float: left;
-    position: relative;
+    position: relative;  
+    margin-left: -7em;
+    margin-top: -6em; 
+}
+
+#demers{
+	position: relative;
+	left: 3.6em;
+	top: 2.2em;
+	z-index: 5;
+}
+
+#demers rect {
+	fill: #eee;
+	stroke: #000;
+	stroke-width: 1.5px;
 }
 
 #map {
 	position: absolute;
-	bottom: 2em;
-	left: 7em;
+	bottom: -4em;
+	left: 5em;
 	display: block;
-	width: 250px;
-	height: 200px;
+	width: 360px;
+	height: 280px;
+}
+
+#map.kartograph svg text tspan {
+	font-family:"Helvetica";
+	/*font-weight: bold;*/
+	font-size: 8px;
+}
+
+#scale{
+	position: absolute;
+	top: 16.5em;
+	left: 6.8em;
+}
+
+#img-scale{
+	float:left;
+}
+ol#ol-scale li {
+	padding-top: 0.82em;
+	text-align: left;
+}
+#ol-scale {
+	float: right;
+	list-style-type: none;
+	padding-left: 0.2em;
+	font-size: 11px;
+	margin-top: -1.4em;
+	color: #606060;
 }
 
 /*TODO: clean the unused chart css*/;	
@@ -58,12 +101,15 @@
 .x.axis path {
 }
 
-/*For Demers*/
-#demers rect {
-fill: #eee;
-stroke: #000;
-stroke-width: 1.5px;
+.lblEstado {
+	font-size: 11px;
 }
+
+.lblValue, .lblEstado {
+	font-family:"Helvetica";
+	font-weight: bold;
+}
+
 
 /*For geo maps*/
 .states {
@@ -82,18 +128,19 @@ stroke-width: 1.5px;
   pointer-events: none;
 }
 
-
 #slider-container{
     float: left;
     margin-top: 2em;
     width: 820px;
     position: relative;
+    z-index: 999;
 }
 
 #slider{
 	padding: 0;
 	margin-left: 14px;
 	width: 820px;
+	z-index: 1000;
 }
 #slider-label{
 	padding: 0;
@@ -152,6 +199,7 @@ stroke-width: 1.5px;
     position: absolute;
     right: 0;
     top: 7em;
+    z-index: 99;
 
     -webkit-box-shadow: 6px 6px 6px #b3b3b3;
     -moz-box-shadow: 6px 6px 6px #b3b3b3;
@@ -169,24 +217,8 @@ stroke-width: 1.5px;
     color: #555;
 }
 
-#btnHomicide.active{
-	background-image: linear-gradient(to bottom, #711a26 0px, #a8787f 100%);
-}
-#btnKidnap.active{
-	background-image: linear-gradient(to bottom, #96adbd 0px, #C5D0D7 100%);
-}
-#btnExtortion.active{
-	background-image: linear-gradient(to bottom, #ae560d 0px, #C89469 100%);
-}
-#btnCarNoViolence.active{
-	background-image: linear-gradient(to bottom, #3b615f 0px, #839998 100%);
-}
-#btnCarViolence.active{
-	background-image: linear-gradient(to bottom, #6b6694 0px, #8D8AAB 100%);
-}
-
 #botones-box > .list-group-item.active {
-    /*background-image: linear-gradient(to bottom, #711a26 0px, #a8787f 100%);*/
+    background-image: linear-gradient(to bottom, #96adbd 0px, #C5D0D7 100%);
     background-repeat: repeat-x;
     border-color: #eee;
     text-shadow: 0 -1px 0 #3071a9;
@@ -225,3 +257,7 @@ h2{
     left: 1em;
     z-index: 9999;
 }
+
+
+
+

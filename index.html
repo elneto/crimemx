@@ -100,13 +100,11 @@
             }
           $("#slider").slider("value", GYEAR+=1);
         }
-        resInterval = setInterval(changeYear, 600); //starts the animation
+        //resInterval = setInterval(changeYear, 600); //starts the animation
 
          $("#play-button").click(function(){
             GYEAR=1996;
             resInterval = setInterval(changeYear, 600);
-            //$(this).animate({bottom:"4.8em",left:"0.8em"},10).animate({bottom:"5em",left:"1em"},50);
-            
           });
 
       });
@@ -190,11 +188,10 @@
         <h1 id="main-title" class="text-left">Homicide Rate in 1997</h1>
         <p class="lead text-left">Select a crime indicator and move the timeline slider.</p>
         
-      
-        
         <div id="top_part">   
               <div id="list-states"></div>
-              <div id="demers">
+              <div id="demers-container">
+                <div id="demers"></div>
                 <list id="botones-box" class="list-group">
                   <li class="list-group-item active" id="btnHomicide">Homicide</li>
                   <li class="list-group-item" id="btnKidnap">Kidnapping </li>
@@ -202,6 +199,19 @@
                   <li class="list-group-item" id="btnCarViolence">Car theft with violence</li>
                   <li class="list-group-item" id="btnCarNoViolence">Car theft without violence</li><br>
                 </list>
+                <div id="scale">
+                  <img src="images/scale2.png" id="img-scale">
+                  <ol id="ol-scale">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li>0</li>
+                  </ol>
+                </div>
                 <div id="map"></div>
               </div>
               <div id="slider-container">
@@ -280,7 +290,6 @@
       <script src="js/highcharts.js"></script>
       <script src="js/modules/exporting.js"></script>
       <script src="js/demers.js"></script>
-      <!--<script src="js/chart.js"></script>-->
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
