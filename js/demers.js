@@ -176,7 +176,8 @@
         force
             .nodes(nodes)
             .on("tick", tick)
-            .start().stop();
+            //.start().stop();
+            .start();
 
         //the enter() section
         var nodeData = svg.selectAll(".nodeG")
@@ -310,7 +311,7 @@
         var nEstado = svg.selectAll(".lblEstado");
          nEstado.data(nodes)
             .attr("x", function(d) { return d.x; })
-            .attr("y", function(d) { return d.y + 20; })
+            .attr("y", function(d) { return d.y; })
             .attr("dx", function(d) { return positive(d.r);}) //half the size of the square
             .transition().duration(500)
             //.attr("font-size", function(d) { return d.value/1.2; })
@@ -320,6 +321,7 @@
         //node.data(nodes);
         force
             .nodes(nodes)
+            //.start().stop();
             .start();
             
         GNODE = nodes; //make it available globally
@@ -450,17 +452,17 @@
 
       //all below is for the force layout
         function tick(e) {
-          var grav = 0.15;
+          var grav = 0.02;
           node.each(gravity(grav))
-              .each(collide(.2))
+              .each(collide(.1))
               .attr("x", function(d) { return d.x - d.r; })
               .attr("y", function(d) { return d.y - d.r; });
           label.each(gravity(grav))
-              .each(collide(.2))
+              .each(collide(.1))
               .attr("x", function(d) { return d.x - d.r; })
               .attr("y", function(d) { return d.y - d.r; });
           nEstado.each(gravity(grav))
-              .each(collide(.2))
+              .each(collide(.1))
               .attr("x", function(d) { return d.x - d.r; })
               .attr("y", function(d) { return d.y - d.r; }); 
         }
