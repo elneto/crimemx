@@ -562,7 +562,7 @@
         })
       return nodo;
   };
-
+  //background gray map
   function bgmapLoaded(bgmap) {
       bgmap.addLayer('admin1', {
           name: 'background',
@@ -572,7 +572,7 @@
           },
       });
     }
-
+  //geo map
   function mapLoaded(map) {
       var currentNodo;
       map.addLayer('admin1', {
@@ -609,12 +609,7 @@
             type: kartograph.Label,
             data: centroids,
             location: function(d) { return [d.geo_longitude, d.geo_latitude] },
-            text: function(d) { 
-                  var val = getNode(d.state).value;
-                  if (val==-1)
-                    val = "NA"
-                  return val},
-            style: function(d){ return "font-size:"+getNode(d.state).value+"px;"},
+            text: function(d) { return getNode(d.state).value==-1? "NA":"";}, //only prints NA
             mouseenter: function(d, path) {
               borderStateGeoMap(d.state, '#000000');
               d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black");
@@ -649,16 +644,12 @@
             .style('fill', function(d) { return getNode(d.name).color;});
 
           map.removeSymbols();
-          //values
+          //values update
           map.addSymbols({
                 type: kartograph.Label,
                 data: centroids,
                 location: function(d) { return [d.geo_longitude, d.geo_latitude] },
-                text: function(d) { 
-                  var val = getNode(d.state).value;
-                  if (val==-1)
-                    val = "NA"
-                  return val},
+                text: function(d) { return getNode(d.state).value==-1? "NA":"";}, //only prints NA
                 mouseenter: function(d, path) {
                   borderStateGeoMap(d.state, '#000000');
                   d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black"); 
