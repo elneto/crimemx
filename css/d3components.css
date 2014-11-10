@@ -33,7 +33,7 @@
 
 #demers rect {
 	fill: #eee;
-	stroke: #000;
+	stroke: #bbbbbb;
 	stroke-width: 1.5px;
 }
 
@@ -48,7 +48,7 @@
 
 #map.kartograph svg text tspan {
 	font-family:"Helvetica";
-	/*font-weight: bold;*/
+	font-weight: bold;
 	font-size: 8px;
 }
 
@@ -166,7 +166,6 @@ ol#ol-scale li {
 	margin-right: 4em;
 	padding: 0.75em 0.2em;
 	width: 19%;
-
 	min-width: 290px; max-width: 300px; height: 695px; margin: 0 auto;
 }
 

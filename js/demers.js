@@ -142,7 +142,7 @@
               return chroma.hex("#ffffff");
             }
             else
-              return chroma.hex("#333333");
+              return chroma.hex("#444444");
           }
 
         fontSize = d3.scale.linear() //values for the font sizes
@@ -176,8 +176,8 @@
         force
             .nodes(nodes)
             .on("tick", tick)
-            //.start().stop();
-            .start();
+            .start().stop();
+            //.start();
 
         //the enter() section
         var nodeData = svg.selectAll(".nodeG")
@@ -199,7 +199,7 @@
                 this.setAttribute("style", "fill:"+d.color+"; stroke:#000000; z-index:999");
             })
             .on('mouseleave', function(d) { 
-                this.setAttribute("style", "fill:"+d.color+"; stroke:"+d.color);
+                this.setAttribute("style", "fill:"+d.color+"; stroke:'#bbbbbb';");
                 if (d.value!=-1){ //select list item just if it exists
                   var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                   chart.series[0].data[index].select(false);
@@ -209,8 +209,8 @@
             })
             .attr('class', 'node')
             .attr("id", function(d) { return "idn-"+String(d.state).replace(/ /g,''); }) //add one id got from states (mx-state-centroids)
-            .attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
-            .attr("stroke", function(d) { return d.color; })
+            .attr("style", function(d) { return "fill:"+d.color+";"; })
+            //.attr("stroke", function(d) { return d.color; })
             .attr("width", function(d) { return positive(d.r * 2); })
             .attr("height", function(d) { return positive(d.r * 2); })
             .attr("x", function(d) { return d.x; })
@@ -232,7 +232,7 @@
                 d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black");
             })
             .on('mouseleave', function(d) {
-                d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", d.color); 
+                d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); 
                 if (d.value!=-1){ //select list item just if it exists
                   var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                   chart.series[0].data[index].select(false);
@@ -266,7 +266,7 @@
                 d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black");
             })
             .on('mouseleave', function(d) { 
-                d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", d.color); 
+                d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); 
                 if (d.value!=-1){ //select list item just if it exists
                   var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                   chart.series[0].data[index].select(false);
@@ -291,9 +291,9 @@
         var node = svg.selectAll(".node");
         //squares update
         node.data(nodes)
-            .attr("style", function(d) { return "fill:"+d.color+"; stroke:"+d.color+";"; })
             .attr("x", function(d) { return d.x; })
             .attr("y", function(d) { return d.y; })
+            .attr("style", function(d) { return "fill:"+d.color+";"; })
             .transition().duration(500)
             .attr("width", function(d) { return positive(d.r * 2); }) 
             .attr("height", function(d) { return positive(d.r * 2); });
@@ -429,7 +429,7 @@
                         },
                         mouseOut: function () {
                             if (String(this.category)!='Total'){
-                              d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", getNode(this.category).color); //restores the fill color
+                              d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the fill color
                               hideTooltip();
                               borderStateGeoMap(this.category, '#ffffff');
                             }
@@ -452,17 +452,18 @@
 
       //all below is for the force layout
         function tick(e) {
-          var grav = 0.02;
+          var grav = 0.01;
+          var coll = 0.01;
           node.each(gravity(grav))
-              .each(collide(.1))
+              .each(collide(coll))
               .attr("x", function(d) { return d.x - d.r; })
               .attr("y", function(d) { return d.y - d.r; });
           label.each(gravity(grav))
-              .each(collide(.1))
+              .each(collide(coll))
               .attr("x", function(d) { return d.x - d.r; })
               .attr("y", function(d) { return d.y - d.r; });
           nEstado.each(gravity(grav))
-              .each(collide(.1))
+              .each(collide(coll))
               .attr("x", function(d) { return d.x - d.r; })
               .attr("y", function(d) { return d.y - d.r; }); 
         }
@@ -566,7 +567,7 @@
       bgmap.addLayer('admin1', {
           name: 'background',
           styles: {
-              stroke: '#ffffff',
+              stroke: '#bbbbbb',
               fill: '#eeeeee'
           },
       });
@@ -576,7 +577,7 @@
       var currentNodo;
       map.addLayer('admin1', {
           styles: {
-              stroke: '#ffffff',
+              stroke: '#bbbbbb',
               fill: function(d) { return getNode(d.name).color;}
           },
           mouseenter: function(d, path) {
@@ -594,8 +595,8 @@
               
             }, 
             mouseleave: function(d, path) {
-              borderStateGeoMap(d.name, '#ffffff');
-              d3.select("#idn-" + String(d.name).replace(/ /g,'')).style("stroke", getNode(d.name).color); //restores the square border color 
+              borderStateGeoMap(d.name, '#bbbbbb');
+              d3.select("#idn-" + String(d.name).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the square border color 
               if (currentNodo.value!=-1){ //select list item just if it exists
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.name);
                 chart.series[0].data[index].select(false);
@@ -629,8 +630,8 @@
               
             }, 
             mouseleave: function(d, path) {
-              borderStateGeoMap(d.state, '#ffffff');
-              d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", getNode(d.state).color); //restores the square border color 
+              borderStateGeoMap(d.state, '#bbbbbb');
+              d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the square border color 
               if (currentNodo.value!=-1){ //select list item just if it exists
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                 chart.series[0].data[index].select(false);
@@ -672,8 +673,8 @@
                   }
                 }, 
                 mouseleave: function(d, path) {
-                  borderStateGeoMap(d.state, '#ffffff');
-                  d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", getNode(d.state).color); //restores the square border color 
+                  borderStateGeoMap(d.state, '#bbbbbb');
+                  d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the square border color 
                   if (currentNodo.value!=-1){ //select list item just if it exists
                     var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                     chart.series[0].data[index].select(false);
@@ -689,7 +690,7 @@
 
       borderStateGeoMap = function (name, color){
           map.getLayer('admin1')
-            .style('stroke', function(d) { if (name==d.name) return color; else return 'white';});   
+            .style('stroke', function(d) { if (name==d.name) return color; else return '#bbbbbb';});   
       }
 
       isMapLoaded = true;
