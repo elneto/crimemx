@@ -33,7 +33,7 @@
 	width: 780px;
 	height: 700px;
 	left: 8.6em;
-	top: -1em;
+	top: 0.5em;
 	z-index: -1;
 }
 
@@ -222,7 +222,7 @@ ol#ol-scale li {
     padding: 0.6em;
     position: absolute;
     right: 0;
-    top: 5.7em;
+    top: 6.7em;
     z-index: 99;
 
     -webkit-box-shadow: 6px 6px 6px #b3b3b3;
