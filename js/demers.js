@@ -33,17 +33,6 @@
         }
         return +max;
       }
-
-      //draws the appropriate scale values for this current CSV
-      function scaleValues(max){
-        $( "#ol-scale li:eq(0)" ).text(Math.round( max*10 )/10);
-        $( "#ol-scale li:eq(1)" ).text(Math.round( max/7*6*10 )/10);
-        $( "#ol-scale li:eq(2)" ).text(Math.round( max/7*5*10 )/10);
-        $( "#ol-scale li:eq(3)" ).text(Math.round( max/7*4*10 )/10);
-        $( "#ol-scale li:eq(4)" ).text(Math.round( max/7*3*10 )/10);
-        $( "#ol-scale li:eq(5)" ).text(Math.round( max/7*2*10 )/10);
-        $( "#ol-scale li:eq(6)" ).text(Math.round( max/7*1*10 )/10);
-      }
       
       //the SVG main demers map    
       var margin = {top: 0, right: 0, bottom: 0, left: 0},
@@ -108,34 +97,66 @@
           scaleValues(MAXRATE);
         }
 
+        //returns appropriate color
+        function colorFn(value){
+            if (value == -1)
+              return chroma.hex("#eeeeee"); //no data
+
+            //maps color using a sqrt scale
+          var colorDomRange = d3.scale.sqrt() //values for the square sizes 
+            .domain([0, MAXRATE]) 
+            .range([0, 63]);
+
+            var v = colorDomRange(value);
+            if ( v < 9)
+              return chroma.hex("#4575b4"); //less crime
+            else if (v >= 9 && v < 18)
+              return chroma.hex("#91bfdb");
+            else if (v >= 18 && v < 27)
+              return chroma.hex("#e0f3f8");
+            else if (v >= 27 && v < 36)
+              return chroma.hex("#ffffbf");
+            else if (v >= 36 && v < 45)
+              return chroma.hex("#fee090");
+            else if ( v >= 45 && v < 54)
+              return chroma.hex("#fc8d59");
+            else 
+              return chroma.hex("#d73027"); //more crime
+          }
+        //brute force to get the correct steps :D
+        function getStepValues(max){
+          var counter, 
+            currentcolor = colorFn(0),
+            stepvalues=[],
+            step;
+
+          for (counter=0; counter <= max; counter+=0.1){  
+            step = colorFn(counter);
+            if (step.toString() != currentcolor.toString()){
+              stepvalues.push(Math.round( counter * 10 ) / 10);
+              currentcolor = step;
+            }
+          }
+          return stepvalues;
+        }
+
+        //draws the appropriate scale values for this current CSV
+        function scaleValues(max){
+
+          var sv = getStepValues(max);
+          
+          $( "#ol-scale li:eq(0)" ).text(Math.round( max*10 )/10);
+          $( "#ol-scale li:eq(1)" ).text(sv[5]);
+          $( "#ol-scale li:eq(2)" ).text(sv[4]);
+          $( "#ol-scale li:eq(3)" ).text(sv[3]);
+          $( "#ol-scale li:eq(4)" ).text(sv[2]);
+          $( "#ol-scale li:eq(5)" ).text(sv[1]);
+          $( "#ol-scale li:eq(6)" ).text(sv[0]);
+        }
+
         var radius = d3.scale.sqrt() //values for the square sizes 
           .domain([0, MAXRATE]) 
           .range([12, 60]);
-
-        var colorDomRange = d3.scale.sqrt() //values for the square sizes 
-          .domain([0, MAXRATE]) 
-          .range([0, 63]);
-
-        function colorFn (value){
-          if (value == -1)
-            return chroma.hex("#eeeeee"); //no data
-
-          var v = colorDomRange(value);
-          if ( v < 9)
-            return chroma.hex("#4575b4"); //less crime
-          else if (v >= 9 && v < 18)
-            return chroma.hex("#91bfdb");
-          else if (v >= 18 && v < 27)
-            return chroma.hex("#e0f3f8");
-          else if (v >= 27 && v < 36)
-            return chroma.hex("#ffffbf");
-          else if (v >= 36 && v < 45)
-            return chroma.hex("#fee090");
-          else if ( v >= 45 && v < 54)
-            return chroma.hex("#fc8d59");
-          else 
-            return chroma.hex("#d73027"); //more crime
-        }
 
         var colorLabel = function (val){
             if (val>=MAXRATE/7*3.7 || (val < MAXRATE/(7*5.9)) &&val>0) { 
