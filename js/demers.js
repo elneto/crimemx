@@ -387,7 +387,7 @@
                   text: barTitulo +' ('+GYEAR+')'
               },
               subtitle: {
-                  text: barFuente
+                  text: barTasa
               },
               xAxis: {
                   categories: estadosArray,
@@ -398,7 +398,7 @@
               yAxis: {
                   min: 0,
                   title: {
-                      text: barTasa,
+                      text: barFuente,
                       align: 'high'
                   },
                   labels: {
