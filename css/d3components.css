@@ -193,6 +193,7 @@ ol#ol-scale li {
 	position: absolute;
 	right: 0;
 	bottom: -2em;
+	z-index: 9999;
 }
 
 /*Tooltip*/
