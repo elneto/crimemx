@@ -11,6 +11,10 @@
     z-index: 9999;
 }
 
+.navbar.navbar-inverse.navbar-fixed-top {
+	z-index: 10001;
+}
+
 /*For Demers*/
 #demers-container {
     width:930px;
@@ -176,6 +180,8 @@ ol#ol-scale li {
 	width: 19%;
 	min-width: 290px; max-width: 300px; height: 715px; 
 	margin-top: -6.8em;
+	z-index: 10000;
+	position: relative;
 }
 
 #list-states ol {
