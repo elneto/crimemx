@@ -63,7 +63,8 @@
     var varTitle = "Homicide rate";
     var varImgFile = "images/homicide.png";
     var varColor = "#711a26";
-    var playFn;
+    var playFn, 
+        togglePlay = false;
     var resInterval;
 
     $(document).ready(function(){
@@ -97,14 +98,31 @@
         function changeYear(){
           if (GYEAR >= 2014){
             clearInterval(resInterval); //stop! 
+            $("#play-button").attr("src", "images/play.png");
+            $("#play-link").text("play");
+            togglePlay = !togglePlay;
             }
           $("#slider").slider("value", GYEAR+=1);
         }
         //resInterval = setInterval(changeYear, 600); //starts the animation
 
         playFn = function(){
-            GYEAR=1996;
-            resInterval = setInterval(changeYear, 600);
+            if (!togglePlay){ //if it's not playing already, play!
+              
+              resInterval = setInterval(changeYear, 600);  
+
+              $("#play-button").attr("src", "images/pause.png");
+              $("#play-link").animate().text("pause");
+              if (GYEAR == 2014) //start from the beginning
+                GYEAR=1996;
+              
+            }
+            else { //it is playing, let's pause
+              clearInterval(resInterval); //stop! 
+              $("#play-button").attr("src", "images/play.png");
+              $("#play-link").text("play");
+            }
+            togglePlay = !togglePlay;
         }
 
         $("#play-button").click(playFn);
@@ -190,7 +208,7 @@
         <div id="top_part">   
               <div id="top-header">
                 <h1 id="main-title" class="text-left">Homicide Rate in 2014</h1>
-                <p class="lead text-left">Select a crime indicator, move the timeline slider or click on the <a href="javascript:playFn()">play</a> button.</p>
+                <p class="lead text-left">Select a crime indicator, move the timeline slider or click on the <a href="javascript:playFn()" id="play-link">play</a> button.</p>
               </div>
               <div id="list-states"></div>
               <div id="demers-container">

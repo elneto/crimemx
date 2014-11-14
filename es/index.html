@@ -63,7 +63,8 @@
     var varTitle = "Tasa de homicidios";
     var varImgFile = "../images/homicide.png";
     var varColor = "#711a26";
-    var playFn;
+    var playFn, 
+        togglePlay = false;
     var resInterval;
 
     $(document).ready(function(){
@@ -97,14 +98,31 @@
         function changeYear(){
           if (GYEAR >= 2014){
             clearInterval(resInterval); //stop! 
+            $("#play-button").attr("src", "../images/play.png");
+            $("#play-link").text("empezar");
+            togglePlay = !togglePlay;
             }
           $("#slider").slider("value", GYEAR+=1);
         }
         //resInterval = setInterval(changeYear, 600); //starts the animation
 
-         playFn = function(){
-            GYEAR=1996;
-            resInterval = setInterval(changeYear, 600);
+        playFn = function(){
+            if (!togglePlay){ //if it's not playing already, play!
+              
+              resInterval = setInterval(changeYear, 600);  
+
+              $("#play-button").attr("src", "../images/pause.png");
+              $("#play-link").animate().text("pausar");
+              if (GYEAR == 2014) //start from the beginning
+                GYEAR=1996;
+              
+            }
+            else { //it is playing, let's pause
+              clearInterval(resInterval); //stop! 
+              $("#play-button").attr("src", "../images/play.png");
+              $("#play-link").text("empezar");
+            }
+            togglePlay = !togglePlay;
         }
 
         $("#play-button").click(playFn);
@@ -190,7 +208,7 @@
         <div id="top_part">
               <div id="top-header">
                 <h1 id="main-title" class="text-left">Tasa de homicidios en 2014</h1>
-                <p class="lead text-left">Selecciona un indicador, desplaza la línea de tiempo o presiona <a href="javascript:playFn()">empezar</a></p>
+                <p class="lead text-left">Selecciona un indicador, desplaza la línea de tiempo o presiona <a href="javascript:playFn()" id="play-link">empezar</a></p>
               </div>   
               <div id="list-states"></div>
               <div id="demers-container">
