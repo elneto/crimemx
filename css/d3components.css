@@ -39,6 +39,7 @@
 	left: 8.6em;
 	top: 0.5em;
 	z-index: -1;
+	opacity: 0.6;
 }
 
 #demers rect {
@@ -209,18 +210,23 @@ ol#ol-scale li {
 	visibility: hidden;
 	border: 1px solid #000;
 	background-color:#fff;
-	padding: 0.1em 1em;
-	width:10em;
+	padding: 0;
+	width:27em;
+	height:17em;
 	display: block;
 	box-shadow: 5px 5px 10px #bbbbbb;
 	margin: 3.5em 0 0 4em;
 }
 #stateTooltip h4{
-	
+	text-align: left;
 }
 #stpNumber {
 	font-weight: bold;
-}	
+}
+#state-chart{
+
+}
+
 #botones-box{
 	background-color: #ffffff;
     clear: both;

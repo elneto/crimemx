@@ -225,7 +225,7 @@
                   var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                   chart.series[0].data[index].select(false);
                 }
-                hideTooltip();
+                //hideTooltip();
                 borderStateGeoMap(d.state, '#ffffff');
             })
             .attr('class', 'node')
