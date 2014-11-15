@@ -1,5 +1,5 @@
 
-d3.json('../json/aguas.json', function(data) {
+d3.json('../json/Aguascalientes.json', function(data) {
   nv.addGraph(function() {
     var chart = nv.models.stackedAreaChart()
                   .margin({right: 50})
@@ -9,7 +9,7 @@ d3.json('../json/aguas.json', function(data) {
                   //.rightAlignYAxis(true)      //Let's move the y-axis to the right side.
                   .transitionDuration(500)
                   .showControls(false)       //Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
-                  .showLegend(false)
+                  //.showLegend(false)
                   .clipEdge(true);
 
     //Format x-axis labels with custom function.
@@ -20,6 +20,9 @@ d3.json('../json/aguas.json', function(data) {
 
     chart.yAxis
         .tickFormat(d3.format(',.2f'));
+
+    chart.color(['#ff0000', '#ffa556', '#6bbc6b', '#984ea3', '#629fca']);
+    //chart.style('stream');
 
     d3.select('#state-chart')
       .datum(data)

@@ -211,14 +211,15 @@ ol#ol-scale li {
 	border: 1px solid #000;
 	background-color:#fff;
 	padding: 0;
-	width:27em;
-	height:17em;
+	width:28em;
+	height:16em;
 	display: block;
 	box-shadow: 5px 5px 10px #bbbbbb;
 	margin: 3.5em 0 0 4em;
 }
 #stateTooltip h4{
 	text-align: left;
+	padding: 0.2em 0 0 1em;
 }
 #stpNumber {
 	font-weight: bold;
