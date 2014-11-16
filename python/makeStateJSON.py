@@ -85,12 +85,14 @@ for i in range(2,34):
 	for row in readercnv:
 		if (row_number!=0):
 			if (row_number==2): #first line
-				line['carnonvio']='{"key":"car withouth violence","values" : ['
+				line['carnonvio']='{"key":"car no violence","values" : ['
 			line['carnonvio'] = line['carnonvio'] + "["+str(int(unix_time_millis(d))) + "," +minus_one(row[i]) + "],"
 			year += 1
 			d = datetime.datetime(year,1,2)
 		row_number += 1
 
+	if (name == 'Coahuila de Zaragoza'):
+		name = 'Coahuila'
 	wfile = open(name+'.json', 'w+')
 	print name
 	print >> wfile,"["+line['homicide'][:-1] + ']},'

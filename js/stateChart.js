@@ -1,10 +1,9 @@
 
 function drawChart(stateInChart){  
   d3.json('../python/'+stateInChart+'.json', function(data) {
-    console.log('entered stateChart')
     nv.addGraph(function() {
       var chart = nv.models.stackedAreaChart()
-                    .margin({right: 50})
+                    //.margin({right: 50})
                     .x(function(d) { return d[0] })   //We can modify the data accessor functions...
                     .y(function(d) { return d[1] })   //...in case your data is formatted differently.
                     .useInteractiveGuideline(true)    //Tooltips which show all data points. Very nice!
@@ -26,10 +25,15 @@ function drawChart(stateInChart){
 
       chart.color(['#ff0000', '#ffa556', '#6bbc6b', '#984ea3', '#629fca']);
       //chart.style('stream');
+      for (var i = 0; i <= 4; i++)
+        data[i].disabled = true;
+
+      data[0].disabled=false;
 
       d3.select('#state-chart')
         .datum(data)
         .call(chart);
+
 
       nv.utils.windowResize(chart.update);
 
