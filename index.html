@@ -69,27 +69,29 @@
 
     $(document).ready(function(){
 
-            function updateYear(){
-                GYEAR = $("#slider").slider("value");
-                $("#main-title").text(varTitle+" in "+$( "#slider" ).slider( "value" ));
-                if (GYEAR==2014)
-                    $("#main-title").append("*");
+          function updateYear(){
+              GYEAR = $("#slider").slider("value");
+              $("#main-title").text(varTitle+" in "+$( "#slider" ).slider( "value" ));
+              if (GYEAR==2014)
+                  $("#main-title").append("*");
 
-                ready(GERROR, GSTATES, GRATES);
-            }
+              ready(GERROR, GSTATES, GRATES);
+          }
          //slider         
-            $( "#slider" ).slider({
-              min: 1997,
-              max: 2014,
-              step: 1,
-              value:GYEAR,
-              slide: updateYear,
-              change: updateYear
-            });
+          $( "#slider" ).slider({
+            min: 1997,
+            max: 2014,
+            step: 1,
+            value:GYEAR,
+            slide: updateYear,
+            change: updateYear
+          });
 
-            $("#botones-box .list-group-item").click(function(event){
-                goToPoint(event.target.id,GYEAR); 
-            });
+          $("#botones-box .list-group-item").click(function(event){
+              goToPoint(event.target.id,GYEAR); 
+          });
+
+          $("#close-button").click(hideTooltip);
       
     });
 
@@ -246,6 +248,7 @@
                   <h4>
                   State
                   </h4>
+                  <img src="images/close.png" id="close-button">
                   <p> <!--Without the p the tooltip diverges !-->
                   <svg style='height:200px' width="300px" id="state-chart"/>
                   </p>
