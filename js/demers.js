@@ -713,7 +713,7 @@
     //Tooltip functions
     function showTooltip(state, number, x, y){
         stateInChart = state;
-        chartGLOBAL.update();
+        drawChart(stateInChart);
         d3.select("#stateTooltip h4").text(state);
         d3.select("#stpNumber").text(number);
         d3.select("#stateTooltip").style("top", y+"px").style("left",x+"px");
@@ -752,6 +752,8 @@
 'Michoacan':'Mich.','Morelos':'Mor.','Nayarit':'Nay.','Nuevo Leon':'N. Leon','Oaxaca':'Oax.','Puebla':'Puebla',
 'Queretaro':'Quer.','Quintana Roo':'Q. Roo','San Luis Potosi':'Sn Luis','Sinaloa':'Sinaloa','Sonora':'Sonora',
 'Tabasco':'Tabasco','Tamaulipas':'Tamp.','Tlaxcala':'Tlax.','Veracruz':'Ver.','Yucatan':'Yuc.','Zacatecas':'Zac.'};
+
+
 
   
 
