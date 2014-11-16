@@ -61,10 +61,11 @@
     var DATAFILE = "../csv/d3-homicide.csv";
     var GYEAR = 2014;
     var varTitle = "Tasa de homicidios";
+    var crimeIndex = 0;
     var varImgFile = "../images/homicide.png";
-    var varColor = "#711a26";
     var playFn, 
         togglePlay = false;
+    var espaniol = true;
     var resInterval;
 
     $(document).ready(function(){
@@ -137,35 +138,35 @@
         case ("btnHomicide"):
           varImgFile = "../images/homicide.png";
           varTitle = "Tasa de Homicidios";
-          varColor = "#711a26";
+          crimeIndex = 0;
           MAXRATE=0;
           ready(GERROR, GSTATES, GHOMI);
           break;
         case ("btnKidnap"):
           varImgFile = "../images/kidnap.png";
           varTitle = "Tasa de Secuestros";
-          varColor = "#96adbd";
+          crimeIndex = 1;
           MAXRATE=0;
           ready(GERROR, GSTATES, GKIDNAP);
           break;
         case ("btnExtortion"):
           varImgFile = "../images/extortion.png";
           varTitle = "Tasa de Extorsión";
-          varColor = "#ae560d";
+          crimeIndex = 2;
           MAXRATE=0;
           ready(GERROR, GSTATES, GEXTORTION);
           break;
         case ("btnCarViolence"):
           varImgFile = "../images/car.png";
           varTitle = "Robo de Autos con Violencia";
-          varColor = "#6b6694";
+          crimeIndex = 3;
           MAXRATE=0;
           ready(GERROR, GSTATES, GCARVIO);
           break;
         case ("btnCarNoViolence"):
           varImgFile = "../images/carvio.png";
           varTitle = "Robo de Autos sin Violencia";
-          varColor = "#3b615f";
+          crimeIndex = 4;
           MAXRATE=0;
           ready(GERROR, GSTATES, GCARNOVIO);
           break;
@@ -243,13 +244,12 @@
                 </div>
                 <!-- A tool tip -->
                 <div id="stateTooltip">
-                    <h4>
-                    State
-                    </h4>
-                    <p>
-                    <span id="stpNumber">30</span> 
-                    <span id="stpText"> por cada 100,000 habitantes </span>
-                    </p>
+                  <h4>
+                  State
+                  </h4>
+                  <p> <!--Without the p the tooltip diverges !-->
+                  <svg style='height:200px' width="300px" id="state-chart"/>
+                  </p>
                 </div>
               </div>
               <div id="slider-container">
@@ -316,6 +316,10 @@
       <script src="http://d3js.org/queue.v1.min.js"></script>
       <script src="../js/highcharts.js"></script>
       <script src="../js/modules/exporting.js"></script>
+      <link href="../css/nv.d3.css" rel="stylesheet" type="text/css">
+      <script src="../js/d3.v3.js"></script>
+      <script src="../js/nv.d3.js"></script>
+      <script src="../js/stateChart.js"></script>
       <script src="../js/demers.js"></script>
     <!-- Bootstrap core JavaScript
     ================================================== -->

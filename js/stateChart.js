@@ -1,5 +1,5 @@
 
-function drawChart(stateInChart, crimeIndex){  
+function drawChart(stateInChart, crimeIndex, espaniol){  
   d3.json('../python/'+stateInChart+'.json', function(data) {
     nv.addGraph(function() {
       var chart = nv.models.stackedAreaChart()
@@ -25,8 +25,19 @@ function drawChart(stateInChart, crimeIndex){
 
       chart.color(['#ff0000', '#ffa556', '#6bbc6b', '#984ea3', '#629fca']);
       //chart.style('stream');
-      for (var i = 0; i <= 4; i++)
+      for (var i = 0; i <= 4; i++){
         data[i].disabled = true;
+
+      if (espaniol)
+        {
+          data[0].key="homicidio";
+          data[1].key="secuestro";
+          data[2].key="extorsión";
+          data[3].key="autos violencia";
+          data[4].key="autos sin violencia";
+        }
+      }
+        
 
       data[crimeIndex].disabled=false;
 

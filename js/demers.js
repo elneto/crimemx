@@ -713,7 +713,7 @@
     //Tooltip functions
     function showTooltip(state, number, x, y){
         stateInChart = state;
-        drawChart(stateInChart, crimeIndex);
+        drawChart(stateInChart, crimeIndex, espaniol);
         d3.select("#stateTooltip h4").text(state);
         d3.select("#stpNumber").text(number);
         d3.select("#stateTooltip").style("top", y+"px").style("left",x+"px");
