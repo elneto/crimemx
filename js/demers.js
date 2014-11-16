@@ -158,10 +158,10 @@
 
         var radius = d3.scale.sqrt() //values for the square sizes 
           .domain([0, MAXRATE]) 
-          .range([12, 60]);
+          .range([0, 64]);
 
         var colorLabel = function (val){
-            if (val>=MAXRATE/7*3.7 || (val < MAXRATE/(7*5.9)) &&val>0) { 
+            if (val>=MAXRATE/7*3.7) { 
               return chroma.hex("#ffffff");
             }
             else
@@ -475,8 +475,8 @@
 
       //all below is for the force layout
         function tick(e) {
-          var grav = 0.02;
-          var coll = 0.05;
+          var grav = 0.3;
+          var coll = 0.5;
           node.each(gravity(grav))
               .each(collide(coll))
               .attr("x", function(d) { return d.x - d.r; })
