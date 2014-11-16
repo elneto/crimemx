@@ -713,18 +713,19 @@
     //Tooltip functions
     function showTooltip(state, number, x, y){
         stateInChart = state;
+        d3.select("#stpNumber").text(number);
         drawChart(stateInChart, crimeIndex, espaniol);
         d3.select("#stateTooltip h4").text(state);
         d3.select("#stpNumber").text(number);
         d3.select("#stateTooltip").style("top", y+"px").style("left",x+"px");
-        d3.select("#stateTooltip").style("visibility", "visible").style("opacity", 1);
-        //d3.select("#stateTooltip").transition().duration(500).style("opacity", 1);
+        d3.select("#stateTooltip").style("visibility", "visible");
+        //d3.select("#stateTooltip").style("opacity", 1);
 
     }
 
     function hideTooltip(){
-        d3.select("#stateTooltip").transition().duration(500).style("opacity", 0).transition().duration(1000).style("visibility", "hidden");
-        //d3.select("#stateTooltip").transition().duration(500).attr('class', 'hidden');
+        //d3.select("#stateTooltip").transition().duration(500).style("opacity", 0).transition().duration(1000).style("visibility", "hidden");
+        d3.select("#stateTooltip").style("visibility", "hidden");
     }
 
     function positive(num){

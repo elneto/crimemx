@@ -236,7 +236,20 @@ img#close-button:hover, img#play-button:hover{
 
 #stpNumber {
 	font-weight: bold;
+	font-size: 2em;
+	position: absolute;
+	left: 0;
+	margin-left: 0.6em;
 }
+
+#stpText {
+	font-size: 0.8em;
+	position: absolute;
+	left: 0;
+	top: 6.6em;
+	margin-left: 1.6em;
+	}
+
 #state-chart{
 
 }
