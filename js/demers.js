@@ -8,6 +8,8 @@
       var chart,
           keysArray;
       var MAXRATE=0;
+      var chartGLOBAL;
+      var stateInChart = "Aguascalientes";
 
       //year must be between 1997 and 2014
       function rateById(year, id)
@@ -710,10 +712,13 @@
 
     //Tooltip functions
     function showTooltip(state, number, x, y){
+        stateInChart = state;
+        chartGLOBAL.update();
         d3.select("#stateTooltip h4").text(state);
         d3.select("#stpNumber").text(number);
         d3.select("#stateTooltip").style("top", y+"px").style("left",x+"px");
         d3.select("#stateTooltip").style("visibility", "visible");
+
     }
 
     function hideTooltip(){

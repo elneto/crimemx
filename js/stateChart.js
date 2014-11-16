@@ -1,5 +1,6 @@
 
-d3.json('../json/Aguascalientes.json', function(data) {
+d3.json('../python/'+stateInChart+'.json', function(data) {
+  console.log('entered stateChart')
   nv.addGraph(function() {
     var chart = nv.models.stackedAreaChart()
                   .margin({right: 50})
@@ -15,7 +16,8 @@ d3.json('../json/Aguascalientes.json', function(data) {
     //Format x-axis labels with custom function.
     chart.xAxis
         .tickFormat(function(d) { 
-          return d3.time.format('%x')(new Date(d)) 
+          return d3.time.format('%Y')(new Date(d)) 
+          //return d3.time.format('%x')(new Date(d)) 
     });
 
     chart.yAxis
@@ -29,6 +31,8 @@ d3.json('../json/Aguascalientes.json', function(data) {
       .call(chart);
 
     nv.utils.windowResize(chart.update);
+
+    chartGLOBAL = chart;
 
     return chart;
   });
