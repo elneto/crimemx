@@ -294,7 +294,7 @@
                   var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                   chart.series[0].data[index].select(false);
                 }
-                hideTooltip();
+                //hideTooltip();
                 borderStateGeoMap(d.state, '#ffffff');
             })
               .attr("class", "lblEstado")
@@ -308,7 +308,7 @@
               .text(function(d){return (d.value != -1)? shortenLbl[d.state]:''});
     
         //deletes the tooltip in case it is still there.
-        hideTooltip();
+        //hideTooltip();
 
          //for the update() section
         var node = svg.selectAll(".node");
@@ -445,15 +445,15 @@
                         mouseOver: function () {
                             if (String(this.category)!='Total'){
                               d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", "black");
-                              currentNodo = getNode(this.category);
-                              showTooltip(this.category, currentNodo.value, currentNodo.x, currentNodo.y);
+                              //currentNodo = getNode(this.category);
+                              //showTooltip(this.category, currentNodo.value, currentNodo.x, currentNodo.y);
                               borderStateGeoMap(this.category, '#000000');
                             }
                         },
                         mouseOut: function () {
                             if (String(this.category)!='Total'){
                               d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the fill color
-                              hideTooltip();
+                              //hideTooltip();
                               borderStateGeoMap(this.category, '#ffffff');
                             }
                         }
@@ -624,7 +624,7 @@
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.name);
                 chart.series[0].data[index].select(false);
               }
-              hideTooltip();
+              //hideTooltip();
             }
       });
       //values
@@ -654,7 +654,7 @@
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                 chart.series[0].data[index].select(false);
               }
-              hideTooltip();
+              //hideTooltip();
             }
         });
       
@@ -693,7 +693,7 @@
                     var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                     chart.series[0].data[index].select(false);
                   }
-                  hideTooltip();
+                  //hideTooltip();
                 }
             });
           
@@ -717,12 +717,14 @@
         d3.select("#stateTooltip h4").text(state);
         d3.select("#stpNumber").text(number);
         d3.select("#stateTooltip").style("top", y+"px").style("left",x+"px");
-        d3.select("#stateTooltip").style("visibility", "visible");
+        d3.select("#stateTooltip").style("visibility", "visible").style("opacity", 1);
+        //d3.select("#stateTooltip").transition().duration(500).style("opacity", 1);
 
     }
 
     function hideTooltip(){
-        d3.select("#stateTooltip").style("visibility", "hidden");
+        d3.select("#stateTooltip").transition().duration(500).style("opacity", 0).transition().duration(1000).style("visibility", "hidden");
+        //d3.select("#stateTooltip").transition().duration(500).attr('class', 'hidden');
     }
 
     function positive(num){
