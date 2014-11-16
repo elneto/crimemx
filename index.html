@@ -60,6 +60,7 @@
     var DATAFILE = "csv/d3-homicide.csv";
     var GYEAR = 2014;
     var varTitle = "Homicide rate";
+    var crimeIndex = 0;
     var varImgFile = "images/homicide.png";
     var playFn, 
         togglePlay = false;
@@ -135,30 +136,35 @@
         case ("btnHomicide"):
           varImgFile = "images/homicide.png";
           varTitle = "Homicide Rate";
+          crimeIndex = 0;
           MAXRATE=0;
           ready(GERROR, GSTATES, GHOMI);
           break;
         case ("btnKidnap"):
           varImgFile = "images/kidnap.png";
           varTitle = "Kidnapping Rate";
+          crimeIndex = 1;
           MAXRATE=0;
           ready(GERROR, GSTATES, GKIDNAP);
           break;
         case ("btnExtortion"):
           varImgFile = "images/extortion.png";
           varTitle = "Extortion Rate";
+          crimeIndex = 2;
           MAXRATE=0;
           ready(GERROR, GSTATES, GEXTORTION);
           break;
         case ("btnCarViolence"):
           varImgFile = "images/car.png";
           varTitle = "Violent Car Theft Rate";
+          crimeIndex = 3;
           MAXRATE=0;
           ready(GERROR, GSTATES, GCARVIO);
           break;
         case ("btnCarNoViolence"):
           varImgFile = "images/carvio.png";
           varTitle = "Non Violent Car Theft Rate";
+          crimeIndex = 4;
           MAXRATE=0;
           ready(GERROR, GSTATES, GCARNOVIO);
           break;

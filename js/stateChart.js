@@ -1,5 +1,5 @@
 
-function drawChart(stateInChart){  
+function drawChart(stateInChart, crimeIndex){  
   d3.json('../python/'+stateInChart+'.json', function(data) {
     nv.addGraph(function() {
       var chart = nv.models.stackedAreaChart()
@@ -28,7 +28,7 @@ function drawChart(stateInChart){
       for (var i = 0; i <= 4; i++)
         data[i].disabled = true;
 
-      data[0].disabled=false;
+      data[crimeIndex].disabled=false;
 
       d3.select('#state-chart')
         .datum(data)
