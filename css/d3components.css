@@ -207,7 +207,6 @@ ol#ol-scale li {
 #stateTooltip{
 	position: absolute;
 	z-index: 99999;
-	visibility: hidden;
 	border: 1px solid #000;
 	background-color:#fff;
 	padding: 0;
@@ -216,11 +215,22 @@ ol#ol-scale li {
 	display: block;
 	box-shadow: 5px 5px 10px #bbbbbb;
 	margin: 3.5em 0 0 4em;
+	visibility: hidden;
+	opacity: 0.7;
 }
 
 #stateTooltip h4{
 	text-align: left;
 	padding: 0.2em 0 0 1em;
+}
+
+#stpInstructions{
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-right: 2em;
+	color: red;
+	text-transform: uppercase;
 }
 
 img#close-button {

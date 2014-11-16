@@ -8,8 +8,8 @@
       var chart,
           keysArray;
       var MAXRATE=0;
-      var chartGLOBAL;
       var stateInChart = "Aguascalientes";
+
 
       //year must be between 1997 and 2014
       function rateById(year, id)
@@ -221,13 +221,16 @@
             .on('mouseover', function(d) { 
                 this.setAttribute("style", "fill:"+d.color+"; stroke:#000000; z-index:999");
             })
+            .on('click', function(d) { 
+                pinTooltip();
+            })
             .on('mouseleave', function(d) { 
                 this.setAttribute("style", "fill:"+d.color+"; stroke:'#bbbbbb';");
                 if (d.value!=-1){ //select list item just if it exists
                   var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                   chart.series[0].data[index].select(false);
                 }
-                //hideTooltip();
+                hideTooltip();
                 borderStateGeoMap(d.state, '#ffffff');
             })
             .attr('class', 'node')
@@ -254,13 +257,16 @@
             .on('mouseover', function(d) { 
                 d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black");
             })
+            .on('click', function(d) { 
+                pinTooltip();
+            })
             .on('mouseleave', function(d) {
                 d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); 
                 if (d.value!=-1){ //select list item just if it exists
                   var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                   chart.series[0].data[index].select(false);
                 }
-                //hideTooltip();
+                hideTooltip();
                 borderStateGeoMap(d.state, '#ffffff');
             })
             .attr("class", "lblValue")
@@ -288,13 +294,16 @@
             .on('mouseover', function(d) { 
                 d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black");
             })
+            .on('click', function(d) { 
+                pinTooltip();
+            })
             .on('mouseleave', function(d) { 
                 d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); 
                 if (d.value!=-1){ //select list item just if it exists
                   var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                   chart.series[0].data[index].select(false);
                 }
-                //hideTooltip();
+                hideTooltip();
                 borderStateGeoMap(d.state, '#ffffff');
             })
               .attr("class", "lblEstado")
@@ -308,7 +317,7 @@
               .text(function(d){return (d.value != -1)? shortenLbl[d.state]:''});
     
         //deletes the tooltip in case it is still there.
-        //hideTooltip();
+        hideTooltip();
 
          //for the update() section
         var node = svg.selectAll(".node");
@@ -616,16 +625,17 @@
                 showTooltip(d.name, "NA", currentNodo.x, currentNodo.y);
               }
               
-            }, 
-            mouseleave: function(d, path) {
-              borderStateGeoMap(d.name, '#bbbbbb');
-              d3.select("#idn-" + String(d.name).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the square border color 
-              if (currentNodo.value!=-1){ //select list item just if it exists
-                var index = keysArray.map(function(x) {return x.state; }).indexOf(d.name);
-                chart.series[0].data[index].select(false);
-              }
-              //hideTooltip();
+            },
+          //mouseclick: pinTooltip(),
+          mouseleave: function(d, path) {
+            borderStateGeoMap(d.name, '#bbbbbb');
+            d3.select("#idn-" + String(d.name).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the square border color 
+            if (currentNodo.value!=-1){ //select list item just if it exists
+              var index = keysArray.map(function(x) {return x.state; }).indexOf(d.name);
+              chart.series[0].data[index].select(false);
             }
+            hideTooltip();
+          }
       });
       //values
       map.addSymbols({
@@ -647,6 +657,7 @@
               }
               
             }, 
+            //mouseclick: pinTooltip(),
             mouseleave: function(d, path) {
               borderStateGeoMap(d.state, '#bbbbbb');
               d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the square border color 
@@ -654,7 +665,7 @@
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                 chart.series[0].data[index].select(false);
               }
-              //hideTooltip();
+              hideTooltip();
             }
         });
       
@@ -686,6 +697,7 @@
                     showTooltip(d.state, "NA", currentNodo.x, currentNodo.y);
                   }
                 }, 
+                //mouseclick: pinTooltip(),
                 mouseleave: function(d, path) {
                   borderStateGeoMap(d.state, '#bbbbbb');
                   d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the square border color 
@@ -693,7 +705,7 @@
                     var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                     chart.series[0].data[index].select(false);
                   }
-                  //hideTooltip();
+                  hideTooltip();
                 }
             });
           
@@ -712,20 +724,41 @@
 
     //Tooltip functions
     function showTooltip(state, number, x, y){
+
+        if (TP) //if another is pinned
+          return;
+
         stateInChart = state;
-        d3.select("#stpNumber").text(number);
         drawChart(stateInChart, crimeIndex, espaniol);
-        d3.select("#stateTooltip h4").text(state);
         d3.select("#stpNumber").text(number);
-        d3.select("#stateTooltip").style("top", y+"px").style("left",x+"px");
-        d3.select("#stateTooltip").style("visibility", "visible");
+        d3.select("#stateTooltip h4").text(state);
+
+        d3.select("#stateTooltip")
+          .style("visibility", "visible")
+          .style("top", y+"px")
+          .style("left",x+"px")
+          .transition().duration(500).style("opacity", 1);
+
+        d3.select("#stpInstructions").style("visibility", "visible");
         //d3.select("#stateTooltip").style("opacity", 1);
 
     }
 
+    function pinTooltip(){
+        d3.select("#stpInstructions").style("visibility", "hidden");
+        d3.select("#stateTooltip").transition().duration(500).style("opacity", 1);
+        TP = true;
+    }
+
     function hideTooltip(){
         //d3.select("#stateTooltip").transition().duration(500).style("opacity", 0).transition().duration(1000).style("visibility", "hidden");
-        d3.select("#stateTooltip").style("visibility", "hidden");
+        if (!TP)
+          {
+            d3.select("#stateTooltip")
+              .style("opacity", 0.7)
+              .style("visibility", "hidden");
+            TP = false;
+          }
     }
 
     function positive(num){

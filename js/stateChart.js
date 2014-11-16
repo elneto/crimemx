@@ -48,8 +48,6 @@ function drawChart(stateInChart, crimeIndex, espaniol){
 
       nv.utils.windowResize(chart.update);
 
-      chartGLOBAL = chart;
-
       return chart;
     });
   })
