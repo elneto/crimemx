@@ -157,7 +157,7 @@ svg {
 }
 
 
-svg text {
+svg#state-chart text{
   font: normal 12px Arial;
 }
 
