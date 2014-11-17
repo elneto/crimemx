@@ -46,6 +46,7 @@
 	fill: #eee;
 	stroke: #bbbbbb;
 	stroke-width: 1.5px;
+	cursor: pointer;
 }
 
 #map {
@@ -55,6 +56,10 @@
 	display: block;
 	width: 360px;
 	height: 280px;
+}
+
+#map .admin1 {
+	cursor: pointer;
 }
 
 #map.kartograph svg text *{
@@ -132,6 +137,7 @@ ol#ol-scale li {
 .lblValue, .lblEstado {
 	font-family:"Helvetica";
 	font-weight: bold;
+	cursor: pointer;
 }
 
 
