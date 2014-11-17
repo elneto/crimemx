@@ -2,7 +2,8 @@
 function drawChart(stateInChart, crimeIndex, espaniol){  
   d3.json('../python/'+stateInChart+'.json', function(data) {
     nv.addGraph(function() {
-      var chart = nv.models.stackedAreaChart()
+      //var chart = nv.models.stackedAreaChart()
+      var chart = nv.models.cumulativeLineChart()
                     //.margin({right: 50})
                     .x(function(d) { return d[0] })   //We can modify the data accessor functions...
                     .y(function(d) { return d[1] })   //...in case your data is formatted differently.
