@@ -626,7 +626,7 @@
               }
               
             },
-          //mouseclick: pinTooltip(),
+          //click: pinTooltip(),
           mouseleave: function(d, path) {
             borderStateGeoMap(d.name, '#bbbbbb');
             d3.select("#idn-" + String(d.name).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the square border color 
@@ -657,7 +657,7 @@
               }
               
             }, 
-            //mouseclick: pinTooltip(),
+            //click: pinTooltip(),
             mouseleave: function(d, path) {
               borderStateGeoMap(d.state, '#bbbbbb');
               d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the square border color 
@@ -697,7 +697,7 @@
                     showTooltip(d.state, "NA", currentNodo.x, currentNodo.y);
                   }
                 }, 
-                //mouseclick: pinTooltip(),
+                //click: pinTooltip(),
                 mouseleave: function(d, path) {
                   borderStateGeoMap(d.state, '#bbbbbb');
                   d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the square border color 
@@ -737,7 +737,7 @@
           .style("visibility", "visible")
           .style("top", y+"px")
           .style("left",x+"px")
-          .transition().duration(500).style("opacity", 1);
+          .transition().duration(500).style("opacity", 0.7);
 
         d3.select("#stpInstructions").style("visibility", "visible");
         //d3.select("#stateTooltip").style("opacity", 1);
@@ -754,6 +754,8 @@
         //d3.select("#stateTooltip").transition().duration(500).style("opacity", 0).transition().duration(1000).style("visibility", "hidden");
         if (!TP)
           {
+            d3.select("#stpInstructions").style("visibility", "hidden");
+
             d3.select("#stateTooltip")
               .style("opacity", 0.7)
               .style("visibility", "hidden");
