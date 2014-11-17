@@ -67,6 +67,7 @@
         togglePlay = false;
     var espaniol = true;
     var resInterval;
+    var TP = false; //tooltipPinned
 
     $(document).ready(function(){
 
@@ -91,6 +92,13 @@
             $("#botones-box .list-group-item").click(function(event){
                 goToPoint(event.target.id,GYEAR); 
             });
+
+            $("#close-button").click(
+              function(){
+                TP = false;
+                hideTooltip();
+              }
+            );
       
     });
 
@@ -244,9 +252,11 @@
                 </div>
                 <!-- A tool tip -->
                 <div id="stateTooltip">
-                  <h4>
-                  State
-                  </h4>
+                  <h4>State</h4>
+                  <h4 id="stpInstructions">Clic para fijar</h4>
+                  <span id="stpNumber">30</span> 
+                  <span id="stpText">por 100,000</span>
+                  <img src="../images/close.png" id="close-button">
                   <p> <!--Without the p the tooltip diverges !-->
                   <svg style='height:200px' width="300px" id="state-chart"/>
                   </p>
