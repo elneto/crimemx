@@ -195,12 +195,26 @@ ol#ol-scale li {
 	white-space: nowrap;
 }
 
+.legends{
+	position: absolute;
+	z-index: 9999;
+}
+
 #legend{
 	text-align: right;
-	position: absolute;
 	right: 0;
 	bottom: -2em;
-	z-index: 9999;
+}
+
+#legend-geo{
+	left: 0;
+	top: 30.5em;
+	margin-left: 10em;
+}
+
+#legend-demers{
+	left: 23em;
+	top: 7em;
 }
 
 /*Tooltip*/
