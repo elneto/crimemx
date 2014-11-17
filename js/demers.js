@@ -221,8 +221,13 @@
             .on('mouseover', function(d) { 
                 this.setAttribute("style", "fill:"+d.color+"; stroke:#000000; z-index:999");
             })
-            .on('click', function(d) { 
-                pinTooltip();
+            .on('click', function(d) {
+                if (d.value!=-1){ //select list item just if it exists 
+                    pinTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y);
+                }
+                else{
+                    pinTooltip(d.state, "NA", d3.select(this).datum().x, d3.select(this).datum().y);
+                }
             })
             .on('mouseleave', function(d) { 
                 this.setAttribute("style", "fill:"+d.color+"; stroke:'#bbbbbb';");
@@ -258,7 +263,12 @@
                 d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black");
             })
             .on('click', function(d) { 
-                pinTooltip();
+                if (d.value!=-1){ //select list item just if it exists 
+                    pinTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y);
+                }
+                else{
+                    pinTooltip(d.state, "NA", d3.select(this).datum().x, d3.select(this).datum().y);
+                }
             })
             .on('mouseleave', function(d) {
                 d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); 
@@ -295,7 +305,12 @@
                 d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black");
             })
             .on('click', function(d) { 
-                pinTooltip();
+                if (d.value!=-1){ //select list item just if it exists 
+                    pinTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y);
+                }
+                else{
+                    pinTooltip(d.state, "NA", d3.select(this).datum().x, d3.select(this).datum().y);
+                }
             })
             .on('mouseleave', function(d) { 
                 d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); 
@@ -626,7 +641,15 @@
               }
               
             },
-          //click: pinTooltip(),
+          click: function(d, path){
+              currentNodo = getNode(d.name);
+              if (currentNodo.value!=-1){ //select list item just if it exists
+                  pinTooltip(d.name, currentNodo.value, currentNodo.x, currentNodo.y);
+              }
+              else{
+                  pinTooltip(d.name, "NA", currentNodo.x, currentNodo.y);
+              }
+          },
           mouseleave: function(d, path) {
             borderStateGeoMap(d.name, '#bbbbbb');
             d3.select("#idn-" + String(d.name).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the square border color 
@@ -657,7 +680,15 @@
               }
               
             }, 
-            //click: pinTooltip(),
+            click: function(d, path){
+              currentNodo = getNode(d.state);
+              if (currentNodo.value!=-1){ //select list item just if it exists
+                  pinTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
+              }
+              else{
+                  pinTooltip(d.state, "NA", currentNodo.x, currentNodo.y);
+              }
+            },
             mouseleave: function(d, path) {
               borderStateGeoMap(d.state, '#bbbbbb');
               d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the square border color 
@@ -697,7 +728,15 @@
                     showTooltip(d.state, "NA", currentNodo.x, currentNodo.y);
                   }
                 }, 
-                //click: pinTooltip(),
+                click: function(d, path){
+                  currentNodo = getNode(d.state);
+                  if (currentNodo.value!=-1){ //select list item just if it exists
+                      pinTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
+                  }
+                  else{
+                      pinTooltip(d.state, "NA", currentNodo.x, currentNodo.y);
+                  }
+                },
                 mouseleave: function(d, path) {
                   borderStateGeoMap(d.state, '#bbbbbb');
                   d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the square border color 
@@ -744,7 +783,10 @@
 
     }
 
-    function pinTooltip(){
+    function pinTooltip(state, number, x, y){
+
+        TP = false;
+        showTooltip(state, number, x, y);
         d3.select("#stpInstructions").style("visibility", "hidden");
         d3.select("#stateTooltip").transition().duration(500).style("opacity", 1);
         TP = true;
