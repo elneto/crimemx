@@ -10,7 +10,6 @@
       var MAXRATE=0;
       var stateInChart = "Aguascalientes";
 
-
       //year must be between 1997 and 2014
       function rateById(year, id)
         {
@@ -554,6 +553,10 @@
           };
         } //end function collide
 
+        //update the state tooltip
+        if (TP)
+          updateTooltip();
+
       }; //end ready (d3.json)
 
   //add geo map
@@ -699,10 +702,6 @@
               hideTooltip();
             }
         });
-      
-      //d3.selectAll("#map.kartograph tspan")
-        //.data(GNODE)
-        //.style("font-size", function(d) { return fontSize(d.value) + "px"; });
 
       updateMap = function() {
           map.getLayer('admin1')
@@ -748,9 +747,6 @@
                 }
             });
           
-          //d3.selectAll("#map.kartograph tspan")
-            //.data(GNODE)
-            //.style("font-size", function(d) { return fontSize(d.value) + "px"; });
       }
 
       borderStateGeoMap = function (name, color){
@@ -770,7 +766,7 @@
         stateInChart = state;
         drawChart(stateInChart, crimeIndex, espaniol);
         d3.select("#stpNumber").text(number);
-        d3.select("#stateTooltip h4").text(state);
+        d3.select("#stateTooltip h4").text(state + " " + GYEAR.toString());
 
         d3.select("#stateTooltip")
           .style("visibility", "visible")
@@ -790,6 +786,21 @@
         d3.select("#stpInstructions").style("visibility", "hidden");
         d3.select("#stateTooltip").transition().duration(500).style("opacity", 1);
         TP = true;
+    }
+
+    function updateTooltip(){
+
+        var val = 0;
+        nodo = getNode(stateInChart);
+          if (nodo.value!=-1) 
+            val = nodo.value;
+          else
+            val = "NA";
+
+        d3.select("#stateTooltip h4").text(stateInChart + " " + GYEAR.toString());
+        d3.select("#stpNumber").transition().text(val);
+        drawChart(stateInChart, crimeIndex, espaniol);
+
     }
 
     function hideTooltip(){
