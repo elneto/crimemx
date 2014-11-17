@@ -554,7 +554,7 @@
         } //end function collide
 
         //update the state tooltip
-        if (TP)
+        //if (TP)
           updateTooltip();
 
       }; //end ready (d3.json)
