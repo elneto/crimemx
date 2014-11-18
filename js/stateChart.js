@@ -3,22 +3,16 @@ function drawChart(stateInChart, crimeIndex, espaniol){
   d3.json('../python/'+stateInChart+'.json', function(data) {
     nv.addGraph(function() {
       //var chart = nv.models.stackedAreaChart()
-      var chart = nv.models.cumulativeLineChart()
-                    //.margin({right: 50})
+      var chart = nv.models.lineChart()
                     .x(function(d) { return d[0] })   //We can modify the data accessor functions...
                     .y(function(d) { return d[1] })   //...in case your data is formatted differently.
                     .useInteractiveGuideline(true)    //Tooltips which show all data points. Very nice!
-                    //.rightAlignYAxis(true)      //Let's move the y-axis to the right side.
-                    .transitionDuration(500)
-                    .showControls(false)       //Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
-                    //.showLegend(false)
-                    .clipEdge(true);
+                    .transitionDuration(500);
 
       //Format x-axis labels with custom function.
       chart.xAxis
           .tickFormat(function(d) { 
             return d3.time.format('%Y')(new Date(d)) 
-            //return d3.time.format('%x')(new Date(d)) 
       });
 
       chart.yAxis
@@ -39,13 +33,11 @@ function drawChart(stateInChart, crimeIndex, espaniol){
         }
       }
         
-
       data[crimeIndex].disabled=false;
 
       d3.select('#state-chart')
         .datum(data)
         .call(chart);
-
 
       nv.utils.windowResize(chart.update);
 
