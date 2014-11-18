@@ -7,7 +7,7 @@ SNSP visualization with D3, Kartograph, Highcharts and NVD3.
 
 Takes SNSP rates of crime tables and maps them to a pseudo-demers map, a choropleth map, a bar chart and individual line charts per state.
 
-Based on: http://bl.ocks.org/mbostock/9265674
+Based on: http://bl.ocks.org/mbostock/4055889
 
 It ranks the crime rates per year and show them in a bar graph with each color corresponding to both the pseudo-demers and the geographic map.
 
