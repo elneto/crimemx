@@ -1,19 +1,14 @@
 #crimemx
-Crime in Mexico Visualization using D3 and topojson
+Crime in Mexico Visualization using D3, Kartograph, Highcharts and NVD3.
 
-<a href="http://thesis.ernestoaraiza.com/crimemx/"><img src="http://thesis.ernestoaraiza.com/images/t20141011.png" align="left" hspace="10" vspace="6" width="400"></a>
+<a href="http://crimeinmexico.org"><img src="http://crimeinmexico.org/images/thumbnail.png" align="left" hspace="10" vspace="6" width="400"></a>
 
-SNSP visualization with D3
+SNSP visualization with D3, Kartograph, Highcharts and NVD3.
 
-Based on: http://bl.ocks.org/mbostock/9265674 To generate the states in topojson I used: https://gist.github.com/diegovalle/5129746 but with the 2013 downloaded from the INEGI link below
+Takes SNSP rates of crime tables and maps them to a pseudo-demers map, a choropleth map, a bar chart and individual line charts per state.
 
-SHP states files: The Areas Geoestadísticas Estatales http://mapserver.inegi.org.mx/MGN/mge2013v6_0.zip available in here: http://www.inegi.org.mx/geo/contenidos/geoestadistica/M_Geoestadistico.aspx
+Based on: http://bl.ocks.org/mbostock/9265674
 
-Crime statistics are rates taken from here: http://secretariadoejecutivosnsp.gob.mx/
-http://secretariadoejecutivosnsp.gob.mx/work/models/SecretariadoEjecutivo/Resource/1/1/Tasas_agosto_2014.pdf
+It ranks the crime rates per year and show them in a bar graph with each color corresponding to both the pseudo-demers and the geographic map.
 
-Terminal Commands:
-
-$ ogr2ogr states.shp Entidades_2013.shp -t_srs "+proj=longlat +ellps=WGS84 +no_defs +towgs84=0,0,0"
-
-$ topojson -o mx_tj.json -s 1e-7 -q 1e5 states.shp -p state_code=+CVE_ENT,state_name=NOM_ENT
+More on the file generation is available in the wiki.
