@@ -773,8 +773,26 @@
           .transition().duration(500).style("opacity", 0.7);
 
         d3.select("#stpInstructions").style("visibility", "visible");
-        //d3.select("#stateTooltip").style("opacity", 1);
-
+        
+        var arr;
+        switch(crimeIndex){
+          case(0):
+            arr = GHOMI_TOTAL;
+            break;
+          case(1):
+            arr = GKIDNAP_TOTAL;
+            break;
+          case(2):
+            arr = GEXTORTION_TOTAL;
+            break;
+          case(3):
+            arr = GCARVIO_TOTAL;
+            break;
+          case(4):
+            arr = GCARNOVIO_TOTAL;
+            break;
+        }
+        console.log(rateById(GYEAR, +getNode(state).id, arr));
     }
 
     function pinTooltip(state, number, x, y){
@@ -819,20 +837,36 @@
     }
 
     //saves the CSVs in globals
-    d3.csv(LANGPATH+"csv/kidnap-rate.csv", function(states){
-          GKIDNAP = states;
+    d3.csv(LANGPATH+"csv/kidnap-rate.csv", function(d){
+          GKIDNAP = d;
         });
-    d3.csv(LANGPATH+"csv/extortion-rate.csv", function(states){
-          GEXTORTION = states;
+    d3.csv(LANGPATH+"csv/extortion-rate.csv", function(d){
+          GEXTORTION = d;
         });
-    d3.csv(LANGPATH+"csv/car-violence-rate.csv", function(states){
-          GCARVIO = states;
+    d3.csv(LANGPATH+"csv/car-violence-rate.csv", function(d){
+          GCARVIO = d;
         });
-    d3.csv(LANGPATH+"csv/car-no-violence-rate.csv", function(states){
-          GCARNOVIO = states;
+    d3.csv(LANGPATH+"csv/car-no-violence-rate.csv", function(d){
+          GCARNOVIO = d;
         });
-    d3.csv(LANGPATH+"csv/homicide-rate.csv", function(states){
-          GHOMI = states;
+    d3.csv(LANGPATH+"csv/homicide-rate.csv", function(d){
+          GHOMI = d;
+        });
+    //totals
+    d3.csv(LANGPATH+"csv/kidnap-total.csv", function(d){
+          GKIDNAP_TOTAL = d;
+        });
+    d3.csv(LANGPATH+"csv/extortion-total.csv", function(d){
+          GEXTORTION_TOTAL = d;
+        });
+    d3.csv(LANGPATH+"csv/car-violence-total.csv", function(d){
+          GCARVIO_TOTAL = d;
+        });
+    d3.csv(LANGPATH+"csv/car-no-violence-total.csv", function(d){
+          GCARNOVIO_TOTAL = d;
+        });
+    d3.csv(LANGPATH+"csv/homicide-total.csv", function(d){
+          GHOMI_TOTAL = d;
         });
 
     var shortenLbl = {'Aguascalientes':'Ags.','Baja California':'Baja Calif.','Baja California Sur':'Baja Calif. S.','Campeche':'Camp.',
