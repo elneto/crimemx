@@ -821,19 +821,19 @@
     }
 
     //saves the CSVs in globals
-    d3.csv(LANGPATH+"csv/d3-kidnap.csv", function(states){
+    d3.csv(LANGPATH+"csv/kidnap-rate.csv", function(states){
           GKIDNAP = states;
         });
-    d3.csv(LANGPATH+"csv/d3-extortion.csv", function(states){
+    d3.csv(LANGPATH+"csv/extortion-rate.csv", function(states){
           GEXTORTION = states;
         });
-    d3.csv(LANGPATH+"csv/d3-car-violence.csv", function(states){
+    d3.csv(LANGPATH+"csv/car-violence-rate.csv", function(states){
           GCARVIO = states;
         });
-    d3.csv(LANGPATH+"csv/d3-car-no-violence.csv", function(states){
+    d3.csv(LANGPATH+"csv/car-no-violence-rate.csv", function(states){
           GCARNOVIO = states;
         });
-    d3.csv(LANGPATH+"csv/d3-homicide.csv", function(states){
+    d3.csv(LANGPATH+"csv/homicide-rate.csv", function(states){
           GHOMI = states;
         });
 

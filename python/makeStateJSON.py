@@ -15,11 +15,11 @@ def minus_one(num):
 		return '0'
 	return num
 
-fh = open('../csv/d3-homicide.csv', 'rb')
-fk = open('../csv/d3-kidnap.csv', 'rb')
-fe = open('../csv/d3-extortion.csv', 'rb')
-fcv = open('../csv/d3-car-violence.csv', 'rb')
-fcnv = open('../csv/d3-car-no-violence.csv', 'rb')
+fh = open('../csv/homicide-rate.csv', 'rb')
+fk = open('../csv/kidnap-rate.csv', 'rb')
+fe = open('../csv/extortion-rate.csv', 'rb')
+fcv = open('../csv/car-violence-rate.csv', 'rb')
+fcnv = open('../csv/car-no-violence-rate.csv', 'rb')
 
 reader = csv.reader(fh)
 readerk = csv.reader(fk)
