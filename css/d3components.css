@@ -231,7 +231,7 @@ ol#ol-scale li {
 	background-color:#fff;
 	padding: 0;
 	width:28em;
-	height:16em;
+	height:20em;
 	display: block;
 	box-shadow: 5px 5px 10px #bbbbbb;
 	margin: 3.5em 0 0 4em;
@@ -264,21 +264,43 @@ img#close-button:hover, img#play-button:hover{
 	cursor: pointer;
 }
 
-#stpNumber {
+.bigNumber{
 	font-weight: bold;
 	font-size: 2em;
+}
+
+#stpNumber {
 	position: absolute;
 	left: 0;
 	margin-left: 0.6em;
 }
 
-#stpText {
+.captionText{
 	font-size: 0.8em;
+}
+
+#stpText {
 	position: absolute;
 	left: 0;
 	top: 6.6em;
 	margin-left: 1.6em;
-	}
+}
+
+div#stpFirst {
+	position: absolute;
+	left: 1.27em;
+	top: 15.5em;
+	width: 5em;
+}
+
+div#stpFirst * {
+	float: left;
+}
+
+span#stpTotalText {
+	margin-top: -0.9em;
+	width: 4em;
+}
 
 #state-chart{
 
