@@ -1,7 +1,6 @@
       //global var that stores the rates
       var GNODE, GERROR, GSTATES, GRATES,
           GHOMI, GKIDNAP, GEXTORTION, GCARVIO, GCARNOVIO;
-      var ratesNationalHomicides;
       var updateMap, borderStateGeoMap, fontSize;
       var isMapLoaded = false
           isChartCreated = false;
@@ -11,15 +10,15 @@
       var stateInChart = "Aguascalientes";
 
       //year must be between 1997 and 2014
-      function rateById(year, id)
+      function rateById(year, id, arr)
         {
-          //ratesNationalHomicides[year][state]
+          //arr[year][state]
           //year 1 = 1997
           ////state 0 = Total,  state 1 = Aguascalientes, state 2 = Baja California...
           if (year < 1997 || year > 2014)
               throw { name: 'FatalError', message: 'Year out of limits' }
 
-          return ratesNationalHomicides[year-1996][id];
+          return arr[year-1996][id];
         }
 
       //Calculates the maximum value per CSV of crime
@@ -91,7 +90,6 @@
         GERROR = error;
         GSTATES = states;
         GRATES = rates;
-        ratesNationalHomicides = rates;
       
         if (MAXRATE==0) {//only calculates it once
           MAXRATE = maxValue(rates);
@@ -175,7 +173,7 @@
             .map(function(d) {
 
               var point = projection([d.geo_longitude,d.geo_latitude])
-              	value = rateById(GYEAR, +d.id),
+              	value = rateById(GYEAR, +d.id, rates),
               	color = colorFn(value),
                 colorlbl = colorLabel(value),
               	state = d.state,
@@ -384,7 +382,7 @@
               keysArray.push({'state':d.state,'value':+d.value, 'color': d.color});
          });
 
-        keysArray.push({'state':'Total','value':rateById(GYEAR,0), 'color': '#FF0000'});
+        keysArray.push({'state':'Total','value':rateById(GYEAR,0,rates), 'color': '#FF0000'});
 
         //Todo, order the states according to the estadosArraysort
         keysArray.sort(function(b, a) { 
