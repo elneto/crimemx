@@ -311,6 +311,10 @@ span#stpTotalText, span#stpWeekText, span#stpCountryText{
 	clear: left;
 }
 
+div#stpWeekly{
+	background-color: #eee;
+}
+
 #botones-box{
 	background-color: #ffffff;
     clear: both;
@@ -424,7 +428,28 @@ img#play-button{
     left: 1em;
     z-index: 9999;
 }
+/*humans*/
+#monoContainer{
+	clear: left;
+	float: left;
+	margin: 0.7em 1.3em 0 1.8em;
+	background-color: #eee;
+	width: 90%;
+	height: 100%;
+	padding: 0.3em 0 0.3em 0.3em;
+}
+.monitoInline{
+	clear:both;
+}
+#monitos{
 
+}
+.human{
+	float: left;
+	height: 15px;
+	fill: #984ea3;
+	margin-right: 1px;
+}
 
 
 

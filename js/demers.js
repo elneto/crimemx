@@ -772,135 +772,148 @@
       isMapLoaded = true;
     }//finish mapLoaded
 
-    //finds closest world rate crime
-      function getClosest(val, arr){
-        if (val==-1)
-          return t("NA");
+//finds closest world rate crime
+function getClosest(val, arr){
+  if (val==-1)
+    return t("NA");
 
-          var tmpmin = 99999999, //big enough so it will be eliminated at the first round
-              len = arr.length,
-              pais,
-              diff;
-          for (var i = 0; i < len; i++) {
-              diff = val - arr[i].rate; //compares received val with array
-              if (diff < tmpmin){
-                  tmpmin = diff;
-                  if (tmpmin<=0){
-                    if (LANGUAGE == 'en')
-                      {
-                        return arr[i].country;  
-                      }
-                    else
-                      {
-                        return arr[i].pais;   
-                      }
-                  }       
-              }
-          }
-          if (LANGUAGE == 'en')
-            return "No Country";
-          else
-            return "Ningún país";
-      }
-
-    //Tooltip functions
-    function updateTotals(state,rate){
-        var arr, 
-            world_arr = [];
-        
-        switch(crimeIndex){
-          case(0): //homicides
-            arr = GHOMI_TOTAL;
-            world_arr = WORLD_RATE;
-            break;
-          case(1): //kidnap
-            arr = GKIDNAP_TOTAL;
-            world_arr = WORLD_KIDNAP_RATE;
-            break;
-          case(2): //extortion
-            arr = GEXTORTION_TOTAL;
-            break;
-          case(3): //car with violence
-            arr = GCARVIO_TOTAL;
-            break;
-          case(4): //car without violence
-            arr = GCARNOVIO_TOTAL;
-            world_arr = WORLD_CARNONVIO_RATE;
-            break;
+    var tmpmin = 99999999, //big enough so it will be eliminated at the first round
+        len = arr.length,
+        pais,
+        diff;
+    for (var i = 0; i < len; i++) {
+        diff = val - arr[i].rate; //compares received val with array
+        if (diff < tmpmin){
+            tmpmin = diff;
+            if (tmpmin<=0){
+              if (LANGUAGE == 'en')
+                {
+                  return arr[i].country;  
+                }
+              else
+                {
+                  return arr[i].pais;   
+                }
+            }       
         }
-        
-        var total = rateById(GYEAR, +getNode(state).id, arr);
-        d3.select("#stpTotalNumber").text(na(total));
+    }
+    if (LANGUAGE == 'en')
+      return "No Country";
+    else
+      return "Ningún país";
+}
 
-        if (total == -1 || total == "NA")
-          d3.select("#stpWeekNumber").text(t("NA"));
-        else  
-          d3.select("#stpWeekNumber").text(na(Math.round(total/52)));
+//Tooltip functions
+function updateTotals(state,rate){
+  var arr, 
+      world_arr = [];
+  
+  switch(crimeIndex){
+    case(0): //homicides
+      arr = GHOMI_TOTAL;
+      world_arr = WORLD_RATE;
+      break;
+    case(1): //kidnap
+      arr = GKIDNAP_TOTAL;
+      world_arr = WORLD_KIDNAP_RATE;
+      break;
+    case(2): //extortion
+      arr = GEXTORTION_TOTAL;
+      break;
+    case(3): //car with violence
+      arr = GCARVIO_TOTAL;
+      break;
+    case(4): //car without violence
+      arr = GCARNOVIO_TOTAL;
+      world_arr = WORLD_CARNONVIO_RATE;
+      break;
+  }
+  
+  var total = rateById(GYEAR, +getNode(state).id, arr);
+  d3.select("#stpTotalNumber").text(na(total));
 
-        if (world_arr.length>1){
-            d3.select("#stpCountry").text(getClosest(rate,world_arr));
-            d3.select("#stpCountryText").text(t("has a similar rate per 100,000"));
-          }
-        else{
-            d3.select("#stpCountry").text("-");
-            d3.select("#stpCountryText").text(t("No world data available"));
-          }
+  if (total == -1 || total == "NA")
+    d3.select("#stpWeekNumber").text(t("NA"));
+  else  
+    {
+      var weekly = Math.round(total/52);
+      d3.select("#stpWeekNumber").text(na(weekly));
+      putMonitos(weekly);
     }
 
-    function showTooltip(state, number, x, y){
-
-        if (TP) //if another is pinned
-          return;
-
-        stateInChart = state;
-        drawChart(stateInChart, crimeIndex, espaniol);
-        d3.select("#stpNumber").text(number);
-        d3.select("#stateTooltip h4").text(state + " " + GYEAR.toString());
-
-        d3.select("#stateTooltip")
-          .style("visibility", "visible")
-          .style("top", y+"px")
-          .style("left",x+"px")
-          .transition().duration(500).style("opacity", 0.7);
-
-        d3.select("#stpInstructions").style("visibility", "visible");
-        updateTotals(state,number);  
+  if (world_arr.length>1){
+      d3.select("#stpCountry").text(getClosest(rate,world_arr));
+      d3.select("#stpCountryText").text(t("has a similar rate per 100,000"));
     }
-
-    function pinTooltip(state, number, x, y){
-
-        TP = false;
-        showTooltip(state, number, x, y);
-        d3.select("#stpInstructions").style("visibility", "hidden");
-        d3.select("#stateTooltip").transition().duration(500).style("opacity", 1);
-        TP = true;
+  else{
+      d3.select("#stpCountry").text("-");
+      d3.select("#stpCountryText").text(t("No world data available"));
     }
+}
 
-    function updateTooltip(){
-        nodo = getNode(stateInChart);
-        d3.select("#stateTooltip h4").text(stateInChart + " " + GYEAR.toString());
-        d3.select("#stpNumber").transition().text(na(nodo.value));
-        drawChart(stateInChart, crimeIndex, espaniol);
-        updateTotals(stateInChart,nodo.value);
+function showTooltip(state, number, x, y){
+
+  if (TP) //if another is pinned
+    return;
+
+  stateInChart = state;
+  drawChart(stateInChart, crimeIndex, espaniol);
+  d3.select("#stpNumber").text(number);
+  d3.select("#stateTooltip h4").text(state + " " + GYEAR.toString());
+
+  d3.select("#stateTooltip")
+    .style("visibility", "visible")
+    .style("top", y+"px")
+    .style("left",x+"px")
+    .transition().duration(500).style("opacity", 0.7);
+
+  d3.select("#stpInstructions").style("visibility", "visible");
+  updateTotals(state,number);  
+}
+
+function pinTooltip(state, number, x, y){
+  TP = false;
+  showTooltip(state, number, x, y);
+  d3.select("#stpInstructions").style("visibility", "hidden");
+  d3.select("#stateTooltip").transition().duration(500).style("opacity", 1);
+  TP = true;
+}
+
+function updateTooltip(){
+  nodo = getNode(stateInChart);
+  d3.select("#stateTooltip h4").text(stateInChart + " " + GYEAR.toString());
+  d3.select("#stpNumber").transition().text(na(nodo.value));
+  drawChart(stateInChart, crimeIndex, espaniol);
+  updateTotals(stateInChart,nodo.value);
+}
+
+function hideTooltip(){
+  //d3.select("#stateTooltip").transition().duration(500).style("opacity", 0).transition().duration(1000).style("visibility", "hidden");
+  if (!TP)
+    {
+      d3.select("#stpInstructions").style("visibility", "hidden");
+
+      d3.select("#stateTooltip")
+        .style("opacity", 0.7)
+        .style("visibility", "hidden");
+      TP = false;
     }
+}
 
-    function hideTooltip(){
-        //d3.select("#stateTooltip").transition().duration(500).style("opacity", 0).transition().duration(1000).style("visibility", "hidden");
-        if (!TP)
-          {
-            d3.select("#stpInstructions").style("visibility", "hidden");
+function positive(num){
+    return num <  0 ? 0 : num;
+}
 
-            d3.select("#stateTooltip")
-              .style("opacity", 0.7)
-              .style("visibility", "hidden");
-            TP = false;
-          }
+function na(num){
+    return num <  0 ? t("NA") : num;
+}
+
+function putMonitos(num){
+    var i=0;
+    $( "#monitos" ).empty();
+    //$( "#monitoState" ).empty();  
+    while(i++ < num){
+      $("#monitos").append('<img src="svg/human.svg" class="human">');
     }
-
-    function positive(num){
-        return num <  0 ? 0 : num;
-    }
-
-    function na(num){
-        return num <  0 ? t("NA") : num;
-    }
+    //$('#monitos').append('<div class="monitoInline">'+state+' '+GYEAR +'</div>')
+}
