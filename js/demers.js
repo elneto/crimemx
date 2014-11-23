@@ -71,6 +71,7 @@
                   }       
               }
           }
+          return "No Country";
       }
 
       //year must be between 1997 and 2014
