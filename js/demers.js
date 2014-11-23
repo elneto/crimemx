@@ -67,11 +67,21 @@
               if (diff < tmpmin){
                   tmpmin = diff;
                   if (tmpmin<=0){
-                    return arr[i].country;
+                    if (LANGUAGE == 'en')
+                      {
+                        return arr[i].country;  
+                      }
+                    else
+                      {
+                        return arr[i].pais;   
+                      }
                   }       
               }
           }
-          return "No Country";
+          if (LANGUAGE == 'en')
+            return "No Country";
+          else
+            return "Ningún país";
       }
 
       //year must be between 1997 and 2014
