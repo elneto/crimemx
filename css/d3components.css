@@ -307,7 +307,7 @@ div.stpContainer *{
 }
 
 span#stpTotalText, span#stpWeekText, span#stpCountryText{
-	margin-top: -0.9em;
+	margin-top: -0.5em;
 	clear: left;
 }
 
