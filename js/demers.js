@@ -1,7 +1,7 @@
       //global var that stores the rates
       var GNODE, GERROR, GSTATES, GRATES,
           GHOMI, GKIDNAP, GEXTORTION, GCARVIO, GCARNOVIO,
-          WORLD_RATE;
+          WORLD_RATE,WORLD_CARNONVIO_RATE, WORLD_KIDNAP_RATE;
       var updateMap, borderStateGeoMap, fontSize;
       var isMapLoaded = false
           isChartCreated = false;
@@ -47,6 +47,9 @@
           });
       d3.csv(LANGPATH+"csv/world-kidnap-rates.csv", function(d){
             WORLD_KIDNAP_RATE = d;
+          });
+      d3.csv(LANGPATH+"csv/world-carnonvio-rates.csv", function(d){
+            WORLD_CARNONVIO_RATE = d;
           });
 
       var shortenLbl = {'Aguascalientes':'Ags.','Baja California':'Baja Calif.','Baja California Sur':'Baja Calif. S.','Campeche':'Camp.',
@@ -806,6 +809,7 @@
             break;
           case(4): //car without violence
             arr = GCARNOVIO_TOTAL;
+            world_arr = WORLD_CARNONVIO_RATE;
             break;
         }
         
@@ -819,7 +823,7 @@
 
         if (world_arr.length>1){
             d3.select("#stpCountry").text(getClosest(rate,world_arr));
-            d3.select("#stpCountryText").text("has a similar rate");
+            d3.select("#stpCountryText").text("has a similar rate per 100,000");
           }
         else{
             d3.select("#stpCountry").text("-");
