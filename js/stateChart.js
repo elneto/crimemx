@@ -17,8 +17,8 @@ function drawChart(stateInChart, crimeIndex, espaniol){
 
       chart.yAxis
           .tickFormat(d3.format(',.2f'));
-
-      chart.color(['#ff0000', '#ffa556', '#6bbc6b', '#984ea3', '#629fca']);
+                    //hom
+      chart.color(['#984ea3', '#b15928', '#a6d854', '#f4cae4', '#33a02c']);
       //chart.style('stream');
       for (var i = 0; i <= 4; i++){
         data[i].disabled = true;

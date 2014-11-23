@@ -348,19 +348,47 @@ span#stpTotalText, span#stpWeekText, span#stpCountryText{
 }
 
 #btnHomicide.active{
-	background-image: linear-gradient(to bottom, #ff0000 0px, #cc0000 100%);
+	background-image: linear-gradient(to bottom, #984ea3 0px, #984ea3 100%);
 }
+#btnHomicide span{
+	float: right;
+	color: #984ea3;
+}
+
 #btnKidnap.active{
-	background-image: linear-gradient(to bottom, #ffa556 0px, #cc8445 100%);
+	background-image: linear-gradient(to bottom, #b15928 0px, #b15928 100%);
 }
+#btnKidnap span{
+	float: right;
+	color: #b15928;
+}
+
 #btnExtortion.active{
-	background-image: linear-gradient(to bottom, #6bbc6b 0px, #4e8a4e 100%);
+	background-image: linear-gradient(to bottom, #a6d854 0px, #a6d854 100%);
 }
-#btnCarNoViolence.active{
-	background-image: linear-gradient(to bottom, #629fca 0px, #4a7696 100%);
+#btnExtortion span{
+	float: right;
+	color: #a6d854;
 }
+
 #btnCarViolence.active{
-	background-image: linear-gradient(to bottom, #984ea3 0px, #683670 100%);
+	background-image: linear-gradient(to bottom, #f4cae4 0px, #f4cae4 100%);
+}
+#btnCarViolence span{
+	float: right;
+	color: #f4cae4;
+}
+
+#btnCarNoViolence.active{
+	background-image: linear-gradient(to bottom, #33a02c 0px, #33a02c 100%);
+}
+#btnCarNoViolence span{
+	float: right;
+	color: #33a02c;
+}
+
+.active span{
+	display: none;
 }
 
 #main-title{
