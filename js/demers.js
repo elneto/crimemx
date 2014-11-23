@@ -251,21 +251,14 @@
                 if (d.value!=-1){ //select list item just if it exists
                   var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                   chart.series[0].data[index].select();
-                  showTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y); //d3.select(this)[0][0].width.animVal.value
                 }
-                else
-                  showTooltip(d.state, "NA", d3.select(this).datum().x, d3.select(this).datum().y); 
+                showTooltip(d.state, na(d.value), d3.select(this).datum().x, d3.select(this).datum().y); 
             })
             .on('mouseover', function(d) { 
                 this.setAttribute("style", "fill:"+d.color+"; stroke:#000000; z-index:999");
             })
             .on('click', function(d) {
-                if (d.value!=-1){ //select list item just if it exists 
-                    pinTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y);
-                }
-                else{
-                    pinTooltip(d.state, "NA", d3.select(this).datum().x, d3.select(this).datum().y);
-                }
+                pinTooltip(d.state, na(d.value), d3.select(this).datum().x, d3.select(this).datum().y);
             })
             .on('mouseleave', function(d) { 
                 this.setAttribute("style", "fill:"+d.color+"; stroke:'#bbbbbb';");
@@ -292,21 +285,14 @@
                 if (d.value!=-1){ //select list item just if it exists
                   var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                   chart.series[0].data[index].select();
-                  showTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y); //d3.select(this)[0][0].width.animVal.value
                 }
-                else
-                  showTooltip(d.state, "NA", d3.select(this).datum().x, d3.select(this).datum().y); 
+                showTooltip(d.state, na(d.value), d3.select(this).datum().x, d3.select(this).datum().y); 
             })
             .on('mouseover', function(d) { 
                 d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black");
             })
             .on('click', function(d) { 
-                if (d.value!=-1){ //select list item just if it exists 
-                    pinTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y);
-                }
-                else{
-                    pinTooltip(d.state, "NA", d3.select(this).datum().x, d3.select(this).datum().y);
-                }
+                pinTooltip(d.state, na(d.value), d3.select(this).datum().x, d3.select(this).datum().y);
             })
             .on('mouseleave', function(d) {
                 d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); 
@@ -334,21 +320,14 @@
                 if (d.value!=-1){ //select list item just if it exists
                   var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                   chart.series[0].data[index].select();
-                  showTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y); //d3.select(this)[0][0].width.animVal.value
                 }
-                else
-                  showTooltip(d.state, "NA", d3.select(this).datum().x, d3.select(this).datum().y); 
+                showTooltip(d.state, na(d.value), d3.select(this).datum().x, d3.select(this).datum().y); 
             })
             .on('mouseover', function(d) { 
                 d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black");
             })
-            .on('click', function(d) { 
-                if (d.value!=-1){ //select list item just if it exists 
-                    pinTooltip(d.state, d.value, d3.select(this).datum().x, d3.select(this).datum().y);
-                }
-                else{
-                    pinTooltip(d.state, "NA", d3.select(this).datum().x, d3.select(this).datum().y);
-                }
+            .on('click', function(d) {     
+                pinTooltip(d.state, na(d.value), d3.select(this).datum().x, d3.select(this).datum().y);
             })
             .on('mouseleave', function(d) { 
                 d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "#bbbbbb"); 
@@ -676,21 +655,12 @@
               if (currentNodo.value!=-1){ //select list item just if it exists
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.name);
                 chart.series[0].data[index].select();  
-                showTooltip(d.name, currentNodo.value, currentNodo.x, currentNodo.y);
               }
-              else{
-                showTooltip(d.name, "NA", currentNodo.x, currentNodo.y);
-              }
-              
+              showTooltip(d.name, na(currentNodo.value), currentNodo.x, currentNodo.y);
             },
           click: function(d, path){
-              currentNodo = getNode(d.name);
-              if (currentNodo.value!=-1){ //select list item just if it exists
-                  pinTooltip(d.name, currentNodo.value, currentNodo.x, currentNodo.y);
-              }
-              else{
-                  pinTooltip(d.name, "NA", currentNodo.x, currentNodo.y);
-              }
+              currentNodo = getNode(d.name);              
+              pinTooltip(d.name, na(currentNodo.value), currentNodo.x, currentNodo.y);
           },
           mouseleave: function(d, path) {
             borderStateGeoMap(d.name, '#bbbbbb');
@@ -707,7 +677,7 @@
             type: kartograph.Label,
             data: centroids,
             location: function(d) { return [d.geo_longitude, d.geo_latitude] },
-            text: function(d) { return getNode(d.state).value==-1? "NA":"";}, //only prints NA
+            text: function(d) { return getNode(d.state).value==-1? "NA":"";}, //only prints NA if -1
             mouseenter: function(d, path) {
               borderStateGeoMap(d.state, '#000000');
               d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black");
@@ -715,21 +685,11 @@
               if (currentNodo.value!=-1){ //select list item just if it exists
                 var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                 chart.series[0].data[index].select();  
-                showTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
               }
-              else{                
-                showTooltip(d.state, "NA", currentNodo.x, currentNodo.y);
-              }
-              
+              showTooltip(d.state, na(currentNodo.value), currentNodo.x, currentNodo.y);                        
             }, 
             click: function(d, path){
-              currentNodo = getNode(d.state);
-              if (currentNodo.value!=-1){ //select list item just if it exists
-                  pinTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
-              }
-              else{
-                  pinTooltip(d.state, "NA", currentNodo.x, currentNodo.y);
-              }
+              pinTooltip(d.state, na(getNode(d.state).value), currentNodo.x, currentNodo.y); 
             },
             mouseleave: function(d, path) {
               borderStateGeoMap(d.state, '#bbbbbb');
@@ -760,20 +720,11 @@
                   if (currentNodo.value!=-1){ //select list item just if it exists
                     var index = keysArray.map(function(x) {return x.state; }).indexOf(d.state);
                     chart.series[0].data[index].select();  
-                    showTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
-                  }
-                  else{                    
-                    showTooltip(d.state, "NA", currentNodo.x, currentNodo.y);
-                  }
+                  }                 
+                  showTooltip(d.state, na(currentNodo.value), currentNodo.x, currentNodo.y);
                 }, 
                 click: function(d, path){
-                  currentNodo = getNode(d.state);
-                  if (currentNodo.value!=-1){ //select list item just if it exists
-                      pinTooltip(d.state, currentNodo.value, currentNodo.x, currentNodo.y);
-                  }
-                  else{
-                      pinTooltip(d.state, "NA", currentNodo.x, currentNodo.y);
-                  }
+                  pinTooltip(d.state, na(getNode(d.state).value), currentNodo.x, currentNodo.y);
                 },
                 mouseleave: function(d, path) {
                   borderStateGeoMap(d.state, '#bbbbbb');
@@ -818,7 +769,7 @@
             arr = GCARNOVIO_TOTAL;
             break;
         }
-        d3.select("#stpTotalNumber").text(rateById(GYEAR, +getNode(state).id, arr));
+        d3.select("#stpTotalNumber").text(na(rateById(GYEAR, +getNode(state).id, arr)));
     }
 
     function showTooltip(state, number, x, y){
@@ -852,19 +803,11 @@
     }
 
     function updateTooltip(){
-
-        var val = 0;
         nodo = getNode(stateInChart);
-          if (nodo.value!=-1) 
-            val = nodo.value;
-          else
-            val = "NA";
-
         d3.select("#stateTooltip h4").text(stateInChart + " " + GYEAR.toString());
-        d3.select("#stpNumber").transition().text(val);
+        d3.select("#stpNumber").transition().text(na(nodo.value));
         drawChart(stateInChart, crimeIndex, espaniol);
         updateTotals(stateInChart);
-
     }
 
     function hideTooltip(){
@@ -887,6 +830,3 @@
     function na(num){
         return num ==  -1 ? "NA" : num;
     }
-
-  
-
