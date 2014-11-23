@@ -230,7 +230,7 @@ ol#ol-scale li {
 	border: 1px solid #000;
 	background-color:#fff;
 	padding: 0;
-	width:28em;
+	width:28.7em;
 	height:20em;
 	display: block;
 	box-shadow: 5px 5px 10px #bbbbbb;
@@ -264,9 +264,15 @@ img#close-button:hover, img#play-button:hover{
 	cursor: pointer;
 }
 
+
 .bigNumber{
 	font-weight: bold;
-	font-size: 2em;
+	font-size: 1.95em;
+}
+
+.bigText{
+	font-weight: bold;
+	font-size: 1.8em;
 }
 
 #stpNumber {
@@ -286,36 +292,23 @@ img#close-button:hover, img#play-button:hover{
 	margin-left: 1.6em;
 }
 
-div#stpFirst {
-	position: absolute;
-	left: 1.27em;
-	top: 15.5em;
-	width: 4em;
+div.stpContainer{
+	float:left;
+	margin-top: -2.5em;
+	margin-left: 2em;
 }
 
-div#stpSecond {
-	position: absolute;
-	left: 10em;
-	top: 15.5em;
-	width: 6em;
+div#totalsContainer:first-child{
+	margin-left: 1.27em;
 }
 
-div#stpFirst *, div#stpSecond * {
+div.stpContainer *{
 	float: left;
 }
 
-span#stpTotalText{
+span#stpTotalText, span#stpWeekText, span#stpCountryText{
 	margin-top: -0.9em;
-	width: 4em;
-}
-
-span#stpWeekText{
-	margin-top: -0.9em;
-	width: 6em;
-}
-
-#state-chart{
-
+	clear: left;
 }
 
 #botones-box{

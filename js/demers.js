@@ -1,6 +1,7 @@
       //global var that stores the rates
       var GNODE, GERROR, GSTATES, GRATES,
-          GHOMI, GKIDNAP, GEXTORTION, GCARVIO, GCARNOVIO;
+          GHOMI, GKIDNAP, GEXTORTION, GCARVIO, GCARNOVIO,
+          WORLD_RATE;
       var updateMap, borderStateGeoMap, fontSize;
       var isMapLoaded = false
           isChartCreated = false;
@@ -41,6 +42,9 @@
       d3.csv(LANGPATH+"csv/homicide-total.csv", function(d){
             GHOMI_TOTAL = d;
           });
+      d3.csv(LANGPATH+"csv/world-murder-rates.csv", function(d){
+            WORLD_RATE = d;
+          });
 
       var shortenLbl = {'Aguascalientes':'Ags.','Baja California':'Baja Calif.','Baja California Sur':'Baja Calif. S.','Campeche':'Camp.',
                         'Chiapas':'Chia.','Chihuahua':'Chihuahua','Coahuila':'Coah.','Colima':'Col.','Distrito Federal':'DF',
@@ -49,6 +53,25 @@
                         'Queretaro':'Quer.','Quintana Roo':'Q. Roo','San Luis Potosi':'Sn Luis','Sinaloa':'Sinaloa','Sonora':'Sonora',
                         'Tabasco':'Tabasco','Tamaulipas':'Tamp.','Tlaxcala':'Tlax.','Veracruz':'Ver.','Yucatan':'Yuc.','Zacatecas':'Zac.'};
 
+      //finds closest world rate murder
+      function getClosest(val, arr){
+        if (val==-1)
+          return "NA";
+
+          var tmpmin = 99999999, //big enough so it will be eliminated at the first round
+              len = arr.length,
+              pais,
+              diff;
+          for (var i = 0; i < len; i++) {
+              diff = val - arr[i].rate; //compares received val with array
+              if (diff < tmpmin){
+                  tmpmin = diff;
+                  if (tmpmin<=0){
+                    return arr[i].country;
+                  }       
+              }
+          }
+      }
 
       //year must be between 1997 and 2014
       function rateById(year, id, arr)
@@ -772,6 +795,8 @@
         var total = rateById(GYEAR, +getNode(state).id, arr);
         d3.select("#stpTotalNumber").text(na(total));
         d3.select("#stpWeekNumber").text(na(Math.round(total/12)));
+
+
     }
 
     function showTooltip(state, number, x, y){
@@ -792,7 +817,8 @@
 
         d3.select("#stpInstructions").style("visibility", "visible");
         updateTotals(state);
-        
+
+        d3.select("#stpCountry").text(getClosest(number,WORLD_RATE));
     }
 
     function pinTooltip(state, number, x, y){
@@ -810,6 +836,7 @@
         d3.select("#stpNumber").transition().text(na(nodo.value));
         drawChart(stateInChart, crimeIndex, espaniol);
         updateTotals(stateInChart);
+        d3.select("#stpCountry").text(getClosest(nodo.value,WORLD_RATE));
     }
 
     function hideTooltip(){
