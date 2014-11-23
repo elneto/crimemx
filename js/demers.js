@@ -45,6 +45,9 @@
       d3.csv(LANGPATH+"csv/world-murder-rates.csv", function(d){
             WORLD_RATE = d;
           });
+      d3.csv(LANGPATH+"csv/world-kidnap-rates.csv", function(d){
+            WORLD_KIDNAP_RATE = d;
+          });
 
       var shortenLbl = {'Aguascalientes':'Ags.','Baja California':'Baja Calif.','Baja California Sur':'Baja Calif. S.','Campeche':'Camp.',
                         'Chiapas':'Chia.','Chihuahua':'Chihuahua','Coahuila':'Coah.','Colima':'Col.','Distrito Federal':'DF',
@@ -52,37 +55,6 @@
                         'Michoacan':'Mich.','Morelos':'Mor.','Nayarit':'Nay.','Nuevo Leon':'N. Leon','Oaxaca':'Oax.','Puebla':'Puebla',
                         'Queretaro':'Quer.','Quintana Roo':'Q. Roo','San Luis Potosi':'Sn Luis','Sinaloa':'Sinaloa','Sonora':'Sonora',
                         'Tabasco':'Tabasco','Tamaulipas':'Tamp.','Tlaxcala':'Tlax.','Veracruz':'Ver.','Yucatan':'Yuc.','Zacatecas':'Zac.'};
-
-      //finds closest world rate murder
-      function getClosest(val, arr){
-        if (val==-1)
-          return "NA";
-
-          var tmpmin = 99999999, //big enough so it will be eliminated at the first round
-              len = arr.length,
-              pais,
-              diff;
-          for (var i = 0; i < len; i++) {
-              diff = val - arr[i].rate; //compares received val with array
-              if (diff < tmpmin){
-                  tmpmin = diff;
-                  if (tmpmin<=0){
-                    if (LANGUAGE == 'en')
-                      {
-                        return arr[i].country;  
-                      }
-                    else
-                      {
-                        return arr[i].pais;   
-                      }
-                  }       
-              }
-          }
-          if (LANGUAGE == 'en')
-            return "No Country";
-          else
-            return "Ningún país";
-      }
 
       //year must be between 1997 and 2014
       function rateById(year, id, arr)
@@ -781,33 +753,78 @@
       isMapLoaded = true;
     }//finish mapLoaded
 
+    //finds closest world rate crime
+      function getClosest(val, arr){
+        if (val==-1)
+          return "NA";
+
+          var tmpmin = 99999999, //big enough so it will be eliminated at the first round
+              len = arr.length,
+              pais,
+              diff;
+          for (var i = 0; i < len; i++) {
+              diff = val - arr[i].rate; //compares received val with array
+              if (diff < tmpmin){
+                  tmpmin = diff;
+                  if (tmpmin<=0){
+                    if (LANGUAGE == 'en')
+                      {
+                        return arr[i].country;  
+                      }
+                    else
+                      {
+                        return arr[i].pais;   
+                      }
+                  }       
+              }
+          }
+          if (LANGUAGE == 'en')
+            return "No Country";
+          else
+            return "Ningún país";
+      }
+
     //Tooltip functions
-
-    function updateTotals(state){
-
-        var arr;
+    function updateTotals(state,rate){
+        var arr, 
+            world_arr = [];
+        
         switch(crimeIndex){
-          case(0):
+          case(0): //homicides
             arr = GHOMI_TOTAL;
+            world_arr = WORLD_RATE;
             break;
-          case(1):
+          case(1): //kidnap
             arr = GKIDNAP_TOTAL;
+            world_arr = WORLD_KIDNAP_RATE;
             break;
-          case(2):
+          case(2): //extortion
             arr = GEXTORTION_TOTAL;
             break;
-          case(3):
+          case(3): //car with violence
             arr = GCARVIO_TOTAL;
             break;
-          case(4):
+          case(4): //car without violence
             arr = GCARNOVIO_TOTAL;
             break;
         }
+        
         var total = rateById(GYEAR, +getNode(state).id, arr);
         d3.select("#stpTotalNumber").text(na(total));
-        d3.select("#stpWeekNumber").text(na(Math.round(total/12)));
 
+        if (total == -1 || total == "NA")
+          d3.select("#stpWeekNumber").text("NA");
+        else  
+          d3.select("#stpWeekNumber").text(na(Math.round(total/52)));
 
+        if (world_arr.length>1){
+            d3.select("#stpCountry").text(getClosest(rate,world_arr));
+            d3.select("#stpCountryText").text("has a similar rate");
+          }
+        else{
+            d3.select("#stpCountry").text("-");
+            d3.select("#stpCountryText").text("No world data available");
+          }
     }
 
     function showTooltip(state, number, x, y){
@@ -827,9 +844,7 @@
           .transition().duration(500).style("opacity", 0.7);
 
         d3.select("#stpInstructions").style("visibility", "visible");
-        updateTotals(state);
-
-        d3.select("#stpCountry").text(getClosest(number,WORLD_RATE));
+        updateTotals(state,number);  
     }
 
     function pinTooltip(state, number, x, y){
@@ -846,8 +861,7 @@
         d3.select("#stateTooltip h4").text(stateInChart + " " + GYEAR.toString());
         d3.select("#stpNumber").transition().text(na(nodo.value));
         drawChart(stateInChart, crimeIndex, espaniol);
-        updateTotals(stateInChart);
-        d3.select("#stpCountry").text(getClosest(nodo.value,WORLD_RATE));
+        updateTotals(stateInChart,nodo.value);
     }
 
     function hideTooltip(){
