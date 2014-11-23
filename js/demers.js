@@ -807,15 +807,19 @@ function getClosest(val, arr){
 function updateTotals(state,rate){
   var arr, 
       world_arr = [];
+
+  var figure = "monitos";
   
   switch(crimeIndex){
     case(0): //homicides
       arr = GHOMI_TOTAL;
       world_arr = WORLD_RATE;
+      figure = "monitos";
       break;
     case(1): //kidnap
       arr = GKIDNAP_TOTAL;
       world_arr = WORLD_KIDNAP_RATE;
+      figure = "monitos";
       break;
     case(2): //extortion
       arr = GEXTORTION_TOTAL;
@@ -826,19 +830,23 @@ function updateTotals(state,rate){
     case(4): //car without violence
       arr = GCARNOVIO_TOTAL;
       world_arr = WORLD_CARNONVIO_RATE;
+      figure = "carritos";
       break;
   }
   
   var total = rateById(GYEAR, +getNode(state).id, arr);
   d3.select("#stpTotalNumber").text(na(total));
 
-  if (total == -1 || total == "NA")
-    d3.select("#stpWeekNumber").text(t("NA"));
-  else  
-    {
+  if (total == -1 || total == "NA"){
+      d3.select("#stpWeekNumber").text(t("NA"));
+      putMonitos(0);
+  } else {
       var weekly = Math.round(total/52);
       d3.select("#stpWeekNumber").text(na(weekly));
-      putMonitos(weekly);
+      if (figure == "monitos")
+        putMonitos(weekly);
+      else
+        putCars(weekly);
     }
 
   if (world_arr.length>1){
@@ -912,7 +920,14 @@ function putMonitos(num){
     var i=0;
     $( "#monitos" ).empty();
     while(i++ < num){
-      $("#monitos").append('<img src="'+LANGPATH+'svg/human.svg" class="human" fill="#984ea3" stroke="#984ea3">');
+      $("#monitos").append('<img src="'+LANGPATH+'svg/human.svg" class="human">');
     }
+}
 
+function putCars(num){
+    var i=0;
+    $( "#monitos" ).empty();
+    while(i++ < num){
+      $("#monitos").append('<img src="'+LANGPATH+'svg/car.png" class="carrito">');
+    }
 }
