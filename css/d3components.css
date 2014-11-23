@@ -231,12 +231,12 @@ ol#ol-scale li {
 	background-color:#fff;
 	padding: 0;
 	width:28.7em;
-	height:20em;
 	display: block;
 	box-shadow: 5px 5px 10px #bbbbbb;
 	margin: 3.5em 0 0 4em;
 	visibility: hidden;
 	opacity: 0.7;
+	padding-bottom: 0.7em;
 }
 
 #stateTooltip h4{

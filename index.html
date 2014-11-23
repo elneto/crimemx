@@ -68,9 +68,6 @@
     var espaniol = false;
     var resInterval;
     var TP = false; //tooltipPinned
-    //for translation
-    var lanSimilarRate = "";
-
 
     $(document).ready(function(){
 
@@ -253,9 +250,9 @@
                 <p id="legend-geo" class="legends">Geographic view</p>
                 <div id="map"></div>
                 <div id="legend" class="legends">
-                  <p>All rates are values per 100,000 inhabitants
+                  <p>All rates are per 100,000 inhabitants
+                  <br>NA means Not Available
                   <br>*2014 data is updated until November 2014
-                  <br>Source: <a href="http://www.secretariadoejecutivosnsp.gob.mx/es/SecretariadoEjecutivo/Incidencia_Delictiva" target="_blank">SENSP, rates per 100,000 inhabitants</a>
                   </p>
                 </div>
                 <!-- A tool tip -->

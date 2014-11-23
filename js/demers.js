@@ -59,6 +59,19 @@
                         'Queretaro':'Quer.','Quintana Roo':'Q. Roo','San Luis Potosi':'Sn Luis','Sinaloa':'Sinaloa','Sonora':'Sonora',
                         'Tabasco':'Tabasco','Tamaulipas':'Tamp.','Tlaxcala':'Tlax.','Veracruz':'Ver.','Yucatan':'Yuc.','Zacatecas':'Zac.'};
 
+      var TRANSLATIONS = {
+        "has a similar rate per 100,000":"tiene tasa similar por 100,000",
+        "No world data available":"No hay datos de otros países",
+        "NA":"ND"
+      }
+
+      function t(str){
+        if (LANGUAGE=='en')
+          return str;
+        else
+          return TRANSLATIONS[str];
+      }
+
       //year must be between 1997 and 2014
       function rateById(year, id, arr)
         {
@@ -686,7 +699,7 @@
             type: kartograph.Label,
             data: centroids,
             location: function(d) { return [d.geo_longitude, d.geo_latitude] },
-            text: function(d) { return getNode(d.state).value==-1? "NA":"";}, //only prints NA if -1
+            text: function(d) { return getNode(d.state).value==-1? t("NA"):"";}, //only prints NA if -1
             mouseenter: function(d, path) {
               borderStateGeoMap(d.state, '#000000');
               d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black");
@@ -721,7 +734,7 @@
                 type: kartograph.Label,
                 data: centroids,
                 location: function(d) { return [d.geo_longitude, d.geo_latitude] },
-                text: function(d) { return getNode(d.state).value==-1? "NA":"";}, //only prints NA
+                text: function(d) { return getNode(d.state).value==-1?t("NA"):"";}, //only prints NA
                 mouseenter: function(d, path) {
                   borderStateGeoMap(d.state, '#000000');
                   d3.select("#idn-" + String(d.state).replace(/ /g,'')).style("stroke", "black"); 
@@ -759,7 +772,7 @@
     //finds closest world rate crime
       function getClosest(val, arr){
         if (val==-1)
-          return "NA";
+          return t("NA");
 
           var tmpmin = 99999999, //big enough so it will be eliminated at the first round
               len = arr.length,
@@ -817,17 +830,17 @@
         d3.select("#stpTotalNumber").text(na(total));
 
         if (total == -1 || total == "NA")
-          d3.select("#stpWeekNumber").text("NA");
+          d3.select("#stpWeekNumber").text(t("NA"));
         else  
           d3.select("#stpWeekNumber").text(na(Math.round(total/52)));
 
         if (world_arr.length>1){
             d3.select("#stpCountry").text(getClosest(rate,world_arr));
-            d3.select("#stpCountryText").text("has a similar rate per 100,000");
+            d3.select("#stpCountryText").text(t("has a similar rate per 100,000"));
           }
         else{
             d3.select("#stpCountry").text("-");
-            d3.select("#stpCountryText").text("No world data available");
+            d3.select("#stpCountryText").text(t("No world data available"));
           }
     }
 
@@ -886,5 +899,5 @@
     }
 
     function na(num){
-        return num <  0 ? "NA" : num;
+        return num <  0 ? t("NA") : num;
     }
