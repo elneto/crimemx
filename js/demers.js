@@ -494,6 +494,9 @@
               credits: {
                   enabled: false
               },
+              exporting: {
+                  enabled: false
+              },
               series: [{
                 name:varTitle, 
                 data: valuesArray,
