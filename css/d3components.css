@@ -316,6 +316,7 @@ span#stpTotalText, span#stpWeekText, span#stpCountryText{
     clear: both;
     float: right;
     height: 12em;
+    width: 16em;
     padding: 0.6em;
     position: absolute;
     right: 0;
