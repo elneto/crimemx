@@ -911,9 +911,8 @@ function na(num){
 function putMonitos(num){
     var i=0;
     $( "#monitos" ).empty();
-    //$( "#monitoState" ).empty();  
     while(i++ < num){
-      $("#monitos").append('<img src="svg/human.svg" class="human">');
+      $("#monitos").append('<img src="'+LANGPATH+'svg/human.svg" class="human" fill="#984ea3" stroke="#984ea3">');
     }
-    //$('#monitos').append('<div class="monitoInline">'+state+' '+GYEAR +'</div>')
+
 }
