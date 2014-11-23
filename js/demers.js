@@ -769,7 +769,9 @@
             arr = GCARNOVIO_TOTAL;
             break;
         }
-        d3.select("#stpTotalNumber").text(na(rateById(GYEAR, +getNode(state).id, arr)));
+        var total = rateById(GYEAR, +getNode(state).id, arr);
+        d3.select("#stpTotalNumber").text(na(total));
+        d3.select("#stpWeekNumber").text(na(Math.round(total/12)));
     }
 
     function showTooltip(state, number, x, y){
@@ -828,5 +830,5 @@
     }
 
     function na(num){
-        return num ==  -1 ? "NA" : num;
+        return num <  0 ? "NA" : num;
     }

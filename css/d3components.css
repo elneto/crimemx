@@ -293,13 +293,25 @@ div#stpFirst {
 	width: 4em;
 }
 
-div#stpFirst * {
+div#stpSecond {
+	position: absolute;
+	left: 10em;
+	top: 15.5em;
+	width: 6em;
+}
+
+div#stpFirst *, div#stpSecond * {
 	float: left;
 }
 
-span#stpTotalText {
+span#stpTotalText{
 	margin-top: -0.9em;
 	width: 4em;
+}
+
+span#stpWeekText{
+	margin-top: -0.9em;
+	width: 6em;
 }
 
 #state-chart{
