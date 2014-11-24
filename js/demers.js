@@ -1,7 +1,7 @@
 $( window ).load(function() {
 
     var crimeIndex = 0;
-    var varImgFile = "images/homicide.png";
+    var varImgFile = LANGPATH+"images/homicide.png";
     var espaniol = false;
     var resInterval;
     var TP = false; //tooltipPinned
@@ -56,7 +56,7 @@ $( window ).load(function() {
     function changeYear(){
       if (GYEAR >= 2014){
         clearInterval(resInterval); //stop! 
-        $("#play-button").attr("src", "images/play.png");
+        $("#play-button").attr("src", LANGPATH+"images/play.png");
         $("#play-link").text("play");
         togglePlay = !togglePlay;
         }
@@ -69,7 +69,7 @@ $( window ).load(function() {
           
           resInterval = setInterval(changeYear, 600);  
 
-          $("#play-button").attr("src", "images/pause.png");
+          $("#play-button").attr("src", LANGPATH+"images/pause.png");
           $("#play-link").animate().text("pause");
           if (GYEAR == 2014) //start from the beginning
             GYEAR=1996;
@@ -77,7 +77,7 @@ $( window ).load(function() {
         }
         else { //it is playing, let's pause
           clearInterval(resInterval); //stop! 
-          $("#play-button").attr("src", "images/play.png");
+          $("#play-button").attr("src", LANGPATH+"images/play.png");
           $("#play-link").text("play");
         }
         togglePlay = !togglePlay;
