@@ -276,42 +276,45 @@ img#close-button:hover, img#play-button:hover{
 	font-size: 1.8em;
 }
 
-#stpNumber {
-	position: absolute;
-	left: 1em;
-}
+
 
 .captionText{
 	font-size: 0.8em;
 }
 
-#stpText {
-	position: absolute;
-	left: 2.5em;
-	top: 7.8em;
+#stpNumber {
+	
 }
 
-div.stpContainer{
-	float:left;
+div.stpTopContainer{
+	position: absolute;
+	margin-top: 0;
+	left: 2em;
+}
+
+div.stpContainer {
+	float: left;
 	margin-top: -2.5em;
-	margin-left: 2em;
+	margin-left: 1.2em;
 }
 
 div#totalsContainer:first-child{
 	margin-left: 1.27em;
 }
 
-div.stpContainer *{
+div.stpContainer *, div.stpTopContainer *{
 	float: left;
 }
 
-span#stpTotalText, span#stpWeekText, span#stpCountryText{
+span#stpTotalText, span#stpWeekText, span#stpCountryText, #stpText {
 	margin-top: -0.5em;
 	clear: left;
 }
 
-div#stpWeekly{
+div#stpWeekly {
 	background-color: #eee;
+	margin-left: 2em;
+	padding: 0 0.3em;
 }
 
 #botones-box{

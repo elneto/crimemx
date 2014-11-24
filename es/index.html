@@ -136,16 +136,27 @@
                 <div id="stateTooltip">
                   <h4 class="bigNumber">State</h4>
                   <h4 id="stpInstructions">Clic para fijar</h4>
-                  <span id="stpNumber" class="bigNumber">30</span> 
-                  <span id="stpText" class="captionText">por 100,000</span>
+                  <div class="stpTopContainer">
+                    <span id="stpTotalNumber" class="bigNumber">100</span>
+                    <span id="stpTotalText" class="captionText">por año</span>
+                  </div>
                   <img src="../images/close.png" id="close-button">
                   <p> <!--Without the p the tooltip diverges !-->
                   <svg style='height:200px' width="300px" id="state-chart"/>
                   </p>
                   <div id="totalsContainer">
-                    <div class="stpContainer"><span id="stpTotalNumber" class="bigNumber">100</span><span id="stpTotalText" class="captionText">c. año</span></div>
-                    <div class="stpContainer" id="stpWeekly"><span id="stpWeekNumber" class="bigNumber">100</span><span id="stpWeekText" class="captionText">c. semana</span></div>
-                    <div class="stpContainer"><span id="stpCountry" class="bigNumber">Country</span><span id="stpCountryText" class="captionText">tiene una tasa similar</span></div>
+                    <div class="stpContainer" id="stpWeekly">
+                      <span id="stpWeekNumber" class="bigNumber">100</span>
+                      <span id="stpWeekText" class="captionText">por semana</span>
+                    </div>
+                    <div class="stpContainer">
+                      <span id="stpNumber" class="bigNumber">30</span> 
+                      <span id="stpText" class="captionText">por 100,000</span>
+                    </div>
+                    <div class="stpContainer">
+                      <span id="stpCountry" class="bigNumber">Country</span>
+                      <span id="stpCountryText" class="captionText">tiene una tasa similar</span>
+                    </div>
                   </div>
                   <div id="monoContainer">
                     <div id="monitos"></div>
