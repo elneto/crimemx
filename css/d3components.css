@@ -246,7 +246,7 @@ ol#ol-scale li {
 
 #stpInstructions{
 	position: absolute;
-	top: 0;
+	top: -0.7em;
 	right: 0;
 	margin-right: 2em;
 	color: red;
@@ -277,8 +277,7 @@ img#close-button:hover, img#play-button:hover{
 
 #stpNumber {
 	position: absolute;
-	left: 0;
-	margin-left: 0.6em;
+	left: 1em;
 }
 
 .captionText{
@@ -287,9 +286,8 @@ img#close-button:hover, img#play-button:hover{
 
 #stpText {
 	position: absolute;
-	left: 0;
-	top: 6.6em;
-	margin-left: 1.6em;
+	left: 2.5em;
+	top: 7.8em;
 }
 
 div.stpContainer{
