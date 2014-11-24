@@ -91,35 +91,35 @@ $( window ).load(function() {
       $("#slider").slider("value", GYEAR);
       switch(crime){
         case ("btnHomicide"):
-          varImgFile = "images/homicide.png";
+          varImgFile = LANGPATH+"images/homicide.png";
           varTitle = t("Homicide Rate");
           crimeIndex = 0;
           MAXRATE=0;
           ready(GERROR, GSTATES, GHOMI);
           break;
         case ("btnKidnap"):
-          varImgFile = "images/kidnap.png";
+          varImgFile = LANGPATH+"images/kidnap.png";
           varTitle = t("Kidnapping Rate");
           crimeIndex = 1;
           MAXRATE=0;
           ready(GERROR, GSTATES, GKIDNAP);
           break;
         case ("btnExtortion"):
-          varImgFile = "images/extortion.png";
+          varImgFile = LANGPATH+"images/extortion.png";
           varTitle = t("Extortion Rate");
           crimeIndex = 2;
           MAXRATE=0;
           ready(GERROR, GSTATES, GEXTORTION);
           break;
         case ("btnCarViolence"):
-          varImgFile = "images/carvio.png";
+          varImgFile = LANGPATH+"images/carvio.png";
           varTitle = t("Violent Car Theft Rate");
           crimeIndex = 3;
           MAXRATE=0;
           ready(GERROR, GSTATES, GCARVIO);
           break;
         case ("btnCarNoViolence"):
-          varImgFile = "images/carnonvio.png";
+          varImgFile = LANGPATH+"images/carnonvio.png";
           varTitle = t("Non Violent Car Theft Rate");
           crimeIndex = 4;
           MAXRATE=0;

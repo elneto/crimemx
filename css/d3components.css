@@ -70,6 +70,7 @@
 	font-family:"Helvetica";
 	font-weight: bold;
 	font-size: 10px;
+	cursor: pointer;
 }
 
 #scale{
