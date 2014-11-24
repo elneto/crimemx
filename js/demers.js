@@ -43,7 +43,7 @@ $( window ).load(function() {
     });
 
     $("#botones-box .list-group-item").click(function(event){
-        this.goToPoint(event.target.id,GYEAR); 
+        goToPoint(event.target.id,GYEAR); 
     });
 
     $("#close-button").click(
