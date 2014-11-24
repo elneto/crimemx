@@ -50,142 +50,16 @@
   <body>
     
     <script type="text/javascript">
-    var LANGPATH = "",
-        LANGUAGE = "en";
-    var barTitulo = "Rank by State",
-        barFuente = "Source: SENSP",
-        barTasa = "Rate per 100,000 inhabitants";
-    var DATAFILE = "csv/homicide-rate.csv";
-    var GYEAR = 2014;
-    var varTitle = "Homicide rate";
-    var crimeIndex = 0;
-    var varImgFile = "images/homicide.png";
-    var playFn, 
-        togglePlay = false;
-    var espaniol = false;
-    var resInterval;
-    var TP = false; //tooltipPinned
-
-    $(document).ready(function(){
-
-          function updateYear(){
-              GYEAR = $("#slider").slider("value");
-              $("#main-title").text(varTitle+" in "+$( "#slider" ).slider( "value" ));
-              if (GYEAR==2014)
-                  $("#main-title").append("*");
-
-              ready(GERROR, GSTATES, GRATES);
-          }
-         //slider         
-          $( "#slider" ).slider({
-            min: 1997,
-            max: 2014,
-            step: 1,
-            value:GYEAR,
-            slide: updateYear,
-            change: updateYear
-          });
-
-          $("#botones-box .list-group-item").click(function(event){
-              goToPoint(event.target.id,GYEAR); 
-          });
-
-          $("#close-button").click(
-              function(){
-                TP = false;
-                hideTooltip();
-              }
-            );
-
-          //$("#map").click(pinTooltip);
-      
-    });
-
-    $(window).load(function() {
-   
-        function changeYear(){
-          if (GYEAR >= 2014){
-            clearInterval(resInterval); //stop! 
-            $("#play-button").attr("src", "images/play.png");
-            $("#play-link").text("play");
-            togglePlay = !togglePlay;
-            }
-          $("#slider").slider("value", GYEAR+=1);
-        }
-        //resInterval = setInterval(changeYear, 600); //starts the animation
-
-        playFn = function(){
-            if (!togglePlay){ //if it's not playing already, play!
-              
-              resInterval = setInterval(changeYear, 600);  
-
-              $("#play-button").attr("src", "images/pause.png");
-              $("#play-link").animate().text("pause");
-              if (GYEAR == 2014) //start from the beginning
-                GYEAR=1996;
-              
-            }
-            else { //it is playing, let's pause
-              clearInterval(resInterval); //stop! 
-              $("#play-button").attr("src", "images/play.png");
-              $("#play-link").text("play");
-            }
-            togglePlay = !togglePlay;
-        }
-
-        $("#play-button").click(playFn);
-
-      });
-
-    function goToPoint(crime, year){
-      MAXRATE=0;
-      GYEAR = year;
-      $("#slider").slider("value", GYEAR);
-      switch(crime){
-        case ("btnHomicide"):
-          varImgFile = "images/homicide.png";
-          varTitle = "Homicide Rate";
-          crimeIndex = 0;
-          MAXRATE=0;
-          ready(GERROR, GSTATES, GHOMI);
-          break;
-        case ("btnKidnap"):
-          varImgFile = "images/kidnap.png";
-          varTitle = "Kidnapping Rate";
-          crimeIndex = 1;
-          MAXRATE=0;
-          ready(GERROR, GSTATES, GKIDNAP);
-          break;
-        case ("btnExtortion"):
-          varImgFile = "images/extortion.png";
-          varTitle = "Extortion Rate";
-          crimeIndex = 2;
-          MAXRATE=0;
-          ready(GERROR, GSTATES, GEXTORTION);
-          break;
-        case ("btnCarViolence"):
-          varImgFile = "images/carvio.png";
-          varTitle = "Violent Car Theft Rate";
-          crimeIndex = 3;
-          MAXRATE=0;
-          ready(GERROR, GSTATES, GCARVIO);
-          break;
-        case ("btnCarNoViolence"):
-          varImgFile = "images/carnonvio.png";
-          varTitle = "Non Violent Car Theft Rate";
-          crimeIndex = 4;
-          MAXRATE=0;
-          ready(GERROR, GSTATES, GCARNOVIO);
-          break;
-        }
-      $('#botones-box > .list-group-item').removeClass("active");
-      $('#'+crime).addClass("active");
-      $("#top-image").attr("src", varImgFile);
-      $("#main-title").text(varTitle+" in "+$( "#slider" ).slider( "value" ));
-      if (GYEAR==2014)
-          $("#main-title").append("*");
-    }
-
+      var LANGPATH = "",
+          LANGUAGE = "en";
+      var barTitulo = "Rank by State",
+          barFuente = "Source: SENSP",
+          barTasa = "Rate per 100,000 inhabitants";
+      var DATAFILE = "csv/homicide-rate.csv";
+      var GYEAR = 2014;
+      var varTitle = "Homicide rate";
+      var playFn, 
+          togglePlay = false;
     </script>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
