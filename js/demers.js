@@ -14,7 +14,8 @@ $( window ).load(function() {
       "Kidnapping Rate":"Tasa de Secuestros",
       "Extortion Rate":"Tasa de Extorsión",
       "Violent Car Theft Rate":"Robo de Autos con Violencia",
-      "Non Violent Car Theft Rate":"Robo de Autos sin Violencia"
+      "Non Violent Car Theft Rate":"Robo de Autos sin Violencia",
+      "National Avg.":"Promedio Nal."
     }
 
     function t(str){
@@ -547,7 +548,7 @@ $( window ).load(function() {
           keysArray.push({'state':d.state,'value':+d.value, 'color': d.color});
      });
 
-    keysArray.push({'state':'Total','value':rateById(GYEAR,0,rates), 'color': '#FF0000'});
+    keysArray.push({'state':t('National Avg.'),'value':rateById(GYEAR,0,rates), 'color': '#FF0000'});
 
     //Todo, order the states according to the estadosArraysort
     keysArray.sort(function(b, a) { 
@@ -594,7 +595,7 @@ $( window ).load(function() {
               }
           },
           tooltip: {
-              enabled: false
+              enabled: true
           },
           plotOptions: {
               bar: {
@@ -632,7 +633,7 @@ $( window ).load(function() {
             point: {
                 events: {
                     mouseOver: function () {
-                        if (String(this.category)!='Total'){
+                        if (String(this.category)!=t('National Avg.')){
                           d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", "black");
                           //currentNodo = getNode(this.category);
                           //showTooltip(this.category, currentNodo.value, currentNodo.x, currentNodo.y);
@@ -640,7 +641,7 @@ $( window ).load(function() {
                         }
                     },
                     mouseOut: function () {
-                        if (String(this.category)!='Total'){
+                        if (String(this.category)!=t('National Avg.')){
                           d3.select("#idn-" + String(this.category).replace(/ /g,'')).style("stroke", "#bbbbbb"); //restores the fill color
                           //hideTooltip();
                           borderStateGeoMap(this.category, '#ffffff');
@@ -659,6 +660,7 @@ $( window ).load(function() {
         chart.setTitle({ text: barTitulo+' ('+GYEAR+')'});
         chart.series[0].setData(valuesArray,true);
         chart.xAxis[0].setCategories(estadosArray,true);
+        chart.series[0].setOptions({name:varTitle});
       }
   }); //ends the highchart bar
 
@@ -818,6 +820,9 @@ $( window ).load(function() {
               chart.series[0].data[index].select(false);
             }
             hideTooltip();
+          },
+          tooltips: function(d) {
+            return d.name;
           }
       });
       //values
@@ -974,7 +979,7 @@ $( window ).load(function() {
       }
 
     if (world_arr.length>1){
-        d3.select("#stpCountry").text(getClosest(rate,world_arr));
+        d3.select("#stpCountry").text("≅"+getClosest(rate,world_arr));
         d3.select("#stpCountryText").text(t("has a similar rate per 100,000"));
       }
     else{
@@ -1058,4 +1063,5 @@ $( window ).load(function() {
         $("#monitos").append('<img src="'+LANGPATH+'svg/car.png" class="carrito">');
       }
   }
+
 });
