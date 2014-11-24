@@ -826,6 +826,7 @@ function updateTotals(state,rate){
       break;
     case(3): //car with violence
       arr = GCARVIO_TOTAL;
+      figure = "carritos";
       break;
     case(4): //car without violence
       arr = GCARNOVIO_TOTAL;
@@ -863,6 +864,9 @@ function showTooltip(state, number, x, y){
 
   if (TP) //if another is pinned
     return;
+  //displaces the tooltip
+  x += 40;
+  y -= 200;
 
   stateInChart = state;
   drawChart(stateInChart, crimeIndex, espaniol);
@@ -873,7 +877,7 @@ function showTooltip(state, number, x, y){
     .style("visibility", "visible")
     .style("top", y+"px")
     .style("left",x+"px")
-    .transition().duration(500).style("opacity", 0.7);
+    .transition().duration(500).style("opacity", 0.9);
 
   d3.select("#stpInstructions").style("visibility", "visible");
   updateTotals(state,number);  
@@ -902,7 +906,7 @@ function hideTooltip(){
       d3.select("#stpInstructions").style("visibility", "hidden");
 
       d3.select("#stateTooltip")
-        .style("opacity", 0.7)
+        .style("opacity", 0.9)
         .style("visibility", "hidden");
       TP = false;
     }
