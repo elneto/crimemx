@@ -211,6 +211,7 @@ ol#ol-scale li {
 	text-align: right;
 	right: 0;
 	bottom: -2em;
+	font-size: 0.8em;
 }
 
 #legend-geo{
@@ -321,7 +322,7 @@ div#stpWeekly {
 	background-color: #ffffff;
     clear: both;
     float: right;
-    height: 12em;
+    height: 14em;
     width: 16em;
     padding: 0.6em;
     position: absolute;
@@ -332,6 +333,10 @@ div#stpWeekly {
     -webkit-box-shadow: 6px 6px 6px #b3b3b3;
     -moz-box-shadow: 6px 6px 6px #b3b3b3;
     box-shadow: 6px 6px 6px #b3b3b3;
+}
+
+.list-header{
+	background-color: #eeeeee;
 }
 
 #botones-box > .list-group-item{
@@ -400,6 +405,7 @@ div#stpWeekly {
 
 #main-title{
 	min-width: 16em;
+	padding-top: 0.3em;
 }
 #top-image{
 	float: left;
@@ -418,10 +424,18 @@ div#stpWeekly {
     border-color: #b92c28;
 }
 
+h1, .h1 {
+    font-size: 32px;
+}
+
 h2{
 	background-color: black;
 	color: white;
 	padding-left: 0.2em;
+}
+
+.lead {
+    font-size: 17px;
 }
 
 img#play-button{

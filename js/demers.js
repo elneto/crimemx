@@ -10,11 +10,11 @@ $( window ).load(function() {
       "has a similar rate per 100,000":"tiene tasa similar por 100,000",
       "No world data available":"No hay datos de otros países",
       "NA":"ND",
-      "Homicide Rate":"Tasa de Homicidios",
-      "Kidnapping Rate":"Tasa de Secuestros",
-      "Extortion Rate":"Tasa de Extorsión",
-      "Violent Car Theft Rate":"Robo de Autos con Violencia",
-      "Non Violent Car Theft Rate":"Robo de Autos sin Violencia",
+      "Homicide Rates in Mexico":"Tasa de Homicidios",
+      "Kidnapping Rates in Mexico":"Tasa de Secuestros",
+      "Extortion Rates in Mexico":"Tasa de Extorsión",
+      "Violent Car Theft Rates in Mexico":"Robo de Autos con Violencia",
+      "Non Violent Car Theft Rates in Mexico":"Robo de Autos sin Violencia",
       "National Avg.":"Promedio Nal."
     }
 
@@ -93,35 +93,35 @@ $( window ).load(function() {
       switch(crime){
         case ("btnHomicide"):
           varImgFile = LANGPATH+"images/homicide.png";
-          varTitle = t("Homicide Rate");
+          varTitle = t("Homicide Rates in Mexico");
           crimeIndex = 0;
           MAXRATE=0;
           ready(GERROR, GSTATES, GHOMI);
           break;
         case ("btnKidnap"):
           varImgFile = LANGPATH+"images/kidnap.png";
-          varTitle = t("Kidnapping Rate");
+          varTitle = t("Kidnapping Rates in Mexico");
           crimeIndex = 1;
           MAXRATE=0;
           ready(GERROR, GSTATES, GKIDNAP);
           break;
         case ("btnExtortion"):
           varImgFile = LANGPATH+"images/extortion.png";
-          varTitle = t("Extortion Rate");
+          varTitle = t("Extortion Rates in Mexico");
           crimeIndex = 2;
           MAXRATE=0;
           ready(GERROR, GSTATES, GEXTORTION);
           break;
         case ("btnCarViolence"):
           varImgFile = LANGPATH+"images/carvio.png";
-          varTitle = t("Violent Car Theft Rate");
+          varTitle = t("Violent Car Theft Rates in Mexico");
           crimeIndex = 3;
           MAXRATE=0;
           ready(GERROR, GSTATES, GCARVIO);
           break;
         case ("btnCarNoViolence"):
           varImgFile = LANGPATH+"images/carnonvio.png";
-          varTitle = t("Non Violent Car Theft Rate");
+          varTitle = t("Non Violent Car Theft Rates in Mexico");
           crimeIndex = 4;
           MAXRATE=0;
           ready(GERROR, GSTATES, GCARNOVIO);
@@ -130,7 +130,7 @@ $( window ).load(function() {
       $('#botones-box > .list-group-item').removeClass("active");
       $('#'+crime).addClass("active");
       $("#top-image").attr("src", varImgFile);
-      $("#main-title").text(varTitle+" in "+$( "#slider" ).slider( "value" ));
+      $("#main-title").text(varTitle+", "+$( "#slider" ).slider( "value" ));
       if (GYEAR==2014)
           $("#main-title").append("*");
     }
