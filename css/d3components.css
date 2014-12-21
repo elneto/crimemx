@@ -172,7 +172,13 @@ ol#ol-scale li {
 	margin-left: 14px;
 	width: 820px;
 	z-index: 1000;
+	cursor: pointer;
 }
+
+div#slider>span{
+	cursor: grab !important;
+}
+
 #slider-label{
 	padding: 0;
 	width: 820px;
@@ -335,9 +341,18 @@ div#stpWeekly {
     box-shadow: 6px 6px 6px #b3b3b3;
 }
 
+list#botones-box{
+	list-style-type: none;
+}
+
 .list-header{
 	background-color: #eeeeee;
-	cursor: default;
+	cursor: default !important;
+
+	text-align: left;
+	font-size: small;
+	padding: 5px 15px;
+
 }
 
 #botones-box > .list-group-item{
