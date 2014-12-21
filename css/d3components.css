@@ -337,6 +337,7 @@ div#stpWeekly {
 
 .list-header{
 	background-color: #eeeeee;
+	cursor: default;
 }
 
 #botones-box > .list-group-item{

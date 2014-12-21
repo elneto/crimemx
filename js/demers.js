@@ -27,7 +27,7 @@ $( window ).load(function() {
 
     function updateYear(){
         GYEAR = $("#slider").slider("value");
-        $("#main-title").text(varTitle+" in "+$( "#slider" ).slider( "value" ));
+        $("#main-title").text(varTitle+", "+$( "#slider" ).slider( "value" ));
         if (GYEAR==2014)
             $("#main-title").append("*");
 
@@ -622,7 +622,7 @@ $( window ).load(function() {
               enabled: false
           },
           series: [{
-            name:varTitle, 
+            name: "Rate", 
             data: valuesArray,
             showInLegend: false,
             color: '#D4C2C5',
