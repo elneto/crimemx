@@ -445,8 +445,8 @@ h1, .h1 {
 }
 
 h2{
-	background-color: black;
-	color: white;
+	background-color: #eee;
+	color: black;
 	padding-left: 0.2em;
 }
 
