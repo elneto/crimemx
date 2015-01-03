@@ -68,7 +68,7 @@ $( window ).load(function() {
     playFn = function(){
         if (!togglePlay){ //if it's not playing already, play!
           
-          resInterval = setInterval(changeYear, 600);  
+          resInterval = setInterval(changeYear, 1400);  
 
           $("#play-button").attr("src", LANGPATH+"images/pause.png");
           $("#play-link").animate().text("pause");
