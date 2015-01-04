@@ -548,7 +548,7 @@ $( window ).load(function() {
           keysArray.push({'state':d.state,'value':+d.value, 'color': d.color});
      });
 
-    keysArray.push({'state':t('National Avg.'),'value':rateById(GYEAR,0,rates), 'color': '#FF0000'});
+    keysArray.push({'state':t('National Avg.'),value: rateById(GYEAR,0,rates), color:'#999999'}); //national avg. color
 
     //Todo, order the states according to the estadosArraysort
     keysArray.sort(function(b, a) { 
