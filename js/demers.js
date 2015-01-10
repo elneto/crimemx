@@ -526,7 +526,7 @@ $( window ).load(function() {
         .transition().duration(500)
         //.attr("font-size", function(d) { return d.value/1.2; })
         .attr("fill", function(d) { return d.colorlbl;})
-        //.text(function(d){return (d.value != -1)? d.state:''});
+        .text(function(d){return (d.value != -1)? shortenLbl[d.state]:''});
 
     //node.data(nodes);
     force
