@@ -36,12 +36,11 @@ class Pdf2Table:
 			self.line = self.line + str(field) + caracter
 		else: #this is the last one
 			self.line = self.line.rstrip(caracter)
-			print(self.line, file=output_file) #end the line
+			print(self.line, file=output_file) #finish the line
 			self.line = field + caracter #unget
 			self.fields_counter = 1
 		return ''
 
-#i=0
 with open(input_name,'r') as f:
 	#build a line
 	output_file = open(output_name,'w+')
@@ -52,7 +51,7 @@ with open(input_name,'r') as f:
 		line = line.strip('\n') #sin esto no funciona!
 		pt.add_field(line)
 
-	#print the last line, bad bad programming :D
+	#print the last line
 	pt.line = pt.line.rstrip(caracter)
 	print(pt.line, file=output_file) #end the line
 
