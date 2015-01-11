@@ -5,7 +5,7 @@ Crime in Mexico Visualization using D3, Kartograph, Highcharts and NVD3.
 
 SENSP visualization with D3, Kartograph, Highcharts and NVD3.
 
-Takes SENSP rates of crime tables and maps them to a pseudo-demers map, a choropleth map, a bar chart and individual line charts per state.
+Takes SENSP rates of crime tables and maps them to a pseudo-Demers cartogram, a choropleth map, a bar chart and individual line charts per state.
 
 The pseudo-Demers cartogram is based on: http://bl.ocks.org/mbostock/4055889
 
