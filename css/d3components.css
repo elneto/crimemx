@@ -367,24 +367,37 @@ list#botones-box{
     cursor: pointer;
 }
 
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus{
+	background: none;
+	color: #333;
+	text-shadow: none;
+}
 
 #botones-box > .list-group-item.active {
-    background-repeat: repeat-x;
-    border-color: #eee;
-    text-shadow: 0 -1px 0 #3071a9;
-    color: white;
+    /*background-repeat: repeat-x;*/
+    /*border-color: #eee;*/
+    /*text-shadow: 0 -1px 0 #3071a9;*/
+    /*color: white;*/
+    border: 1px solid #ddd;
+}
+
+.list-group-item.active::after{
+	content: "█"; 
+	float: right;
+	color: "#333"
 }
 
 #btnHomicide.active{
-	background-image: linear-gradient(to bottom, #984ea3 0px, #984ea3 100%);
+	/*background-image: linear-gradient(to bottom, #984ea3 0px, #984ea3 100%);*/
 }
+
 #btnHomicide span{
 	float: right;
 	color: #984ea3;
 }
 
 #btnKidnap.active{
-	background-image: linear-gradient(to bottom, #b15928 0px, #b15928 100%);
+	/*background-image: linear-gradient(to bottom, #b15928 0px, #b15928 100%);*/
 }
 #btnKidnap span{
 	float: right;
@@ -392,7 +405,7 @@ list#botones-box{
 }
 
 #btnExtortion.active{
-	background-image: linear-gradient(to bottom, #a6d854 0px, #a6d854 100%);
+	/*background-image: linear-gradient(to bottom, #a6d854 0px, #a6d854 100%);*/
 }
 #btnExtortion span{
 	float: right;
@@ -400,7 +413,7 @@ list#botones-box{
 }
 
 #btnCarViolence.active{
-	background-image: linear-gradient(to bottom, #f4cae4 0px, #f4cae4 100%);
+	/*background-image: linear-gradient(to bottom, #f4cae4 0px, #f4cae4 100%);*/
 }
 #btnCarViolence span{
 	float: right;
@@ -408,7 +421,7 @@ list#botones-box{
 }
 
 #btnCarNoViolence.active{
-	background-image: linear-gradient(to bottom, #33a02c 0px, #33a02c 100%);
+	/*background-image: linear-gradient(to bottom, #33a02c 0px, #33a02c 100%);*/
 }
 #btnCarNoViolence span{
 	float: right;

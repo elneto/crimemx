@@ -128,7 +128,9 @@ $( window ).load(function() {
           break;
         }
       $('#botones-box > .list-group-item').removeClass("active");
+      $('#botones-box > .list-group-item').removeClass("active::after");
       $('#'+crime).addClass("active");
+      $('#'+crime).addClass("active::after");
       $("#top-image").attr("src", varImgFile);
       $("#main-title").text(varTitle+", "+$( "#slider" ).slider( "value" ));
       if (GYEAR==2014)
