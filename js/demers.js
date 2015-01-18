@@ -7,7 +7,7 @@ $( window ).load(function() {
     var TP = false; //tooltipPinned
 
     var TRANSLATIONS = {
-      "has a similar rate per 100,000":"tiene tasa similar por 100,000",
+      "had a similar rate per 100,000 in 2011":"tuvo una tasa similar en el 2011",
       "No world data available":"No hay datos de otros países",
       "NA":"ND",
       "Homicide Rates in Mexico":"Tasa de Homicidios",
@@ -15,7 +15,8 @@ $( window ).load(function() {
       "Extortion Rates in Mexico":"Tasa de Extorsión",
       "Violent Car Theft Rates in Mexico":"Robo de Autos con Violencia",
       "Non Violent Car Theft Rates in Mexico":"Robo de Autos sin Violencia",
-      "National Avg.":"Promedio Nal."
+      "National Avg.":"Promedio Nal.",
+      "in 2011":"en 2011"
     }
 
     function t(str){
@@ -189,7 +190,7 @@ $( window ).load(function() {
         WORLD_CARNONVIO_RATE = d;
       });
 
-  var shortenLbl = {'Aguascalientes':'Ags.','Baja California':'Baja Calif.','Baja California Sur':'Baja Calif. S.','Campeche':'Camp.',
+  var shortenLbl = {'Aguascalientes':'Ags','Baja California':'BC','Baja California Sur':'Baja Calif. S.','Campeche':'Camp.',
                     'Chiapas':'Chia.','Chihuahua':'Chihuahua','Coahuila':'Coah.','Colima':'Col.','Distrito Federal':'DF',
                     'Durango':'Dur.','Guanajuato':'Gto.','Guerrero':'Guerrero','Hidalgo':'Hgo.','Jalisco':'Jal.','Mexico':'Mex.',
                     'Michoacan':'Mich.','Morelos':'Mor.','Nayarit':'Nay.','Nuevo Leon':'N. Leon','Oaxaca':'Oax.','Puebla':'Puebla',
@@ -980,7 +981,7 @@ $( window ).load(function() {
 
     if (world_arr.length>1){
         d3.select("#stpCountry").text("≅"+getClosest(rate,world_arr));
-        d3.select("#stpCountryText").text(t("has a similar rate per 100,000"));
+        d3.select("#stpCountryText").text(t("had a similar rate per 100,000 in 2011"));
       }
     else{
         d3.select("#stpCountry").text("-");

@@ -278,12 +278,23 @@ img#close-button:hover, img#play-button:hover{
 	font-size: 1.95em;
 }
 
+.countryNumber{
+	font-weight: bold;
+	font-size: 1.25em;
+}
+
+span#stpCountry {
+margin-top: 0.3em;
+}
+
+span#stpCountryText {
+	margin-top: 0.1em !important;
+}
+
 .bigText{
 	font-weight: bold;
 	font-size: 1.8em;
 }
-
-
 
 .captionText{
 	font-size: 0.8em;
