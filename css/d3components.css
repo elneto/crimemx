@@ -132,7 +132,8 @@ ol#ol-scale li {
 }
 
 .lblEstado {
-	font-size: 11px;
+	/*font-size: 11px;*/
+	color: white
 }
 
 .lblValue, .lblEstado {
@@ -140,7 +141,6 @@ ol#ol-scale li {
 	font-weight: bold;
 	cursor: pointer;
 }
-
 
 /*For geo maps*/
 .states {

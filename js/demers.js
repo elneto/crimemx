@@ -190,12 +190,12 @@ $( window ).load(function() {
         WORLD_CARNONVIO_RATE = d;
       });
 
-  var shortenLbl = {'Aguascalientes':'Ags','Baja California':'BC','Baja California Sur':'Baja Calif. S.','Campeche':'Camp.',
-                    'Chiapas':'Chia.','Chihuahua':'Chihuahua','Coahuila':'Coah.','Colima':'Col.','Distrito Federal':'DF',
-                    'Durango':'Dur.','Guanajuato':'Gto.','Guerrero':'Guerrero','Hidalgo':'Hgo.','Jalisco':'Jal.','Mexico':'Mex.',
-                    'Michoacan':'Mich.','Morelos':'Mor.','Nayarit':'Nay.','Nuevo Leon':'N. Leon','Oaxaca':'Oax.','Puebla':'Puebla',
-                    'Queretaro':'Quer.','Quintana Roo':'Q. Roo','San Luis Potosi':'Sn Luis','Sinaloa':'Sinaloa','Sonora':'Sonora',
-                    'Tabasco':'Tabasco','Tamaulipas':'Tamp.','Tlaxcala':'Tlax.','Veracruz':'Ver.','Yucatan':'Yuc.','Zacatecas':'Zac.'};
+  var shortenLbl = {'Aguascalientes':'Ags','Baja California':'BC','Baja California Sur':'BCS','Campeche':'Camp',
+                    'Chiapas':'Chis','Chihuahua':'Chih','Coahuila':'Coah','Colima':'Col','Distrito Federal':'DF',
+                    'Durango':'Dgo','Guanajuato':'Gto','Guerrero':'Gro','Hidalgo':'Hgo','Jalisco':'Jal','Mexico':'Mex',
+                    'Michoacan':'Mich','Morelos':'Mor','Nayarit':'Nay','Nuevo Leon':'NL','Oaxaca':'Oax','Puebla':'Pue',
+                    'Queretaro':'Qro','Quintana Roo':'QR','San Luis Potosi':'SLP','Sinaloa':'Sin','Sonora':'Son',
+                    'Tabasco':'Tab','Tamaulipas':'Tamps','Tlaxcala':'Tlax','Veracruz':'Ver','Yucatan':'Yuc','Zacatecas':'Zac'};
 
   //year must be between 1997 and 2014
   function rateById(year, id, arr)
@@ -490,7 +490,7 @@ $( window ).load(function() {
           .attr("y", function(d) { return d.y; })
           .attr("dx", function(d) { return positive(d.r);}) //half the size of the square
           .attr("dy", "1.4em")
-          //.attr("font-size", function(d) { return fontSize(d.value)/1.2; })
+          .attr("font-size", function(d) { return fontSize(d.value); })
           .attr("fill", function(d) { return d.colorlbl;})
           .attr("text-anchor", "middle")
           .text(function(d){return (d.value != -1)? shortenLbl[d.state]:''});
@@ -525,7 +525,7 @@ $( window ).load(function() {
         .attr("y", function(d) { return d.y; })
         .attr("dx", function(d) { return positive(d.r);}) //half the size of the square
         .transition().duration(500)
-        //.attr("font-size", function(d) { return d.value/1.2; })
+        .attr("font-size", function(d) { return fontSize(d.value); })
         .attr("fill", function(d) { return d.colorlbl;})
         .text(function(d){return (d.value != -1)? shortenLbl[d.state]:''});
 
