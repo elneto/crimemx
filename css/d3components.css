@@ -329,7 +329,7 @@ div#stpWeekly {
     clear: both;
     float: right;
     height: 14em;
-    width: 16em;
+    width: 16.6em;
     padding: 0.6em;
     position: absolute;
     right: 0;
@@ -371,6 +371,7 @@ list#botones-box{
 	background: none;
 	color: #333;
 	text-shadow: none;
+	font-weight: bold;
 }
 
 #botones-box > .list-group-item.active {
@@ -381,55 +382,30 @@ list#botones-box{
     border: 1px solid #ddd;
 }
 
-.list-group-item.active::after{
-	content: "█"; 
+.list-group-item::after{
 	float: right;
-	color: "#333"
+	position: absolute;
+	right:4px;
 }
 
-#btnHomicide.active{
-	/*background-image: linear-gradient(to bottom, #984ea3 0px, #984ea3 100%);*/
+#btnHomicide.list-group-item::after{
+	content: url("../images/homicide-b.png");
 }
 
-#btnHomicide span{
-	float: right;
-	color: #984ea3;
+#btnKidnap.list-group-item::after{
+	content: url("../images/kidnap-b.png");
 }
 
-#btnKidnap.active{
-	/*background-image: linear-gradient(to bottom, #b15928 0px, #b15928 100%);*/
-}
-#btnKidnap span{
-	float: right;
-	color: #b15928;
+#btnExtortion.list-group-item::after{
+	content: url("../images/extortion-b.png");
 }
 
-#btnExtortion.active{
-	/*background-image: linear-gradient(to bottom, #a6d854 0px, #a6d854 100%);*/
-}
-#btnExtortion span{
-	float: right;
-	color: #a6d854;
+#btnCarViolence.list-group-item::after{
+	content: url("../images/carvio-b.png");
 }
 
-#btnCarViolence.active{
-	/*background-image: linear-gradient(to bottom, #f4cae4 0px, #f4cae4 100%);*/
-}
-#btnCarViolence span{
-	float: right;
-	color: #f4cae4;
-}
-
-#btnCarNoViolence.active{
-	/*background-image: linear-gradient(to bottom, #33a02c 0px, #33a02c 100%);*/
-}
-#btnCarNoViolence span{
-	float: right;
-	color: #33a02c;
-}
-
-.active span{
-	display: none;
+#btnCarNoViolence.list-group-item::after{
+	content: url("../images/carnonvio-b.png");
 }
 
 #main-title{
