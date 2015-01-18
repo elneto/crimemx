@@ -227,7 +227,7 @@ div#slider>span{
 }
 
 #legend-demers{
-	left: 23em;
+	left: 20em;
 	top: 7em;
 }
 
@@ -339,14 +339,13 @@ div#stpWeekly {
 	background-color: #ffffff;
     clear: both;
     float: right;
-    height: 14em;
+    height: 15.8em;
     width: 16.6em;
     padding: 0.6em;
     position: absolute;
-    right: 0;
-    top: 6.7em;
+	right: -1em;
+	top: 0;
     z-index: 99;
-
     -webkit-box-shadow: 6px 6px 6px #b3b3b3;
     -moz-box-shadow: 6px 6px 6px #b3b3b3;
     box-shadow: 6px 6px 6px #b3b3b3;
@@ -359,11 +358,10 @@ list#botones-box{
 .list-header{
 	background-color: #eeeeee;
 	cursor: default !important;
-
 	text-align: left;
-	font-size: small;
+	font-size: large;
 	padding: 5px 15px;
-
+	height: 3.3em;
 }
 
 #botones-box > .list-group-item{
@@ -424,11 +422,11 @@ list#botones-box{
 	padding-top: 0.3em;
 }
 #top-image{
-	float: left;
-    margin-right: 1em;
-    position: relative;
-    max-height:75px; 
-    width:auto;
+	max-width: 113px;
+	max-height: 55px;
+	position: absolute;
+	right: 22em;
+	top: 0.5em;
 }
 #main-blob{
 	display: inline;
@@ -441,7 +439,7 @@ list#botones-box{
 }
 
 h1, .h1 {
-    font-size: 32px;
+    font-size: 29px;
 }
 
 h2{
