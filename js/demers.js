@@ -5,6 +5,7 @@ $( window ).load(function() {
     var espaniol = false;
     var resInterval;
     var TP = false; //tooltipPinned
+    var LASTYEAR = 2015;
 
     var TRANSLATIONS = {
       "had a similar rate per 100,000 in 2011":"tuvo una tasa similar en el 2011",
@@ -29,7 +30,7 @@ $( window ).load(function() {
     function updateYear(){
         GYEAR = $("#slider").slider("value");
         $("#main-title").text(varTitle+", "+$( "#slider" ).slider( "value" ));
-        if (GYEAR==2014)
+        if (GYEAR==LASTYEAR)
             $("#main-title").append("*");
 
         ready(GERROR, GSTATES, GRATES);
@@ -37,7 +38,7 @@ $( window ).load(function() {
    //slider         
     $( "#slider" ).slider({
       min: 1997,
-      max: 2014,
+      max: LASTYEAR,
       step: 1,
       value:GYEAR,
       slide: updateYear,
@@ -56,7 +57,7 @@ $( window ).load(function() {
       );      
 
     function changeYear(){
-      if (GYEAR >= 2014){
+      if (GYEAR >= LASTYEAR){
         clearInterval(resInterval); //stop! 
         $("#play-button").attr("src", LANGPATH+"images/play.png");
         $("#play-link").text("play");
@@ -73,7 +74,7 @@ $( window ).load(function() {
 
           $("#play-button").attr("src", LANGPATH+"images/pause.png");
           $("#play-link").animate().text("pause");
-          if (GYEAR == 2014) //start from the beginning
+          if (GYEAR == LASTYEAR) //start from the beginning
             GYEAR=1996;
           
         }
@@ -132,7 +133,7 @@ $( window ).load(function() {
       $('#'+crime).addClass("active");
       $("#top-image").attr("src", varImgFile);
       $("#main-title").text(varTitle+", "+$( "#slider" ).slider( "value" ));
-      if (GYEAR==2014)
+      if (GYEAR==LASTYEAR)
           $("#main-title").append("*");
     }
 
@@ -197,13 +198,13 @@ $( window ).load(function() {
                     'Queretaro':'Qro','Quintana Roo':'QR','San Luis Potosi':'SLP','Sinaloa':'Sin','Sonora':'Son',
                     'Tabasco':'Tab','Tamaulipas':'Tamps','Tlaxcala':'Tlax','Veracruz':'Ver','Yucatan':'Yuc','Zacatecas':'Zac'};
 
-  //year must be between 1997 and 2014
+  //year must be between 1997 and LASTYEAR
   function rateById(year, id, arr)
     {
       //arr[year][state]
       //year 1 = 1997
       ////state 0 = Total,  state 1 = Aguascalientes, state 2 = Baja California...
-      if (year < 1997 || year > 2014)
+      if (year < 1997 || year > LASTYEAR)
           throw { name: 'FatalError', message: 'Year out of limits' }
 
       return arr[year-1996][id];
@@ -246,7 +247,7 @@ $( window ).load(function() {
       .attr("height", height);
 
   var xSlider = d3.time.scale()
-      .domain([new Date(1997, 0, 1), new Date(2014, 0, 1)])
+      .domain([new Date(1997, 0, 1), new Date(LASTYEAR, 0, 1)])
       .range([0, 820]);
 
   var xAxis = d3.svg.axis()
