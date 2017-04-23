@@ -5,7 +5,7 @@ $( window ).load(function() {
     var espaniol = false;
     var resInterval;
     var TP = false; //tooltipPinned
-    var LASTYEAR = 2015;
+    var LASTYEAR = 2017;
 
     var TRANSLATIONS = {
       "had a similar rate per 100,000 in 2011":"tuvo una tasa similar en el 2011",
